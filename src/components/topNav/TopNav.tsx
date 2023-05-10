@@ -42,18 +42,21 @@ export default function TopNav() {
         <nav className="flex items-center gap-2 pl-3">
           {menu.map((item) => (
             <Link href={item.href} key={item.href}>
-              <SimpleButton text={item.text} bold={pathName === item.href} />
+              <SimpleButton active={pathName === item.href} activeType="bold">
+                {item.text}
+              </SimpleButton>
             </Link>
           ))}
         </nav>
         <div className="flex-1"></div>
         <section>
           <SimpleButton
-            text="로그아웃"
             size="small"
-            bgColor="bg-slate-500"
+            bgColor="bg-secondary-color"
             color="text-white"
-          />
+          >
+            로그아웃
+          </SimpleButton>
         </section>
       </div>
     </header>

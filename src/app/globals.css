@@ -8,3 +8,11 @@ body {
   height: 100vh;
   overflow-x: hidden;
 }
+
+:root {
+  --brand-color: #ffbf00;
+  --primary-color: #757575;
+  --secondary-color: #4e4e4e;
+  --bg-light-color: #f5f5f5;
+  --bg-dark-color: #212121;
+}

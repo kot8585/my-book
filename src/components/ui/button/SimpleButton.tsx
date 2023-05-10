@@ -1,28 +1,78 @@
+import { ReactNode } from "react";
+
 type Props = {
-  text: string;
+  children: ReactNode;
   // onClick: () => {};
-  bold?: boolean;
-  size?: "small" | "middle";
+  activeType?: "bold" | "color" | "underline";
+  active?: boolean;
+  size?: "small" | "middle" | "large";
   bgColor?: string;
   color?: string;
 };
 
 export default function SimpleButton({
-  text,
-  bold,
+  children,
+  activeType,
+  active,
   size,
   bgColor,
   color,
 }: Props) {
-  console.log("bold", bold);
   return (
     <button
       // onClick={onClick}
-      className={`rounded-md ${bold && "font-extrabold"} ${
-        size === "small" ? "p-[0.3rem] text-base" : "p-4 text-xl"
-      } ${bgColor && `${bgColor}`} ${color && `${color}`}`}
+      className={getContainerStyle({
+        activeType,
+        active,
+        size,
+        bgColor,
+        color,
+      })}
     >
-      {text}
+      {children}
     </button>
   );
+}
+
+function getContainerStyle({
+  activeType,
+  active,
+  size,
+  bgColor,
+  color,
+}: Omit<Props, "children">) {
+  const baseStyle = "flex flex-col justify-center items-center rounded-md";
+  const bgColorStyle = bgColor ? `${bgColor}` : "";
+
+  let activeStyle = getActiveStyle(active, activeType);
+
+  let sizeStyle = getSizeStyle(size);
+
+  const colorStyle = color ? `${color}` : "text-primary-color";
+
+  return `${baseStyle} ${bgColorStyle} ${activeStyle} ${sizeStyle} ${colorStyle}`;
+}
+
+function getActiveStyle(active?: boolean, activeType?: string) {
+  if (!active) return "";
+
+  if (activeType === "underline") {
+    return "after:bottom-2 after:border-b-4 after:content-[''] after:block after:w-[120%] after:-mx-1";
+  } else if (activeType === "bold") {
+    return "font-extrabold text-secondary-color";
+  } else if (activeType === "color") {
+    return "text-brand-color";
+  } else {
+    return "";
+  }
+}
+
+function getSizeStyle(size?: string): string {
+  if (size === "small") {
+    return "p-[0.3rem] text-base";
+  } else if (size === "large") {
+    return "text-[1.5rem] py-1";
+  } else {
+    return "p-4 text-xl";
+  }
 }

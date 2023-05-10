@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import TopNav from "./TopNav";
 
 const meta: Meta<typeof TopNav> = {
-  title: "Navigation/TopNav",
+  title: "Components/TopNav",
   component: TopNav,
   argTypes: {},
 };
