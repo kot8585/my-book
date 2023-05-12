@@ -7,6 +7,7 @@ import SimpleButton from "../ui/button/SimpleButton";
 import { MdPeopleAlt } from "react-icons/md";
 import { TbNotes, TbListSearch } from "react-icons/tb";
 import { FaUserCircle } from "react-icons/fa";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export const menu = [
   {
@@ -32,6 +33,9 @@ export const menu = [
 ];
 
 export default function TopNav() {
+  const { data: session } = useSession();
+  console.log("login data: ", session);
+
   const pathName = usePathname();
   return (
     <header className="sticky top-0 bg-white z-10 border-b hidden xl:block">
@@ -50,13 +54,25 @@ export default function TopNav() {
         </nav>
         <div className="flex-1"></div>
         <section>
-          <SimpleButton
-            size="small"
-            bgColor="bg-secondary-color"
-            color="text-white"
-          >
-            로그아웃
-          </SimpleButton>
+          {session ? (
+            <SimpleButton
+              size="small"
+              bgColor="bg-secondary-color"
+              color="text-white"
+              onClick={() => signOut()}
+            >
+              로그아웃
+            </SimpleButton>
+          ) : (
+            <SimpleButton
+              size="small"
+              bgColor="bg-secondary-color"
+              color="text-white"
+              onClick={() => signIn()}
+            >
+              로그인
+            </SimpleButton>
+          )}
         </section>
       </div>
     </header>
