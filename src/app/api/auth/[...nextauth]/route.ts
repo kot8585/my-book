@@ -1,3 +1,4 @@
+import { addUser } from "@/service/user";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import KakaoProvider from "next-auth/providers/kakao";
@@ -13,6 +14,13 @@ export const handler = NextAuth({
       clientSecret: process.env.KAKAO_OAUTH_SECRET || "",
     }),
   ],
+  callbacks: {
+    async signIn({ user: { id, email, name, image }, account }) {
+      const type = account?.provider || "";
+      addUser({ userId: id, email, name: name || "", image, type });
+      return true;
+    },
+  },
   pages: {
     signIn: "/auth/signin",
   },
