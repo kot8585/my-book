@@ -16,8 +16,18 @@ export const handler = NextAuth({
   ],
   callbacks: {
     async signIn({ user: { id, email, name, image }, account }) {
+      if (!email) {
+        console.error("email cannot be empty");
+        return false;
+      }
       const type = account?.provider || "";
-      addUser({ userId: id, email, name: name || "", image, type });
+      addUser({
+        userId: id,
+        email: email || "",
+        name: name || "",
+        image,
+        type,
+      });
       return true;
     },
   },
