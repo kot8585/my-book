@@ -2,30 +2,34 @@ import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
-  // onClick: () => {};
+  onClick?: () => {};
   activeType?: "bold" | "color" | "underline";
   active?: boolean;
   size?: "small" | "middle" | "large";
   bgColor?: string;
+  border?: boolean;
   color?: string;
 };
 
 export default function SimpleButton({
   children,
+  onClick,
   activeType,
   active,
   size,
   bgColor,
+  border,
   color,
 }: Props) {
   return (
     <button
-      // onClick={onClick}
+      onClick={onClick}
       className={getContainerStyle({
         activeType,
         active,
         size,
         bgColor,
+        border,
         color,
       })}
     >
@@ -39,8 +43,9 @@ function getContainerStyle({
   active,
   size,
   bgColor,
+  border,
   color,
-}: Omit<Props, "children">) {
+}: Omit<Props, "children" | "onClick">) {
   const baseStyle = "flex flex-col justify-center items-center rounded-md";
   const bgColorStyle = bgColor ? `${bgColor}` : "";
 
@@ -48,9 +53,11 @@ function getContainerStyle({
 
   let sizeStyle = getSizeStyle(size);
 
+  const borderStyle = border ? "border-primary-color border " : "";
+
   const colorStyle = color ? `${color}` : "text-primary-color";
 
-  return `${baseStyle} ${bgColorStyle} ${activeStyle} ${sizeStyle} ${colorStyle}`;
+  return `${baseStyle} ${bgColorStyle} ${activeStyle} ${sizeStyle} ${borderStyle} ${colorStyle}`;
 }
 
 function getActiveStyle(active?: boolean, activeType?: string) {
