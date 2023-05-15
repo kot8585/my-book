@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  idx    Int     @id @default(autoincrement())
   userId String   
   email String  @unique
   name  String?
@@ -21,4 +21,40 @@ model User {
   updatedAt DateTime?
 }
 
+model UserBook {
+  userIdx Int
+  isbn String 
+  title String
+  author String
+  categoryName String?
+  //toRead reading complete 
+  status String
+  // ebook, paper, 
+  type String
+  comment String @db.VarChar(255)
+  @@unique([userIdx, isbn])
+}
+
+model Post {
+  userIdx Int 
+  isbn String @db.VarChar(255)
+  idx Int @id @default(autoincrement())
+  page Int 
+  title String? @db.VarChar(255)
+  content String?
+  createAt DateTime @default(now())
+  updateAt DateTime?
+  isPublic Boolean 
+  bookMarkUserIdx String?
+  likeUserIdx String?
+}
+
+model Comment {
+  postIdx Int
+  userIdx Int
+  idx Int @id @default(autoincrement())
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime?
+}
 
