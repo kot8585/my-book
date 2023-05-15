@@ -1,9 +1,11 @@
-import { addUser } from "@/service/user";
-import NextAuth from "next-auth";
+import { addUser, getIdxByEmail } from "@/service/user";
+import NextAuth, { NextAuthOptions } from "next-auth";
+import { AdapterUser } from "next-auth/adapters";
+import { JWT } from "next-auth/jwt/types";
 import GoogleProvider from "next-auth/providers/google";
 import KakaoProvider from "next-auth/providers/kakao";
 
-export const handler = NextAuth({
+export const handler: NextAuthOptions = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
@@ -29,6 +31,22 @@ export const handler = NextAuth({
         type,
       });
       return true;
+    },
+    async session({ session, token }) {
+      const user = session?.user;
+      if (token && user) {
+        session.user = {
+          ...user,
+          idx: token.idx,
+        };
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      // TODO: email 무조건 있도록 하기
+      const idx = await getIdxByEmail(token.email || "");
+      token.idx = idx!;
+      return token;
     },
   },
   pages: {

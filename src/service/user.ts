@@ -21,3 +21,16 @@ export async function addUser({ userId, email, name, image, type }: OAuthUser) {
     update: {},
   });
 }
+
+export async function getIdxByEmail(email: string) {
+  const result = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+    select: {
+      idx: true,
+    },
+  });
+
+  return result?.idx;
+}
