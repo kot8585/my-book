@@ -1,8 +1,10 @@
-import Header from "@/components/topNav/TopNav";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import BottomNav from "@/components/bottomNav/BottomNav";
 import AuthProvider from "@/provider/AuthProvider";
+import TopNav from "@/components/topNav/TopNav";
+import { QueryClientProvider } from "@tanstack/react-query";
+import ReactQueryProvider from "@/provider/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +22,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <Header />
-          <main className="w-full flex justify-center max-w-screen-xl mx-auto min-h-screen ">
-            {children}
-          </main>
+          <TopNav />
+          <ReactQueryProvider>
+            <main className="w-full flex justify-center max-w-screen-xl mx-auto grow">
+              {children}
+            </main>
+          </ReactQueryProvider>
           <BottomNav />
         </AuthProvider>
       </body>
