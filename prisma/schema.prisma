@@ -8,53 +8,69 @@ generator client {
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
 model User {
   idx    Int     @id @default(autoincrement())
-  userId String   
+  posts Post[]
+  userBook UserBook[] 
+  userId String   @map("user_id")
   email String  @unique
   name  String?
   image String?
-  type String @default("")
-  createdAt DateTime @default(now())
-  updatedAt DateTime?
+  //user primary admin
+  type String @default("USER")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime? @map("updated_at")
 }
 
 model UserBook {
-  userIdx Int
+  userIdx Int @map("user_idx")
   isbn String 
+  user User @relation(fields: [userIdx], references: [idx])
+  post Post[]
   title String
   author String
-  categoryName String?
+  publisher String
+  imageUrl String @map("image_url")
+  categoryName String? @map("category_name")
+  totalPage Int @map("total_page")
   //toRead reading complete 
   status String
   // ebook, paper, 
   type String
-  comment String @db.VarChar(255)
-  @@unique([userIdx, isbn])
+  comment String @db.VarChar(50)
+  startDate DateTime? @map("start_date")
+  endDate DateTime? @map("end_date")
+  createdAt DateTime @map("created_at") @default(now()) 
+  @@id([userIdx, isbn])
 }
 
+
 model Post {
-  userIdx Int 
-  isbn String @db.VarChar(255)
+  userIdx Int @map("user_idx")
+  user User @relation(fields: [userIdx], references: [idx])
+  isbn String 
+  userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
   idx Int @id @default(autoincrement())
   page Int 
   title String? @db.VarChar(255)
   content String?
-  createAt DateTime @default(now())
-  updateAt DateTime?
-  isPublic Boolean 
-  bookMarkUserIdx String?
-  likeUserIdx String?
+  type String? 
+  createdAt DateTime @map("created_at") @default(now()) 
+  updatedAt DateTime? @map("updated_ap")
+  isPublic Boolean  @map("is_public")
+  bookmarkUserIdx String? @map("bookmark_user_idx")
+  likeUserIdx String?  @map("like_user_idx")
 }
 
 model Comment {
-  postIdx Int
-  userIdx Int
+  postIdx Int @map("post_idx")
+  userIdx Int @map("user_idx")
   idx Int @id @default(autoincrement())
   content String
-  createdAt DateTime @default(now())
-  updatedAt DateTime?
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime? @map("updated_at")
 }
 
