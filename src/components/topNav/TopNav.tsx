@@ -38,8 +38,8 @@ export default function TopNav() {
 
   const pathName = usePathname();
   return (
-    <header className="sticky top-0 bg-white z-10 border-b hidden xl:block">
-      <div className="max-w-screen-2xl flex justify-between items-center mx-auto px-3">
+    <header className="sticky top-0 bg-white z-10 border-b hidden xl:block p-2">
+      <div className="max-w-screen-xl flex justify-between items-center mx-auto px-3">
         <Link href="/">
           <Image src={logo} alt="키핑북" width={40} height={40} />
         </Link>
