@@ -15,7 +15,6 @@ export default function FeedBookInfo({ book, createdAt }: Props) {
       <div className="flex flex-col">
         <span className="text-sm">{book.title}</span>
         <span className="text-xs text-gray-500">{formatDate(createdAt)}</span>
-        {book.publisher ?? <span>${book.publisher}</span>}
       </div>
     </section>
   );
