@@ -4,7 +4,7 @@ import { handler } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import SimpleButton from "@/components/ui/button/SimpleButton";
 import { BsPlusLg } from "react-icons/bs";
-import BookCardList from "@/components/bookCardList/BookCardList";
+import BookCardList from "@/components/home/BookCardList";
 import { getUserBooks } from "@/service/userbook";
 
 export default async function HomePage() {

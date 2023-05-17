@@ -1,6 +1,6 @@
 import { UserBook } from "@/model/userBook";
 import React from "react";
-import BookCard from "../bookCard/BookCard";
+import BookCard from "./BookCard";
 
 type Props = {
   books: UserBook[];
