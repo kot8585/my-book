@@ -2,7 +2,8 @@ import { ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
-  onClick?: () => {};
+  onClick?: () => void;
+  rounded?: boolean;
   activeType?: "bold" | "color" | "underline";
   active?: boolean;
   size?: "small" | "middle" | "large";
@@ -14,6 +15,7 @@ type Props = {
 export default function SimpleButton({
   children,
   onClick,
+  rounded,
   activeType,
   active,
   size,
@@ -25,6 +27,7 @@ export default function SimpleButton({
     <button
       onClick={onClick}
       className={getContainerStyle({
+        rounded,
         activeType,
         active,
         size,
@@ -39,6 +42,7 @@ export default function SimpleButton({
 }
 
 function getContainerStyle({
+  rounded,
   activeType,
   active,
   size,
@@ -46,7 +50,8 @@ function getContainerStyle({
   border,
   color,
 }: Omit<Props, "children" | "onClick">) {
-  const baseStyle = "flex flex-col justify-center items-center rounded-md";
+  const baseStyle = "rounded-full";
+  // const roundedStyle = rounded ? ''
   const bgColorStyle = bgColor ? `${bgColor}` : "";
 
   let activeStyle = getActiveStyle(active, activeType);
@@ -64,7 +69,7 @@ function getActiveStyle(active?: boolean, activeType?: string) {
   if (!active) return "";
 
   if (activeType === "underline") {
-    return "after:bottom-2 after:border-b-4 after:content-[''] after:block after:w-[120%] after:-mx-1";
+    return "after:bottom-2 after:border-b-4 after:border-brand-color after:content-[''] after:block after:w-[120%] after:-mx-1";
   } else if (activeType === "bold") {
     return "font-extrabold text-secondary-color";
   } else if (activeType === "color") {
@@ -76,10 +81,10 @@ function getActiveStyle(active?: boolean, activeType?: string) {
 
 function getSizeStyle(size?: string): string {
   if (size === "small") {
-    return "p-[0.3rem] text-base";
+    return "py-[0.3rem] px-2 text-base";
   } else if (size === "large") {
-    return "text-[1.5rem] py-1";
+    return "text-[1.5rem] p-1";
   } else {
-    return "p-4 text-xl";
+    return "p-1 text-lg mx-1";
   }
 }
