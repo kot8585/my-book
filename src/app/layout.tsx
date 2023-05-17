@@ -1,5 +1,5 @@
-import BottomNav from "@/components/bottomNav/BottomNav";
-import TopNav from "@/components/topNav/TopNav";
+import BottomNav from "@/components/layout/BottomNav";
+import TopNav from "@/components/layout/TopNav";
 import AuthProvider from "@/provider/AuthProvider";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
 import { Inter } from "next/font/google";
