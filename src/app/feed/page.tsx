@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import SimpleButton from "../../components/ui/button/SimpleButton";
 import FeedList from "@/components/feed/FeedList";
 import { useSession } from "next-auth/react";
 import ShowMessage from "@/components/common/ShowMessage";
+import SimpleButton from "@/components/common/SimpleButton";
 
 export type FeedType = "TOTAL" | "FOLLOW";
 

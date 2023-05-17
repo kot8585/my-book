@@ -3,11 +3,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "../../../public/images/logo.png";
-import SimpleButton from "../ui/button/SimpleButton";
 import { MdPeopleAlt } from "react-icons/md";
 import { TbNotes, TbListSearch } from "react-icons/tb";
 import { FaUserCircle } from "react-icons/fa";
 import { useSession, signIn, signOut } from "next-auth/react";
+import SimpleButton from "../common/SimpleButton";
 
 export const menu = [
   {
