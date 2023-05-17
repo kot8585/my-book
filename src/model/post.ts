@@ -10,17 +10,17 @@ type Post = {
   likeUserIdx?: String;
 };
 
-export type FeedBookInfo = {
-  title: string;
-  imageUrl: string;
-  author: string;
-  page?: number;
-};
-
-export type FeedTotalPost = {
+export type FeedResponseType = {
   user: {
     image?: string;
     name: string;
   };
   userBook: FeedBookInfo;
 } & Post;
+
+export type FeedBookInfo = {
+  title: string;
+  imageUrl: string;
+  author: string;
+  page?: number;
+};

@@ -8,6 +8,9 @@ export async function getAllPostList() {
     where: {
       isPublic: true,
     },
+    orderBy: {
+      createdAt: "desc",
+    },
     include: {
       user: {
         select: {
@@ -49,6 +52,7 @@ export async function getFollowingPostList(userIdx) {
     WHERE is_public=TRUE AND p.user_idx IN (
         SELECT followee_idx FROM FOLLOW WHERE follower_idx=${userIdx}
       )
+    ORDER BY p.created_at DESC
     `;
 
   const mappedResult = result.map((row) => ({
