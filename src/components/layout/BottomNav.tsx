@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { menu } from "../topNav/TopNav";
+import { menu } from "./TopNav";
 import { TiHome } from "react-icons/ti";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
