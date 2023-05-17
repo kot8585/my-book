@@ -5,7 +5,7 @@ import { menu } from "./TopNav";
 import { TiHome } from "react-icons/ti";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import SimpleButton from "../ui/button/SimpleButton";
+import SimpleButton from "../common/SimpleButton";
 
 export default function BottomNav() {
   const pathName = usePathname();

@@ -2,10 +2,10 @@
 
 import { ClientSafeProvider, signIn } from "next-auth/react";
 import React from "react";
-import SimpleButton from "../ui/button/SimpleButton";
 import { FcGoogle } from "react-icons/fc";
 import { RiKakaoTalkFill } from "react-icons/ri";
 import { SiKakaotalk } from "react-icons/si";
+import SimpleButton from "../common/SimpleButton";
 
 type Props = {
   providers: Record<string, ClientSafeProvider>;
