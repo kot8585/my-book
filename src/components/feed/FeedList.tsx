@@ -10,14 +10,15 @@ type Props = {
 };
 
 export default function FeedList({ feedType }: Props) {
-  // 얘를 아마 다른데다가 놔야할텐데.....
   async function getPost(): Promise<FeedTotalPost[]> {
     return await axios
-      .get("http://localhost:3000/api/posts")
+      .get(`http://localhost:3000/api/posts?feedType=${feedType}`)
       .then((response) => response.data);
   }
-  const { data: feedList } = useQuery(["posts"], getPost);
 
+  // TODO: type에 따른 캐싱
+  const { data: feedList } = useQuery(["feeds", feedType], getPost);
+  console.log("feedList : ", feedList);
   return (
     <ul>
       {feedList &&

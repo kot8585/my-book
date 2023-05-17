@@ -12,9 +12,7 @@ datasource db {
 }
 
 model User {
-  idx    Int     @id @default(autoincrement())
-  posts Post[]
-  userBook UserBook[] 
+  idx    Int     @id @default(autoincrement()) 
   userId String   @map("user_id")
   email String  @unique
   name  String?
@@ -23,12 +21,16 @@ model User {
   type String @default("USER")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime? @map("updated_at")
+
+  posts Post[]
+  userBook UserBook[]
+  follower Follow[] @relation("Follower")
+  followee Follow[] @relation("Followee")
 }
 
 model UserBook {
   userIdx Int @map("user_idx")
   isbn String 
-  user User @relation(fields: [userIdx], references: [idx])
   post Post[]
   title String
   author String
@@ -44,15 +46,16 @@ model UserBook {
   startDate DateTime? @map("start_date")
   endDate DateTime? @map("end_date")
   createdAt DateTime @map("created_at") @default(now()) 
+
+  user User @relation(fields: [userIdx], references: [idx])
+
   @@id([userIdx, isbn])
 }
 
 
 model Post {
   userIdx Int @map("user_idx")
-  user User @relation(fields: [userIdx], references: [idx])
-  isbn String 
-  userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
+  isbn String
   idx Int @id @default(autoincrement())
   page Int 
   title String? @db.VarChar(255)
@@ -63,6 +66,9 @@ model Post {
   isPublic Boolean  @map("is_public")
   bookmarkUserIdx String? @map("bookmark_user_idx")
   likeUserIdx String?  @map("like_user_idx")
+
+  user User @relation(fields: [userIdx], references: [idx])
+  userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
 }
 
 model Comment {
@@ -74,3 +80,11 @@ model Comment {
   updatedAt DateTime? @map("updated_at")
 }
 
+model Follow {
+  idx Int @id @default(autoincrement())
+  followerIdx Int @map("follower_idx") 
+  followeeIdx Int @map("followee_idx")
+
+  followerUser User @relation("Follower", fields: [followerIdx], references: [idx])
+  followeeUser User @relation("Followee", fields: [followeeIdx], references: [idx])
+}

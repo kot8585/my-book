@@ -11,7 +11,7 @@ type Props = {
 
 export default function FeedCard({ feed }: Props) {
   return (
-    <li className="flex flex-col border border-gray-200 rounded-xl p-2 shadow-lg gap-2">
+    <li className="flex flex-col border border-gray-200 rounded-xl p-2 shadow-lg gap-2 my-5">
       <FeedBookInfo book={feed.userBook} createdAt={feed.createdAt} />
       <PostCard title={feed.title} content={feed.content} />
       <hr />

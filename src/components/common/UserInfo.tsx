@@ -9,7 +9,7 @@ type Props = {
 export default function UserInfo({ image, name }: Props) {
   return (
     <div className="flex justify-start gap-2 items-center">
-      <img src={image} width={30} height={30} className="rounded-full" />
+      <img src={image} width={25} height={25} className="rounded-full" />
       <span className="text-xs text-gray-400">{name}</span>
     </div>
   );

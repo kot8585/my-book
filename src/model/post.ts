@@ -1,6 +1,6 @@
 type Post = {
   userIdx: number;
-  bookIdx: string;
+  isbn: string;
   idx: number;
   page: number;
   title?: string;
@@ -14,7 +14,6 @@ export type FeedBookInfo = {
   title: string;
   imageUrl: string;
   author: string;
-  publisher: string;
   page?: number;
 };
 
