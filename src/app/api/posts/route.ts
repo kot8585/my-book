@@ -11,7 +11,10 @@ export async function GET(req: NextRequest, res: NextResponse) {
   if (feedType === "FOLLOW") {
     const session: Session | null = await getServerSession(handler);
     if (!session) {
-      throw new Error("로그인이 되어있지 않음");
+      console.error("로그인이 되어있지 않음");
+      return new Response("Authentication Error 로그인이 되어있지 않음", {
+        status: 401,
+      });
     }
     const userIdx = await getIdxByEmail(session.user.email!);
     return getFollowingPostList(userIdx)

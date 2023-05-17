@@ -1,6 +1,4 @@
 import { FeedBookInfo } from "@/model/post";
-import Image from "next/image";
-import React from "react";
 import { formatDate } from "@/utils/formatDate";
 
 type Props = {

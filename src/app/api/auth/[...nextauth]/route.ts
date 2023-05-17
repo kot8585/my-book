@@ -1,7 +1,5 @@
 import { addUser, getIdxByEmail } from "@/service/user";
 import NextAuth, { NextAuthOptions } from "next-auth";
-import { AdapterUser } from "next-auth/adapters";
-import { JWT } from "next-auth/jwt/types";
 import GoogleProvider from "next-auth/providers/google";
 import KakaoProvider from "next-auth/providers/kakao";
 
