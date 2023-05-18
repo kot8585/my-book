@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type Props = {
+export type Props = {
   children: ReactNode;
   onClick?: () => void;
   rounded?: boolean;
@@ -22,6 +22,7 @@ export default function SimpleButton({
   bgColor,
   border,
   color,
+  ...rest
 }: Props) {
   return (
     <button
@@ -35,6 +36,7 @@ export default function SimpleButton({
         border,
         color,
       })}
+      {...rest}
     >
       {children}
     </button>
@@ -50,8 +52,8 @@ function getContainerStyle({
   border,
   color,
 }: Omit<Props, "children" | "onClick">) {
-  const baseStyle = "rounded-full";
-  // const roundedStyle = rounded ? ''
+  const baseStyle = "rounded-xl";
+
   const bgColorStyle = bgColor ? `${bgColor}` : "";
 
   let activeStyle = getActiveStyle(active, activeType);
@@ -62,7 +64,7 @@ function getContainerStyle({
 
   const colorStyle = color ? `${color}` : "text-primary-color";
 
-  return `${baseStyle} ${bgColorStyle} ${activeStyle} ${sizeStyle} ${borderStyle} ${colorStyle}`;
+  return `${baseStyle} ${bgColorStyle} ${activeStyle} ${sizeStyle} ${borderStyle} ${colorStyle} ...rest`;
 }
 
 function getActiveStyle(active?: boolean, activeType?: string) {
