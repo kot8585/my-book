@@ -7,4 +7,6 @@ export const useRouter = () => ({
   push: () => {},
   back: () => {},
 });
+
+export const usePathname = () => "";
 export default { useRouter };
