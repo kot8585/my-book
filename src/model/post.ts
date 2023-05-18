@@ -15,10 +15,10 @@ export type FeedResponseType = {
     image?: string;
     name: string;
   };
-  userBook: FeedBookInfo;
+  userBook: FeedBookInfoType;
 } & Post;
 
-export type FeedBookInfo = {
+export type FeedBookInfoType = {
   title: string;
   imageUrl: string;
   author: string;

@@ -1,8 +1,8 @@
-import { FeedBookInfo } from "@/model/post";
+import { FeedBookInfoType } from "@/model/post";
 import { formatDate } from "@/utils/formatDate";
 
 type Props = {
-  book: FeedBookInfo;
+  book: FeedBookInfoType;
   createdAt: Date;
 };
 
