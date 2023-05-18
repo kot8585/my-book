@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   core: {
     // opt-into Storybook Webpack 5
@@ -28,9 +30,8 @@ module.exports = {
     config.resolve.alias["next/navigation"] = require.resolve(
       "../src/__mocks__/next/router.js"
     );
-    // config.resolve.alias["next/image"] = require.resolve(
-    //   "../src/__mocks__/next/image.js"
-    // );
+
+    config.resolve.alias["@"] = path.resolve(__dirname, "../src/");
     return config;
   },
 };
