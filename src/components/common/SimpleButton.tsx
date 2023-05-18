@@ -62,9 +62,9 @@ function getContainerStyle({
 
   const borderStyle = border ? "border-primary-color border " : "";
 
-  const colorStyle = color ? `${color}` : "text-primary-color";
+  const colorStyle = !active && color ? `${color}` : "text-primary-color";
 
-  return `${baseStyle} ${bgColorStyle} ${activeStyle} ${sizeStyle} ${borderStyle} ${colorStyle} ...rest`;
+  return `${baseStyle} ${bgColorStyle}  ${sizeStyle} ${borderStyle} ${colorStyle} ${activeStyle}`;
 }
 
 function getActiveStyle(active?: boolean, activeType?: string) {
