@@ -3,11 +3,7 @@ import SimpleButton, { Props } from "./SimpleButton";
 import { Children } from "react";
 
 const meta: Meta<typeof SimpleButton> = {
-  /* 👇 The title prop is optional.
-   * See https://storybook.js.org/docs/react/configure/overview#configure-story-loading
-   * to learn how to generate automatic titles
-   */
-  title: "component/common/SimpleButton",
+  title: "components/common/SimpleButton",
   component: SimpleButton,
 };
 

@@ -6,14 +6,14 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import ShowMessage from "../common/ShowMessage";
 import FeedCard from "./FeedCard";
 
-type Props = {
+export type Props = {
   feedType: FeedType;
 };
 
 export default function FeedList({ feedType }: Props) {
   async function getPost(): Promise<FeedResponseType[]> {
     return await axios
-      .get(`http://localhost:3000/api/posts?feedType=${feedType}`)
+      .get(`/api/posts?feedType=${feedType}`)
       .then((response) => response.data);
   }
 
