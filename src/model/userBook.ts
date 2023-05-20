@@ -8,9 +8,9 @@ export type UserBook = {
   categoryName?: string | null;
   totalPage: number;
   //toRead reading complete
-  status: string;
+  status: "TOREAD" | "READING" | "COMPLETED";
   // ebook, paper,
-  type: string;
+  type: "EBOOK" | "PAPER";
   comment?: string | null;
   startDate?: Date | null;
   endDate?: Date | null;
