@@ -5,7 +5,7 @@ export type Post = {
   page: number;
   title?: string;
   content: string;
-  type: "MEMO" | "REVIEW";
+  type: "NOTE" | "REVIEW";
   openType: "NONE" | "FOLLOW" | "ALL";
   createdAt: Date;
   bookMarkUserIdx?: String;
@@ -27,7 +27,7 @@ export type FeedBookInfoType = {
   page?: number;
 };
 
-export type CreateMemoType = Pick<
+export type CreateNoteType = Pick<
   Post,
   "userIdx" | "type" | "openType" | "page" | "content"
 >;

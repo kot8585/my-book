@@ -69,7 +69,7 @@ Default.parameters = {
               title: "재밌는 책이지",
               content:
                 "'뒤에', '나중에'라는 뜻을 지닌 접두사. 포스트모더니즘이나 포스트 아포칼립스 등이 그 예. 2020년 들어 포스트 코로나나 포스트 아베라는 표현도 사용되고 있다. 같은 뜻의 라틴어 단어(부사, 전치사)에서 유래하였다.",
-              type: "MEMO",
+              type: "NOTE",
               createdAt: "2023-05-16T07:30:51.191Z",
               updatedAt: null,
               isPublic: true,

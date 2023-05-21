@@ -38,11 +38,11 @@ export async function GET(req: NextRequest, res: NextResponse) {
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const memo = await req.json();
+  const note = await req.json();
   // TODO: validation 처리
   // 사용자 있는지
   // 필수값 있는지
-  return createPost(memo)
+  return createPost(note)
     .then((res) => NextResponse.json(res))
     .catch((error) => {
       console.error(error);

@@ -1,7 +1,6 @@
 "use client";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import Modal from "@/components/common/Modal";
 import SimpleButton from "@/components/common/SimpleButton";
 import { Post } from "@/model/post";
 import axios from "axios";
@@ -31,16 +30,19 @@ export default function CreateNotePage() {
     redirect("/auth/signin");
   }
 
-  const [memo, setMemo] = useState<Partial<Post>>({
+  const [note, setNote] = useState<Partial<Post>>({
     userIdx: user.idx,
-    type: "MEMO",
+    type: "NOTE",
     openType: "NONE",
     page: 0,
     content: "",
+    isbn: isbn!,
   });
 
-  const handleClose = () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const openModal = () => {
     //createModal
+    setIsOpen(true);
   };
 
   const handleChange = (
@@ -49,19 +51,19 @@ export default function CreateNotePage() {
     >
   ) => {
     const { name, value } = e.target;
-    setMemo((memo) => ({ ...memo, [name]: value }));
+    setNote((note) => ({ ...note, [name]: value }));
   };
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     setLoading(true);
-    if (typeof memo.page === "string") {
-      memo.page = parseInt(memo.page);
+    if (typeof note.page === "string") {
+      note.page = parseInt(note.page);
     }
 
     //useQuery mutation 처리
     axios
-      .post("/api/posts", memo)
+      .post("/api/posts", note)
       .then((response) => {
         setLoading(false);
         router.back();
@@ -74,7 +76,6 @@ export default function CreateNotePage() {
 
   return (
     <section className="relative w-full">
-      <Modal isOpen={isOpen} />
       {loading && (
         <div className="absolute inset-0 z-20 text-center pt-[30%] bg-yellow-100/20">
           <LoadingSpinner />
@@ -102,7 +103,7 @@ export default function CreateNotePage() {
               min={0}
               className="p-2 w-full h-8 bg-gray-100 rounded-md focus:outline-none"
               name="page"
-              value={memo?.page}
+              value={note?.page}
               onChange={handleChange}
               inputMode="numeric"
             />
@@ -115,7 +116,7 @@ export default function CreateNotePage() {
             rows={10}
             className="bg-gray-100 rounded-lg p-2 focus:outline-none resize-none"
             name="content"
-            value={memo?.content}
+            value={note?.content}
             onChange={handleChange}
           />
           <select
@@ -123,7 +124,7 @@ export default function CreateNotePage() {
             id="openType"
             className="lg:w-20 w-full self-end bg-gray-100 p-2 rounded-lg"
             onChange={handleChange}
-            value={memo.openType}
+            value={note.openType}
           >
             <option value="NONE">비공개</option>
             <option value="FOLLOW">팔로워만</option>
