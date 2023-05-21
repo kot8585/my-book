@@ -2,7 +2,6 @@ import { Session, getServerSession } from "next-auth";
 import Image from "next/image";
 import { handler } from "./api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
-import { BsPlusLg } from "react-icons/bs";
 import BookCardList from "@/components/home/BookCardList";
 import { getUserBooks } from "@/service/userbook";
 import SimpleButton from "@/components/common/SimpleButton";
@@ -22,11 +21,11 @@ export default async function HomePage() {
       <SimpleButton bgColor="bg-gray-200" size="small">
         읽고 있는 책
       </SimpleButton>
-      <BookCardList books={toReadBooks} />
+      <BookCardList books={readingBooks} />
       <SimpleButton bgColor="bg-gray-200" size="small">
         읽고 싶은 책
       </SimpleButton>
-      <BookCardList books={readingBooks} />
+      <BookCardList books={toReadBooks} />
     </main>
   );
 }

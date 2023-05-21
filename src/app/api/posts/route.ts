@@ -1,4 +1,8 @@
-import { getAllPostList, getFollowingPostList } from "@/service/post";
+import {
+  createPost,
+  getAllPostList,
+  getFollowingPostList,
+} from "@/service/post";
 import { Session, getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { handler } from "../auth/[...nextauth]/route";
@@ -26,6 +30,19 @@ export async function GET(req: NextRequest, res: NextResponse) {
   }
 
   return getAllPostList()
+    .then((res) => NextResponse.json(res))
+    .catch((error) => {
+      console.error(error);
+      return new Response(JSON.stringify(error), { status: 500 });
+    });
+}
+
+export async function POST(req: NextRequest, res: NextResponse) {
+  const memo = await req.json();
+  // TODO: validation 처리
+  // 사용자 있는지
+  // 필수값 있는지
+  return createPost(memo)
     .then((res) => NextResponse.json(res))
     .catch((error) => {
       console.error(error);

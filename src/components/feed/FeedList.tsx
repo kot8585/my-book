@@ -32,7 +32,7 @@ export default function FeedList({ feedType }: Props) {
             feedList.map((feed) => <FeedCard key={feed.idx} feed={feed} />)}
         </ul>
       )}
-      {!loading && !error && !feedList && (
+      {!loading && !error && feedList?.length === 0 && (
         <ShowMessage message="작성된 피드가 없습니다" />
       )}
     </>
