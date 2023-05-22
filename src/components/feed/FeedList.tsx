@@ -21,8 +21,9 @@ export default function FeedList({ feedType }: Props) {
     data: feedList,
     isLoading: loading,
     error,
-  } = useQuery(["feeds", feedType], getPost);
-  console.log("feedList : ", feedList);
+  } = useQuery(["feeds", feedType], getPost, {
+    staleTime: 3 * 1000 * 60,
+  });
   return (
     <>
       {loading && <LoadingSpinner />}
