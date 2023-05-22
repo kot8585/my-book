@@ -29,6 +29,7 @@ export default function RootLayout({
           </ReactQueryProvider>
           <BottomNav />
         </AuthProvider>
+        <div id="portal" />
       </body>
     </html>
   );

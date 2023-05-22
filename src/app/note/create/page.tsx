@@ -1,7 +1,9 @@
 "use client";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import ModalPortal from "@/components/common/ModalPortal";
 import SimpleButton from "@/components/common/SimpleButton";
+import NoteModal from "@/components/note/NoteModal";
 import { Post } from "@/model/post";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -39,11 +41,8 @@ export default function CreateNotePage() {
     isbn: isbn!,
   });
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const openModal = () => {
-    //createModal
-    setIsOpen(true);
-  };
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const onClose = () => setOpenModal(true);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -86,7 +85,9 @@ export default function CreateNotePage() {
         onSubmit={handleSubmit}
       >
         <header className="flex justify-between items-center fixed h-10 bg-white z-10 max-w-3xl lg:w-4/5 w-full">
-          <SimpleButton onClick={openModal}>닫기</SimpleButton>
+          <SimpleButton type="button" onClick={onClose}>
+            닫기
+          </SimpleButton>
           메모 작성
           <SimpleButton
             type="submit"
@@ -130,9 +131,24 @@ export default function CreateNotePage() {
             <option value="FOLLOW">팔로워만</option>
             <option value="NONE">전체 공개</option>
           </select>
-          <input type="hidden" id="isbn" name="isbn" value={isbn} />
+          <input type="hidden" id="isbn" name="isbn" value={isbn!} />
         </main>
       </form>
+      {openModal && (
+        <ModalPortal>
+          <NoteModal
+            onCancel={() => setOpenModal(false)}
+            onOK={() => router.back()}
+          >
+            <h5 className="font-bold text-lg p-3">노트 작성 중</h5>
+            <p>
+              작성 중인 노트가 지워져요.
+              <br />
+              그래도 이동하시겠어요?
+            </p>
+          </NoteModal>
+        </ModalPortal>
+      )}
     </section>
   );
 }
