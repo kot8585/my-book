@@ -1,5 +1,4 @@
 import React from "react";
-import { Children } from "react";
 
 type Props = {
   onCancel: () => void;
@@ -13,7 +12,6 @@ export default function NoteModal({ onCancel, onOK, children }: Props) {
       className="fixed top-0 left-0 flex items-center justify-center w-full h-full z-50 bg-neutral-500/90"
       onClick={(event) => {
         if (event.target === event.currentTarget) {
-          console.log("Note modal 클릭됌");
           onCancel();
         }
       }}

@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import ShowMessage from "@/components/common/ShowMessage";
 import SimpleButton from "@/components/common/SimpleButton";
 
-export type FeedType = "TOTAL" | "FOLLOW";
+export type FeedType = "ALL" | "FOLLOW";
 
 type HeaderMenuType = {
   type: FeedType;
@@ -14,12 +14,12 @@ type HeaderMenuType = {
 };
 
 const headerMenu: HeaderMenuType[] = [
-  { type: "TOTAL", text: "전체" },
+  { type: "ALL", text: "전체" },
   { type: "FOLLOW", text: "팔로잉" },
 ];
 
 export default function FeedPage() {
-  const [type, setType] = useState<FeedType>("TOTAL");
+  const [type, setType] = useState<FeedType>("ALL");
   const { data: session } = useSession();
   const user = session?.user;
 

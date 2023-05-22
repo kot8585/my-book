@@ -4,27 +4,13 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ModalPortal from "@/components/common/ModalPortal";
 import SimpleButton from "@/components/common/SimpleButton";
 import NoteModal from "@/components/note/NoteModal";
-import { Post } from "@/model/post";
-import axios from "axios";
+import useNote from "@/hooks/note";
+import { CreateNoteType } from "@/model/post";
 import { useSession } from "next-auth/react";
-import {
-  redirect,
-  useParams,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
-import { parse } from "path";
-import React, { useState } from "react";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+import React, { FormEvent, useState } from "react";
 
 export default function CreateNotePage() {
-  const searchParams = useSearchParams();
-  const isbn = searchParams.get("isbn");
-  const readingType = searchParams.get("readingType");
-  //TODO: isbn과 readingType이 전해지지 않을 수가 있어,,? 이런것도 처리해줘야돼?
-  const router = useRouter();
-
-  const [loading, setLoading] = useState<boolean>(false);
-
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -32,7 +18,16 @@ export default function CreateNotePage() {
     redirect("/auth/signin");
   }
 
-  const [note, setNote] = useState<Partial<Post>>({
+  const { addNote } = useNote();
+  const searchParams = useSearchParams();
+  //TODO: isbn과 readingType이 전해지지 않을 수가 있어,,? 이런것도 처리해줘야돼?
+  const isbn = searchParams.get("isbn");
+  const readingType = searchParams.get("readingType");
+
+  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [note, setNote] = useState<CreateNoteType>({
     userIdx: user.idx,
     type: "NOTE",
     openType: "NONE",
@@ -41,7 +36,6 @@ export default function CreateNotePage() {
     isbn: isbn!,
   });
 
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const onClose = () => setOpenModal(true);
 
   const handleChange = (
@@ -53,7 +47,7 @@ export default function CreateNotePage() {
     setNote((note) => ({ ...note, [name]: value }));
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
     if (typeof note.page === "string") {
@@ -61,16 +55,10 @@ export default function CreateNotePage() {
     }
 
     //useQuery mutation 처리
-    axios
-      .post("/api/posts", note)
-      .then((response) => {
-        setLoading(false);
-        router.back();
-      })
-      .catch((error) => {
-        //TODO: 에러처리
-        console.log(error);
-      });
+    addNote.mutate(note);
+
+    setLoading(false);
+    router.back();
   };
 
   return (
@@ -123,13 +111,13 @@ export default function CreateNotePage() {
           <select
             name="openType"
             id="openType"
-            className="lg:w-20 w-full self-end bg-gray-100 p-2 rounded-lg"
+            className="lg:w-24 w-full self-end bg-gray-100 p-2 rounded-lg"
             onChange={handleChange}
             value={note.openType}
           >
             <option value="NONE">비공개</option>
             <option value="FOLLOW">팔로워만</option>
-            <option value="NONE">전체 공개</option>
+            <option value="ALL">전체 공개</option>
           </select>
           <input type="hidden" id="isbn" name="isbn" value={isbn!} />
         </main>

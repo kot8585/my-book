@@ -6,7 +6,7 @@ import prisma from "./prisma";
 export async function getAllPostList() {
   return await prisma.post.findMany({
     where: {
-      openType: "FOLLOW",
+      openType: "ALL",
     },
     orderBy: {
       createdAt: "desc",

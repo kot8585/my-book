@@ -29,5 +29,5 @@ export type FeedBookInfoType = {
 
 export type CreateNoteType = Pick<
   Post,
-  "userIdx" | "type" | "openType" | "page" | "content"
+  "userIdx" | "type" | "openType" | "page" | "content" | "isbn"
 >;

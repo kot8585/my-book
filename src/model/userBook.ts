@@ -7,10 +7,10 @@ export type UserBook = {
   imageUrl: string;
   categoryName?: string | null;
   totalPage: number;
-  //toRead reading complete
-  status: "TOREAD" | "READING" | "COMPLETED";
-  // ebook, paper,
-  type: "EBOOK" | "PAPER";
+  // status: "TOREAD" | "READING" | "COMPLETED";
+  status: string;
+  // type: "EBOOK" | "PAPER";
+  type: string;
   comment?: string | null;
   startDate?: Date | null;
   endDate?: Date | null;
