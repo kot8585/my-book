@@ -7,9 +7,9 @@ export type UserBook = {
   imageUrl: string;
   categoryName?: string | null;
   totalPage: number;
-  //toRead reading complete
+  // status: "TOREAD" | "READING" | "COMPLETED";
   status: string;
-  // ebook, paper,
+  // type: "EBOOK" | "PAPER";
   type: string;
   comment?: string | null;
   startDate?: Date | null;

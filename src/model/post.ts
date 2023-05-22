@@ -1,10 +1,12 @@
-type Post = {
+export type Post = {
   userIdx: number;
   isbn: string;
   idx: number;
   page: number;
   title?: string;
   content: string;
+  type: "NOTE" | "REVIEW";
+  openType: "NONE" | "FOLLOW" | "ALL";
   createdAt: Date;
   bookMarkUserIdx?: String;
   likeUserIdx?: String;
@@ -24,3 +26,8 @@ export type FeedBookInfoType = {
   author: string;
   page?: number;
 };
+
+export type CreateNoteType = Pick<
+  Post,
+  "userIdx" | "type" | "openType" | "page" | "content" | "isbn"
+>;

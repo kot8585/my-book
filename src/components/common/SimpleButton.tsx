@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 
-export type Props = {
+export interface Props extends ComponentProps<"button"> {
   children: ReactNode;
   onClick?: () => void;
   rounded?: boolean;
@@ -10,7 +10,7 @@ export type Props = {
   bgColor?: string;
   border?: boolean;
   color?: string;
-};
+}
 
 export default function SimpleButton({
   children,
@@ -52,7 +52,7 @@ function getContainerStyle({
   border,
   color,
 }: Omit<Props, "children" | "onClick">) {
-  const baseStyle = "rounded-xl";
+  const baseStyle = "rounded-xl cursor-pointer";
 
   const bgColorStyle = bgColor ? `${bgColor}` : "";
 

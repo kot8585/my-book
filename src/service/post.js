@@ -6,7 +6,7 @@ import prisma from "./prisma";
 export async function getAllPostList() {
   return await prisma.post.findMany({
     where: {
-      isPublic: true,
+      openType: "ALL",
     },
     orderBy: {
       createdAt: "desc",
@@ -49,7 +49,7 @@ export async function getFollowingPostList(userIdx) {
       ON p.user_idx = u.idx 
     LEFT JOIN userbook b 
       ON p.isbn=b.isbn  
-    WHERE is_public=TRUE AND p.user_idx IN (
+    WHERE (open_type="FOLLOW" OR open_type="ALL") AND p.user_idx IN (
         SELECT followee_idx FROM FOLLOW WHERE follower_idx=${userIdx}
       )
     ORDER BY p.created_at DESC
@@ -78,4 +78,17 @@ export async function getFollowingPostList(userIdx) {
   }));
 
   return mappedResult;
+}
+
+export async function createPost(post) {
+  return await prisma.post.create({
+    data: {
+      isbn: post.isbn,
+      type: post.type,
+      openType: post.openType,
+      content: post.content,
+      page: post.page,
+      userIdx: post.userIdx,
+    },
+  });
 }

@@ -21,8 +21,9 @@ export default function FeedList({ feedType }: Props) {
     data: feedList,
     isLoading: loading,
     error,
-  } = useQuery(["feeds", feedType], getPost);
-  console.log("feedList : ", feedList);
+  } = useQuery(["feeds", feedType], getPost, {
+    staleTime: 3 * 1000 * 60,
+  });
   return (
     <>
       {loading && <LoadingSpinner />}
@@ -32,7 +33,7 @@ export default function FeedList({ feedType }: Props) {
             feedList.map((feed) => <FeedCard key={feed.idx} feed={feed} />)}
         </ul>
       )}
-      {!loading && !error && !feedList && (
+      {!loading && !error && feedList?.length === 0 && (
         <ShowMessage message="작성된 피드가 없습니다" />
       )}
     </>

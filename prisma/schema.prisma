@@ -63,7 +63,7 @@ model Post {
   type String? 
   createdAt DateTime @map("created_at") @default(now()) 
   updatedAt DateTime? @map("updated_ap")
-  isPublic Boolean  @map("is_public")
+  openType String  @map("open_type")
   bookmarkUserIdx String? @map("bookmark_user_idx")
   likeUserIdx String?  @map("like_user_idx")
 
