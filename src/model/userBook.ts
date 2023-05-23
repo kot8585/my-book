@@ -14,5 +14,19 @@ export type UserBook = {
   comment?: string | null;
   startDate?: Date | null;
   endDate?: Date | null;
-  createdAt: Date;
+  createdAt?: Date;
+};
+
+export type SearchBookType = {
+  title: string;
+  isbn: string;
+  imageUrl: string;
+  publisher: string;
+  author: string;
+};
+
+export type addUserBookType = {
+  userIdx: number;
+  isbn: string;
+  status: string;
 };

@@ -42,7 +42,7 @@ model UserBook {
   status String
   // ebook, paper, 
   type String
-  comment String @db.VarChar(50)
+  comment String? @db.VarChar(50)
   startDate DateTime? @map("start_date")
   endDate DateTime? @map("end_date")
   createdAt DateTime @map("created_at") @default(now()) 

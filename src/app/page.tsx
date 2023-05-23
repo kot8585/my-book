@@ -1,14 +1,12 @@
-import { Session, getServerSession } from "next-auth";
-import Image from "next/image";
-import { handler } from "./api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
+import SimpleButton from "@/components/common/SimpleButton";
 import BookCardList from "@/components/home/BookCardList";
 import { getUserBooks } from "@/service/userbook";
-import SimpleButton from "@/components/common/SimpleButton";
+import { Session, getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { handler } from "./api/auth/[...nextauth]/route";
 
 export default async function HomePage() {
   const session: Session | null = await getServerSession(handler);
-  console.log("server session", session);
   const user = session?.user;
 
   if (!user) {
