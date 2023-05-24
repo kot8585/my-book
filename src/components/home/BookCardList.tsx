@@ -10,7 +10,9 @@ export default function BookCardList({ books }: Props) {
   return (
     <ul className="flex py-2">
       {books ? (
-        books.map((book) => <BookCard key={book.isbn} book={book} />)
+        books.map((book) => (
+          <BookCard key={book.isbn} book={book} size="medium" />
+        ))
       ) : (
         <li>
           <>책을 추가해주세요</>

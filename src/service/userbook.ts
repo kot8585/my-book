@@ -6,6 +6,16 @@ export async function getUserBooks(userIdx: number, status: string) {
   return result;
 }
 
+export async function selectUserBook(userIdx: number, isbn: string) {
+  const result = await prisma.userBook.findUnique({
+    where: { userIdx_isbn: { userIdx, isbn } },
+    include: {
+      posts: true,
+    },
+  });
+  return result;
+}
+
 export async function createUserBook(userBook: UserBook) {
   console.log("userBook", userBook);
   return await prisma.$queryRaw`

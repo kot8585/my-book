@@ -24,14 +24,12 @@ export default function SearchStatusButton({ isbn }: Props) {
       isbn: isbn,
       status: bookStatus,
     });
-    // 잘 추가 되었다면 모달창 보여주고 싶은데 어디서 처리하는거지?
+    // 잘 추가 되었다면 버튼색깔 회색으로 바꾸기
+    // 근데 내가 추가한 책인지 확인을 어떻게 하는지 모르겠어. react-query꺼 쓰는건가......
   };
 
   return (
     <>
-      {addUserBookMutate.isError &&
-        confirm("에러가 발생해 추가하지 못하였습니다")}
-      {addUserBookMutate.isSuccess && confirm("책이 등록되었습니다.")}
       <div className="flex justify-center gap-1 bg-brand-color h-8 w-28 rounded-lg overflow-hidden self-end">
         <select
           className="bg-inherit border-r border-gray-500 text-sm"
