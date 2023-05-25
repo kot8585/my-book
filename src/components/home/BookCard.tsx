@@ -36,7 +36,7 @@ export default function BookCard({ book, size }: Props) {
           size={18}
           onClick={() => {
             router.push(
-              `/note/create?isbn=${book.isbn}&readingType=${book.type}`
+              `/posts/write?isbn=${book.isbn}&readingType=${book.type}`
             );
           }}
         />

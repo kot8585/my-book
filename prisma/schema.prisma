@@ -59,7 +59,7 @@ model Post {
   idx Int @id @default(autoincrement())
   page Int 
   title String? @db.VarChar(255)
-  content String?
+  content String
   type String? 
   createdAt DateTime @map("created_at") @default(now()) 
   updatedAt DateTime? @map("updated_ap")

@@ -8,9 +8,11 @@ export type Post = {
   type: "NOTE" | "REVIEW";
   openType: "NONE" | "FOLLOW" | "ALL";
   createdAt: Date;
-  bookMarkUserIdx?: String;
-  likeUserIdx?: String;
+  bookMarkUserIdx?: string;
+  likeUserIdx?: string;
 };
+
+export type OnlyPost = Omit<Post, "bookMarkUserIdx" | "likeUserIdx">;
 
 export type FeedResponseType = {
   user: {

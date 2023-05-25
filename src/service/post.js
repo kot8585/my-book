@@ -92,3 +92,31 @@ export async function createPost(post) {
     },
   });
 }
+
+export async function getPost(postIdx) {
+  return await prisma.post.findUnique({
+    where: {
+      idx: postIdx,
+    },
+  });
+}
+
+export async function deletePost(postIdx) {
+  return await prisma.post.delete({
+    where: {
+      idx: postIdx,
+    },
+  });
+}
+
+export async function updatePost(post) {
+  return await prisma.post.update({
+    where: {
+      idx: post.idx,
+    },
+    data: {
+      ...post,
+      updatedAt: new Date(),
+    },
+  });
+}

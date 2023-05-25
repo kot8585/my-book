@@ -3,14 +3,14 @@
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ModalPortal from "@/components/common/ModalPortal";
 import SimpleButton from "@/components/common/SimpleButton";
-import NoteModal from "@/components/post/PostModal";
+import PostModal from "@/components/post/PostModal";
 import useNote from "@/hooks/note";
 import { CreateNoteType } from "@/model/post";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 
-export default function CreateNotePage() {
+export default function WritePostPage() {
   const { data: session } = useSession();
   const user = session?.user;
 
@@ -124,7 +124,7 @@ export default function CreateNotePage() {
       </form>
       {openModal && (
         <ModalPortal>
-          <NoteModal
+          <PostModal
             onCancel={() => setOpenModal(false)}
             onOK={() => router.back()}
           >
@@ -134,7 +134,7 @@ export default function CreateNotePage() {
               <br />
               그래도 이동하시겠어요?
             </p>
-          </NoteModal>
+          </PostModal>
         </ModalPortal>
       )}
     </section>
