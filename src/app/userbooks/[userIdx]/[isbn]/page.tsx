@@ -1,5 +1,6 @@
 "use client";
 
+import ThreeDotsButton from "@/components/common/ThreeDotsButton";
 import ReactButtonList from "@/components/feed/ReactButtonList";
 import BookCard from "@/components/home/BookCard";
 import HomeBookInfo from "@/components/home/HomeBookInfo";
@@ -9,7 +10,7 @@ import { formatDate } from "@/utils/formatDate";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 export default function UserBookDetailPage() {
   const params = useParams();
@@ -26,6 +27,14 @@ export default function UserBookDetailPage() {
     { staleTime: 24 * 60 * 60 * 1000 }
   );
 
+  const handleEdit = () => {
+    // 포스트 수정 페이지로 이동하기
+  };
+
+  const handleDelete = () => {
+    // 모달 보여주기
+  };
+
   return (
     <section className="lg:w-4/5 w-full h-full flex flex-col mx-auto p-3">
       <div className="mb-5">
@@ -40,11 +49,14 @@ export default function UserBookDetailPage() {
               key={post.idx}
               className="border rounded-lg border-gray-300 p-2 my-3"
             >
-              <PostCard
-                idx={post.idx}
-                title={post.title}
-                content={post.content}
-              />
+              <div className="flex justify-between">
+                <PostCard
+                  idx={post.idx}
+                  title={post.title}
+                  content={post.content}
+                />
+                <ThreeDotsButton onEdit={handleEdit} onDelete={handleDelete} />
+              </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-400">
                   {formatDate(post.createdAt)}

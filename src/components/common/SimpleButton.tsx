@@ -6,7 +6,7 @@ export interface Props extends ComponentProps<"button"> {
   rounded?: boolean;
   activeType?: "bold" | "color" | "underline";
   active?: boolean;
-  size?: "small" | "middle" | "large";
+  size?: "x-small" | "small" | "middle" | "large";
   bgColor?: string;
   border?: boolean;
   color?: string;
@@ -82,7 +82,9 @@ function getActiveStyle(active?: boolean, activeType?: string) {
 }
 
 function getSizeStyle(size?: string): string {
-  if (size === "small") {
+  if (size === "x-small") {
+    return "text-sm py-[0.3rem]";
+  } else if (size === "small") {
     return "py-[0.3rem] px-2 text-base";
   } else if (size === "large") {
     return "text-[1.5rem] p-1";

@@ -3,7 +3,7 @@
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ModalPortal from "@/components/common/ModalPortal";
 import SimpleButton from "@/components/common/SimpleButton";
-import NoteModal from "@/components/note/NoteModal";
+import NoteModal from "@/components/post/PostModal";
 import useNote from "@/hooks/note";
 import { CreateNoteType } from "@/model/post";
 import { useSession } from "next-auth/react";
