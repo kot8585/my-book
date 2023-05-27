@@ -9,7 +9,7 @@ type Props = {
 
 export default function PostCard({ idx, title, content }: Props) {
   return (
-    <Link href={`/feed/${idx}`} className="flex flex-col">
+    <Link href={`/posts/${idx}`} className="flex flex-col">
       {title && <div className="font-bold text-lg">{title}</div>}
       <p className="line-clamp-3">{content}</p>
     </Link>

@@ -33,3 +33,22 @@ export type CreateNoteType = Pick<
   Post,
   "userIdx" | "type" | "openType" | "page" | "content" | "isbn"
 >;
+
+export type PostDetailType = {
+  user: {
+    image?: string;
+    name: string;
+  };
+  userBook: FeedBookInfoType;
+  comments: CommentType[];
+} & Post;
+
+export type CommentType = {
+  idx: number;
+  content: string;
+  createdAt: Date;
+  user: {
+    name: string;
+    image?: string;
+  };
+};

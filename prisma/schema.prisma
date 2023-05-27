@@ -24,6 +24,7 @@ model User {
 
   posts Post[]
   userBook UserBook[]
+  comments Comment[]
   follower Follow[] @relation("Follower")
   followee Follow[] @relation("Followee")
 }
@@ -62,13 +63,15 @@ model Post {
   content String
   type String? 
   createdAt DateTime @map("created_at") @default(now()) 
-  updatedAt DateTime? @map("updated_ap")
+  updatedAt DateTime? @map("updated_at")
   openType String  @map("open_type")
   bookmarkUserIdx String? @map("bookmark_user_idx")
   likeUserIdx String?  @map("like_user_idx")
 
+  comments Comment[]
   user User @relation(fields: [userIdx], references: [idx])
   userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
+
 }
 
 model Comment {
@@ -78,6 +81,9 @@ model Comment {
   content String
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime? @map("updated_at")
+
+  post Post @relation(fields: [postIdx], references: [idx])
+  user User @relation(fields: [userIdx], references: [idx])
 }
 
 model Follow {

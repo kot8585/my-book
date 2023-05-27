@@ -55,10 +55,17 @@ export default function WritePostPage() {
     }
 
     //useQuery mutation 처리
-    addNote.mutate(note);
-
-    setLoading(false);
-    router.back();
+    //mutation의 후처리를 할 수 있다
+    addNote.mutate(note, {
+      onSuccess: () => {
+        setLoading(false);
+        router.back();
+      },
+      onError(error, variables, context) {
+        setLoading(false);
+        //TODO: 에러 메세지 보여주기
+      },
+    });
   };
 
   return (

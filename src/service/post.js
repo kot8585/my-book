@@ -98,6 +98,37 @@ export async function getPost(postIdx) {
     where: {
       idx: postIdx,
     },
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+      userBook: {
+        select: {
+          title: true,
+          categoryName: true,
+          comment: true,
+          imageUrl: true,
+          author: true,
+          publisher: true,
+        },
+      },
+      comments: {
+        select: {
+          idx: true,
+          content: true,
+          createdAt: true,
+          user: {
+            select: {
+              name: true,
+              image: true,
+            },
+          },
+        },
+      },
+    },
   });
 }
 
@@ -120,3 +151,22 @@ export async function updatePost(post) {
     },
   });
 }
+
+export async function getCommentList(postIdx) {
+  return await prisma.comment.findMany({
+    where: {
+      postIdx,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+        },
+      },
+    },
+  });
+}
+
+//TODO: comment는 알겠는데 like랑 bookmark는 어떻게 하는거지?
+export async function setLikes() {}
