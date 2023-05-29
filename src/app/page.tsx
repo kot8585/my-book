@@ -3,10 +3,10 @@ import BookCardList from "@/components/home/BookCardList";
 import { getUserBooks } from "@/service/userbook";
 import { Session, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { handler } from "./api/auth/[...nextauth]/route";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 export default async function HomePage() {
-  const session: Session | null = await getServerSession(handler);
+  const session: Session | null = await getServerSession(authOptions);
   const user = session?.user;
 
   if (!user) {

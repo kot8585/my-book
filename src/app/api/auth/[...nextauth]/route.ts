@@ -3,7 +3,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import KakaoProvider from "next-auth/providers/kakao";
 
-export const handler: NextAuthOptions = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
@@ -50,6 +50,8 @@ export const handler: NextAuthOptions = NextAuth({
   pages: {
     signIn: "/auth/signin",
   },
-});
+};
+
+export const handler: NextAuthOptions = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
