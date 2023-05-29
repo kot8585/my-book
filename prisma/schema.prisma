@@ -20,13 +20,15 @@ model User {
   //user primary admin
   type String @default("USER")
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime? @map("updated_at")
+  updatedAt DateTime? @map("updated_at") 
 
   posts Post[]
   userBook UserBook[]
-  comments Comment[]
+  comments Comment[] 
   follower Follow[] @relation("Follower")
   followee Follow[] @relation("Followee")
+  likePosts Likes[] 
+  bookmarkPosts Bookmarks[]
 }
 
 model UserBook {
@@ -65,13 +67,12 @@ model Post {
   createdAt DateTime @map("created_at") @default(now()) 
   updatedAt DateTime? @map("updated_at")
   openType String  @map("open_type")
-  bookmarkUserIdx String? @map("bookmark_user_idx")
-  likeUserIdx String?  @map("like_user_idx")
 
   comments Comment[]
   user User @relation(fields: [userIdx], references: [idx])
   userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
-
+  likeUsers Likes[] 
+  bookmarkUsers Bookmarks[]
 }
 
 model Comment {
@@ -80,7 +81,7 @@ model Comment {
   idx Int @id @default(autoincrement())
   content String
   createdAt DateTime @map("created_at") @default(now())
-  updatedAt DateTime? @map("updated_at")
+  updatedAt DateTime? @map("updated_at") @updatedAt
 
   post Post @relation(fields: [postIdx], references: [idx])
   user User @relation(fields: [userIdx], references: [idx])
@@ -93,4 +94,22 @@ model Follow {
 
   followerUser User @relation("Follower", fields: [followerIdx], references: [idx])
   followeeUser User @relation("Followee", fields: [followeeIdx], references: [idx])
+}
+
+model Likes {
+  post Post @relation(fields: [postIdx], references: [idx])
+  postIdx Int 
+  user User @relation(fields: [userIdx], references: [idx])
+  userIdx Int
+
+  @@id([postIdx, userIdx])
+}
+
+model Bookmarks {
+  post Post @relation(fields: [postIdx], references: [idx])
+  postIdx Int 
+  user User @relation(fields: [userIdx], references: [idx])
+  userIdx Int
+
+  @@id([postIdx, userIdx])
 }

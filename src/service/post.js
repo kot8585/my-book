@@ -128,6 +128,19 @@ export async function getPost(postIdx) {
           },
         },
       },
+      _count: {
+        select: { likeUsers: true, bookmarkUsers: true },
+      },
+      likeUsers: {
+        select: {
+          userIdx: true,
+        },
+      },
+      bookmarkUsers: {
+        select: {
+          userIdx: true,
+        },
+      },
     },
   });
 }
@@ -167,6 +180,3 @@ export async function getCommentList(postIdx) {
     },
   });
 }
-
-//TODO: comment는 알겠는데 like랑 bookmark는 어떻게 하는거지?
-export async function setLikes() {}

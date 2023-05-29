@@ -8,8 +8,8 @@ export type Post = {
   type: "NOTE" | "REVIEW";
   openType: "NONE" | "FOLLOW" | "ALL";
   createdAt: Date;
-  bookMarkUserIdx?: string;
-  likeUserIdx?: string;
+  likeUsers: { userIdx: number }[];
+  bookmarkUsers: { userIdx: number }[];
 };
 
 export type OnlyPost = Omit<Post, "bookMarkUserIdx" | "likeUserIdx">;

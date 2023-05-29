@@ -34,3 +34,23 @@ export async function getIdxByEmail(email: string) {
 
   return result?.idx;
 }
+
+export async function getMyReactions(userIdx: number) {
+  return await prisma.user.findUnique({
+    where: {
+      idx: userIdx,
+    },
+    select: {
+      likePosts: {
+        select: {
+          postIdx: true,
+        },
+      },
+      bookmarkPosts: {
+        select: {
+          postIdx: true,
+        },
+      },
+    },
+  });
+}

@@ -7,3 +7,8 @@ type User = {
   type: String;
   createdAt: Date;
 };
+
+export type UserReactions = {
+  likePosts: { postIdx: number }[];
+  bookmarkPosts: { postIdx: number }[];
+};

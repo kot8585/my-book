@@ -10,13 +10,11 @@ import ShowMessage from "../common/ShowMessage";
 import FeedBookInfo from "../feed/FeedBookInfo";
 import ReactButtonList from "../feed/ReactButtonList";
 import PostCard from "./PostCard";
-import { useState } from "react";
+import Reactions from "./Reactions";
 
 export default function PostDetail() {
   const params = useParams();
   const postIdx = params.postIdx;
-  const [clickHeart, setClickHeart] = useState(false);
-  const [clickBookMark, setClickBookMark] = useState(false);
 
   const {
     data: post,
@@ -27,6 +25,8 @@ export default function PostDetail() {
     (): Promise<PostDetailType> =>
       axios.get(`/api/posts/${postIdx}`).then((res) => res.data)
   );
+
+  // likeUsers를 가져오면
 
   if (post) {
     return (
@@ -39,7 +39,7 @@ export default function PostDetail() {
           </div>
           <PostCard title={post.title} content={post.content} idx={post.idx} />
           <div className="py-2 self-end ">
-            <ReactButtonList />
+            <Reactions postIdx={post.idx} />
           </div>
         </article>
         <section className="border-t border-gray-200 py-2">
