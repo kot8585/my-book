@@ -2,10 +2,10 @@
 
 import ModalPortal from "@/components/common/ModalPortal";
 import ThreeDotsButton from "@/components/common/ThreeDotsButton";
-import ReactButtonList from "@/components/feed/ReactButtonList";
 import BookCard from "@/components/home/BookCard";
 import PostCard from "@/components/post/PostCard";
 import PostModal from "@/components/post/PostModal";
+import ReactionButtonList from "@/components/post/Reactions";
 import useNote from "@/hooks/note";
 import { UserBookDetail } from "@/model/userBook";
 import { formatDate } from "@/utils/formatDate";
@@ -14,7 +14,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import { addUser } from "@/service/user";
 
 export default function UserBookDetailPage() {
   const params = useParams();
@@ -82,7 +81,7 @@ export default function UserBookDetailPage() {
                 <span className="text-sm text-gray-400">
                   {formatDate(post.createdAt)}
                 </span>
-                <ReactButtonList />
+                <ReactionButtonList postIdx={post.idx} />
               </div>
             </li>
           ))}

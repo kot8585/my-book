@@ -15,35 +15,28 @@ type Props = {
   postIdx: number;
 };
 
-export default function Reactions({ postIdx }: Props) {
+export default function ReactionButtonList({ postIdx }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
 
   const { setLikes, setBookmarks } = useUser();
 
+  const { data: likePosts } = useQuery(
+    ["posts", "likePosts"],
+    (): Promise<number[]> => axios.get("/api/likes").then((res) => res.data)
+  );
+
   const {
-    data: userReactions,
+    data: bookmarkPosts,
     isLoading,
     error,
   } = useQuery(
-    ["users", "reactions"],
-    (): Promise<UserReactions> =>
-      axios.get("/api/users/reactions").then((res) => res.data)
+    ["posts", "bookmarkPosts"],
+    (): Promise<number[]> => axios.get("/api/bookmarks").then((res) => res.data)
   );
 
-  // user의 likePosts에 user가 없다면 emptyIcon을 보야주고
-  // 있다면 fill 아이콘을 보여준다
-  const liked =
-    !!userReactions &&
-    !!userReactions.likePosts.find((likePost) => {
-      return likePost.postIdx === postIdx;
-    });
-
-  const bookmarked =
-    !!userReactions &&
-    !!userReactions.bookmarkPosts.find((bookmarkPost) => {
-      return bookmarkPost.postIdx === postIdx;
-    });
+  const liked = !!likePosts && likePosts.includes(postIdx);
+  const bookmarked = !!bookmarkPosts && bookmarkPosts.includes(postIdx);
 
   const handleLikeClick = () => {
     if (!user) {
@@ -51,7 +44,7 @@ export default function Reactions({ postIdx }: Props) {
       console.log("로그인을 하셔야 이용가능 합니다.");
       return;
     }
-    setLikes.mutate({ postIdx, liked });
+    setLikes.mutate({ postIdx, liked, userIdx: user.idx });
   };
 
   const handleBookmarkClick = () => {
@@ -60,7 +53,7 @@ export default function Reactions({ postIdx }: Props) {
       console.log("로그인을 하셔야 이용가능 합니다.");
       return;
     }
-    setBookmarks.mutate({ postIdx, bookmarked });
+    setBookmarks.mutate({ postIdx, bookmarked, userIdx: user.idx });
   };
 
   return (

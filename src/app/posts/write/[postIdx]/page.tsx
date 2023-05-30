@@ -5,7 +5,7 @@ import ModalPortal from "@/components/common/ModalPortal";
 import SimpleButton from "@/components/common/SimpleButton";
 import PostModal from "@/components/post/PostModal";
 import useNote from "@/hooks/note";
-import { CreateNoteType, Post } from "@/model/post";
+import { CreateNoteType, PostType } from "@/model/post";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 import { useSession } from "next-auth/react";
@@ -27,7 +27,7 @@ export default function EditPostPage() {
   const params = useParams();
   const postIdx = params.postIdx;
 
-  const getPost: () => Promise<Post> = () =>
+  const getPost: () => Promise<PostType> = () =>
     axios.get(`/api/posts/${postIdx}`).then((response) => response.data);
   const {
     data: originalPost,
@@ -44,7 +44,7 @@ export default function EditPostPage() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [post, setPost] = useState<Partial<Post>>({
+  const [post, setPost] = useState<Partial<PostType>>({
     userIdx: originalPost?.userIdx,
     type: originalPost?.type,
     openType: originalPost?.openType,

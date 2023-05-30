@@ -8,9 +8,8 @@ import CommentList from "../comment/CommentList";
 import LoadingSpinner from "../common/LoadingSpinner";
 import ShowMessage from "../common/ShowMessage";
 import FeedBookInfo from "../feed/FeedBookInfo";
-import ReactButtonList from "../feed/ReactButtonList";
 import PostCard from "./PostCard";
-import Reactions from "./Reactions";
+import ReactionButtonList from "./Reactions";
 
 export default function PostDetail() {
   const params = useParams();
@@ -26,8 +25,6 @@ export default function PostDetail() {
       axios.get(`/api/posts/${postIdx}`).then((res) => res.data)
   );
 
-  // likeUsers를 가져오면
-
   if (post) {
     return (
       <section className="flex flex-col py-3">
@@ -39,7 +36,7 @@ export default function PostDetail() {
           </div>
           <PostCard title={post.title} content={post.content} idx={post.idx} />
           <div className="py-2 self-end ">
-            <Reactions postIdx={post.idx} />
+            <ReactionButtonList postIdx={post.idx} />
           </div>
         </article>
         <section className="border-t border-gray-200 py-2">

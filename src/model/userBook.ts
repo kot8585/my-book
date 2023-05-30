@@ -1,4 +1,4 @@
-import { Post } from "./post";
+import { PostType } from "./post";
 
 export type UserBook = {
   userIdx: number;
@@ -34,5 +34,5 @@ export type addUserBookType = {
 };
 
 export type UserBookDetail = {
-  posts: Post[];
+  posts: PostType[];
 } & UserBook;
