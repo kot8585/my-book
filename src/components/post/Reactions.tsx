@@ -1,7 +1,7 @@
-import useUser from "@/hooks/user";
-import { UserReactions } from "@/model/user";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useBookMarkPostListQuery } from "@/hooks/useBookMarkPostListQuery";
+import { useLikePostListQuery } from "@/hooks/useLikePostListQuery";
+import { useUpdateLikeMutation } from "@/hooks/useUpdateLikeMutation";
+import useUpdateBookMarkMutation from "@/hooks/useUpdateBookMarkMutation";
 import { useSession } from "next-auth/react";
 import {
   FaBookmark,
@@ -19,21 +19,12 @@ export default function ReactionButtonList({ postIdx }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { setLikes, setBookmarks } = useUser();
+  const { setBookmarks } = useUpdateBookMarkMutation();
+  const { setLikes } = useUpdateLikeMutation();
 
-  const { data: likePosts } = useQuery(
-    ["posts", "likePosts"],
-    (): Promise<number[]> => axios.get("/api/likes").then((res) => res.data)
-  );
+  const { likePosts } = useLikePostListQuery();
 
-  const {
-    data: bookmarkPosts,
-    isLoading,
-    error,
-  } = useQuery(
-    ["posts", "bookmarkPosts"],
-    (): Promise<number[]> => axios.get("/api/bookmarks").then((res) => res.data)
-  );
+  const { bookmarkPosts } = useBookMarkPostListQuery();
 
   const liked = !!likePosts && likePosts.includes(postIdx);
   const bookmarked = !!bookmarkPosts && bookmarkPosts.includes(postIdx);

@@ -2,11 +2,9 @@
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import PostEditForm from "@/components/post/PostEditForm";
-import { PostDetailType, PostType } from "@/model/post";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import usePostDetailQuery from "@/hooks/usePostDetailQuery";
 import { useSession } from "next-auth/react";
-import { redirect, useParams, useSearchParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useState } from "react";
 
 export default function EditPostPage() {
@@ -17,15 +15,11 @@ export default function EditPostPage() {
   }
 
   const params = useParams();
-  const postIdx = params.postIdx;
-
-  const getPost: () => Promise<PostDetailType> = () =>
-    axios.get(`/api/posts/${postIdx}`).then((response) => response.data);
   const {
-    data: originalPost,
+    detailPost: originalPost,
     isLoading,
     error,
-  } = useQuery(["posts", "detail", postIdx], getPost);
+  } = usePostDetailQuery({ postIdx: parseInt(params.postIdx) });
 
   const [loading, setLoading] = useState<boolean>(false);
 

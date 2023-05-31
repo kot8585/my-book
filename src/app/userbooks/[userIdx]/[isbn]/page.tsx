@@ -6,11 +6,9 @@ import BookCard from "@/components/home/BookCard";
 import PostCard from "@/components/post/PostCard";
 import PostModal from "@/components/post/PostModal";
 import ReactionButtonList from "@/components/post/Reactions";
-import useNote from "@/hooks/note";
-import { UserBookDetail } from "@/model/userBook";
+import { useDeletePostMutation } from "@/hooks/useDeletePostMutation";
+import useUserBookDetailQuery from "@/hooks/useUserBookDetailQuery";
 import { formatDate } from "@/utils/formatDate";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
@@ -19,28 +17,19 @@ export default function UserBookDetailPage() {
   const params = useParams();
   const router = useRouter();
   const { data: session } = useSession();
-  const { deletePost } = useNote();
+  const { deletePost } = useDeletePostMutation();
+  const { userBook, isLoading, error } = useUserBookDetailQuery({
+    isbn: params.isbn,
+    userIdx: parseInt(params.userIdx),
+  });
   const user = session?.user;
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const fetchUserBookInfo: () => Promise<UserBookDetail> = async () => {
-    return axios
-      .get(`/api/userbooks/${params.userIdx}/${params.isbn}`)
-      .then((res) => res.data);
-  };
 
   const toDeletePostIdx = useRef<number | null>(null);
   //🚨 status랑 같이 오네... 흠....
-  const { data: userBook } = useQuery(
-    ["UserBooks", "Detail", { isbn: params.isbn, userIdx: params.userIdx }],
-    fetchUserBookInfo,
-    { staleTime: 24 * 60 * 60 * 1000 }
-  );
 
   const handleEdit = (postIdx: number) => {
-    // 포스트 수정 페이지로 이동하기
-    router.push(
-      `/posts/write/${postIdx}?isbn=${userBook?.isbn}&readingType=${userBook?.type}`
-    );
+    router.push(`/posts/write/${postIdx}`);
   };
 
   const handleDelete = (idx: number) => {

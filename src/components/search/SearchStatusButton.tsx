@@ -1,4 +1,4 @@
-import useUserBook from "@/hooks/userbook";
+import useCreateUserBookMutation from "@/hooks/useCreateUserBookMutation";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -10,7 +10,7 @@ type Props = {
 
 export default function SearchStatusButton({ isbn }: Props) {
   const [bookStatus, setBookStatus] = useState("TOREAD");
-  const { addUserBookMutate } = useUserBook();
+  const { createUserBook: addUserBookMutate } = useCreateUserBookMutation();
   const { data: session } = useSession();
   const user = session?.user;
 

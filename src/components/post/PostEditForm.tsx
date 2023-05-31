@@ -1,12 +1,10 @@
-import useNote from "@/hooks/note";
-import { PostDetailType, PostType } from "@/model/post";
+import { useUpdatePostMutation } from "@/hooks/useUpdatePostMutation";
+import { PostDetailType } from "@/model/post";
 import { useRouter } from "next/navigation";
-import React, { FormEvent, useState } from "react";
-import SimpleButton from "../common/SimpleButton";
+import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import ModalPortal from "../common/ModalPortal";
+import SimpleButton from "../common/SimpleButton";
 import PostModal from "./PostModal";
-import { Dispatch } from "react";
-import { SetStateAction } from "react";
 
 type Props = {
   originalPost: PostDetailType;
@@ -14,7 +12,7 @@ type Props = {
 };
 
 export default function PostEditForm({ originalPost, setLoading }: Props) {
-  const { editPost } = useNote();
+  const { editPost } = useUpdatePostMutation();
   const router = useRouter();
 
   const [post, setPost] = useState({

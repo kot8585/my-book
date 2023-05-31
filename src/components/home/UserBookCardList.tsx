@@ -1,10 +1,7 @@
 "use client";
 
-import { UserBook } from "@/model/userBook";
-import React from "react";
+import { useUserBookListQuery } from "@/hooks/useUserBookListQuery";
 import BookCard from "./BookCard";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 type Props = {
   status: "READING" | "TOREAD" | "COMPLETED";
@@ -12,11 +9,8 @@ type Props = {
 };
 
 export default function UserBookCardList({ status, userIdx }: Props) {
-  const { data: userbooks } = useQuery(
-    ["userbooks", "list", userIdx, { filter: status }],
-    (): Promise<UserBook[]> =>
-      axios.get(`/api/userbooks?status=${status}`).then((res) => res.data)
-  );
+  const { userbooks, isLoading, error } = useUserBookListQuery(userIdx, status);
+
   return (
     <ul className="flex py-2">
       {userbooks ? (

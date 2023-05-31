@@ -1,11 +1,11 @@
 import { addUserBookType } from "@/model/userBook";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
 
-export default function useUserBook() {
+export default function useCreateUserBookMutation() {
   const queryClient = useQueryClient();
 
-  const addUserBookMutate = useMutation(
+  const createUserBook = useMutation(
     (addUserBook: addUserBookType) => {
       return axios.post("/api/userbooks", addUserBook);
     },
@@ -22,5 +22,5 @@ export default function useUserBook() {
     }
   );
 
-  return { addUserBookMutate };
+  return { createUserBook };
 }

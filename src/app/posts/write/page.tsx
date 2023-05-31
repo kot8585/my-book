@@ -4,7 +4,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import ModalPortal from "@/components/common/ModalPortal";
 import SimpleButton from "@/components/common/SimpleButton";
 import PostModal from "@/components/post/PostModal";
-import useNote from "@/hooks/note";
+import { useCreatePostMutation } from "@/hooks/useCreatePostMutation";
 import { CreateNoteType } from "@/model/post";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter, useSearchParams } from "next/navigation";
@@ -18,7 +18,7 @@ export default function WritePostPage() {
     redirect("/auth/signin");
   }
 
-  const { addNote } = useNote();
+  const { createPost: addNote } = useCreatePostMutation();
   const searchParams = useSearchParams();
   //TODO: isbn과 readingType이 전해지지 않을 수가 있어,,? 이런것도 처리해줘야돼?
   const isbn = searchParams.get("isbn");
