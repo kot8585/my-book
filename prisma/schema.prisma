@@ -50,15 +50,15 @@ model UserBook {
   endDate DateTime? @map("end_date")
   createdAt DateTime @map("created_at") @default(now()) 
 
-  user User @relation(fields: [userIdx], references: [idx])
+  user User @relation(fields: [userIdx], references: [idx], onDelete: Cascade)
 
   @@id([userIdx, isbn])
 }
 
 
 model Post {
-  userIdx Int @map("user_idx")
-  isbn String
+  userIdx Int? @map("user_idx")
+  isbn String?
   idx Int @id @default(autoincrement())
   page Int 
   title String? @db.VarChar(255)
@@ -69,21 +69,21 @@ model Post {
   openType String  @map("open_type")
 
   comments Comment[]
-  user User @relation(fields: [userIdx], references: [idx])
-  userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
+  user User? @relation(fields: [userIdx], references: [idx], onDelete: SetNull)
+  userBook UserBook? @relation(fields: [isbn, userIdx], references: [isbn, userIdx], onDelete: SetNull)
   likeUsers Likes[] 
   bookmarkUsers Bookmarks[]
 }
 
 model Comment {
-  postIdx Int @map("post_idx")
+  postIdx Int? @map("post_idx")
   userIdx Int @map("user_idx")
   idx Int @id @default(autoincrement())
   content String
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime? @map("updated_at") @updatedAt
 
-  post Post @relation(fields: [postIdx], references: [idx])
+  post Post? @relation(fields: [postIdx], references: [idx], onDelete: SetNull)
   user User @relation(fields: [userIdx], references: [idx])
 }
 
@@ -97,18 +97,18 @@ model Follow {
 }
 
 model Likes {
-  post Post @relation(fields: [postIdx], references: [idx])
+  post Post @relation(fields: [postIdx], references: [idx], onDelete: Cascade)
   postIdx Int 
-  user User @relation(fields: [userIdx], references: [idx])
+  user User @relation(fields: [userIdx], references: [idx], onDelete: Cascade)
   userIdx Int
 
   @@id([postIdx, userIdx])
 }
 
 model Bookmarks {
-  post Post @relation(fields: [postIdx], references: [idx])
+  post Post @relation(fields: [postIdx], references: [idx], onDelete: Cascade)
   postIdx Int 
-  user User @relation(fields: [userIdx], references: [idx])
+  user User @relation(fields: [userIdx], references: [idx], onDelete: Cascade)
   userIdx Int
 
   @@id([postIdx, userIdx])

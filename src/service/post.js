@@ -113,6 +113,7 @@ export async function getPost(postIdx) {
           imageUrl: true,
           author: true,
           publisher: true,
+          type: true,
         },
       },
       comments: {

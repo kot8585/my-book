@@ -27,6 +27,7 @@ export type FeedBookInfoType = {
   imageUrl: string;
   author: string;
   page?: number;
+  type: string;
 };
 
 export type CreateNoteType = Pick<

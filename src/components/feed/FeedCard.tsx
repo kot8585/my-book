@@ -1,6 +1,5 @@
 import { FeedResponseType } from "@/model/post";
 import React from "react";
-import { FaRegCommentDots } from "react-icons/fa";
 
 import UserInfo from "../common/UserInfo";
 import PostCard from "../post/PostCard";
