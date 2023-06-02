@@ -6,8 +6,8 @@ import { getMyLikes } from "@/service/user";
 
 export async function GET() {
   const session: Session | null = await getServerSession(authOptions);
-  if (!session) {
-    return null;
+  if (!session || !session?.user) {
+    return [];
   }
 
   return getMyLikes(session.user.idx)

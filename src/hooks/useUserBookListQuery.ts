@@ -6,15 +6,14 @@ export const useUserBookListQuery = (
   userIdx: number,
   status: "READING" | "TOREAD" | "COMPLETED"
 ) => {
-  const {
-    data: userbooks,
-    isLoading,
-    error,
-  } = useQuery(
+  const { data: userbooks, error } = useQuery(
     ["userbooks", "list", userIdx, { filter: status }],
     (): Promise<UserBook[]> =>
-      axios.get(`/api/userbooks?status=${status}`).then((res) => res.data)
+      axios.get(`/api/userbooks?status=${status}`).then((res) => res.data),
+    {
+      suspense: true,
+    }
   );
 
-  return { userbooks, isLoading, error };
+  return { userbooks, error };
 };

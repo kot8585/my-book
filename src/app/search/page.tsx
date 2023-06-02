@@ -1,8 +1,9 @@
 "use client";
 
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import SearchBookCardList from "@/components/search/SearchBookCardList";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, Suspense, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 export default function SearchPage() {
@@ -44,7 +45,9 @@ export default function SearchPage() {
           />
         </div>
       </div>
-      <SearchBookCardList keyword={keyword} />
+      <Suspense fallback={<LoadingSpinner />}>
+        <SearchBookCardList keyword={keyword} />
+      </Suspense>
     </section>
   );
 }

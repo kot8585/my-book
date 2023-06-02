@@ -1,10 +1,10 @@
 import { FeedType } from "@/app/feed/page";
 import { FeedResponseType } from "@/model/post";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const useFeedListQuery = (feedType: FeedType) => {
-  async function getPost(): Promise<FeedResponseType[]> {
+  async function getPost() {
     return await axios
       .get(`/api/posts?feedType=${feedType}`)
       .then((response) => response.data);
@@ -14,9 +14,12 @@ export const useFeedListQuery = (feedType: FeedType) => {
     data: feedList,
     isLoading,
     error,
-  } = useQuery(["feeds", feedType], getPost, {
+    refetch,
+    isRefetching,
+  } = useQuery<FeedResponseType[], AxiosError>(["feeds", feedType], getPost, {
     staleTime: 3 * 1000 * 60,
+    suspense: true,
   });
 
-  return { feedList, isLoading, error };
+  return { feedList, isLoading, error, refetch, isRefetching };
 };

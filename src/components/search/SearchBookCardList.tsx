@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function SearchBookCardList({ keyword }: Props) {
-  const { searchBookList, isLoading, error } = useSearchBookQuery(keyword);
+  const { searchBookList, error } = useSearchBookQuery(keyword);
   return (
     <ul className="py-14">
       {searchBookList &&

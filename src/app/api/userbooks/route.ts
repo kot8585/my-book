@@ -36,13 +36,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 function getBookInfoFromAladin(body: UserBook) {
-  console.log("getBookInfoFromAladin 호출------", body.isbn);
   return axios
     .get(
       `http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=${process.env.ALADIN_KEY}&itemIdType=ISBN&ItemId=${body.isbn}&output=js&Version=20131101`
     )
     .then((res) => {
-      console.log("=====res---", res);
       const items = res.data.item;
 
       if (!items)

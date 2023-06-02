@@ -23,7 +23,6 @@ export default function PostEditForm({ originalPost, setLoading }: Props) {
     content: originalPost.content,
     isbn: originalPost.isbn,
     idx: originalPost.idx,
-    readingType: originalPost.userBook.type,
   });
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -83,7 +82,7 @@ export default function PostEditForm({ originalPost, setLoading }: Props) {
               inputMode="numeric"
             />
             <span className="absolute right-2 top-[0.45rem]  text-gray-500 appearance-none text-sm">
-              {post.readingType === "PAPER" ? "p" : "%"}
+              {originalPost.userBook.type === "PAPER" ? "p" : "%"}
             </span>
           </div>
           <textarea

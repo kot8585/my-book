@@ -1,21 +1,17 @@
 "use client";
 
-import { PostDetailType } from "@/model/post";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import usePostDetailQuery from "@/hooks/usePostDetailQuery";
 import { useParams } from "next/navigation";
 import CommentList from "../comment/CommentList";
-import LoadingSpinner from "../common/LoadingSpinner";
 import ShowMessage from "../common/ShowMessage";
 import FeedBookInfo from "../feed/FeedBookInfo";
 import PostCard from "./PostCard";
 import ReactionButtonList from "./Reactions";
-import usePostDetailQuery from "@/hooks/usePostDetailQuery";
 
 export default function PostDetail() {
   const params = useParams();
 
-  const { detailPost, isLoading, error } = usePostDetailQuery({
+  const { detailPost, error } = usePostDetailQuery({
     postIdx: parseInt(params.postIdx),
   });
 
@@ -54,8 +50,7 @@ export default function PostDetail() {
     );
   }
 
-  if (error) {
-    return <ShowMessage message="에러가 발생하였습니다." />;
-  }
-  return <>{isLoading && <LoadingSpinner />}</>;
+  if (error) return <ShowMessage message="에러가 발생하였습니다." />;
+
+  return <></>;
 }

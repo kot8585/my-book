@@ -3,6 +3,8 @@ import UserBookCardList from "@/components/home/UserBookCardList";
 import { Session, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import { Suspense } from "react";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default async function HomePage() {
   const session: Session | null = await getServerSession(authOptions);
@@ -13,15 +15,23 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="w-full p-3">
-      <SimpleButton bgColor="bg-gray-200" size="small">
-        읽고 있는 책
-      </SimpleButton>
-      <UserBookCardList status="READING" userIdx={user.idx} />
-      <SimpleButton bgColor="bg-gray-200" size="small">
-        읽고 싶은 책
-      </SimpleButton>
-      <UserBookCardList status="TOREAD" userIdx={user.idx} />
+    <main className="w-full p-3 flex flex-col">
+      <section className="h-52">
+        <SimpleButton bgColor="bg-gray-200" size="small">
+          읽고 있는 책
+        </SimpleButton>
+        <Suspense fallback={<LoadingSpinner />}>
+          <UserBookCardList status="READING" userIdx={user.idx} />
+        </Suspense>
+      </section>
+      <section className="h-52">
+        <SimpleButton bgColor="bg-gray-200" size="small">
+          읽고 싶은 책
+        </SimpleButton>
+        <Suspense fallback={<LoadingSpinner />}>
+          <UserBookCardList status="TOREAD" userIdx={user.idx} />
+        </Suspense>
+      </section>
     </main>
   );
 }

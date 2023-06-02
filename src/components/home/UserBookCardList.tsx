@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function UserBookCardList({ status, userIdx }: Props) {
-  const { userbooks, isLoading, error } = useUserBookListQuery(userIdx, status);
+  const { userbooks, error } = useUserBookListQuery(userIdx, status);
 
   return (
     <ul className="flex py-2">
