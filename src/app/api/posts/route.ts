@@ -20,13 +20,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
       return new Response("Authentication Error 로그인이 되어있지 않음", {
         status: 401,
       });
+    } else {
+      return getFollowingPostList(user.idx)
+        .then((res) => NextResponse.json(res))
+        .catch((error) => {
+          console.error(error);
+          return new Response(JSON.stringify(error), { status: 500 });
+        });
     }
-    return getFollowingPostList(user.idx)
-      .then((res) => NextResponse.json(res))
-      .catch((error) => {
-        console.error(error);
-        return new Response(JSON.stringify(error), { status: 500 });
-      });
   }
 
   return getAllPostList()

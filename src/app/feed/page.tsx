@@ -1,11 +1,11 @@
 "use client";
 
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import ShowMessage from "@/components/common/ShowMessage";
 import SimpleButton from "@/components/common/SimpleButton";
 import FeedList from "@/components/feed/FeedList";
-import { useSession } from "next-auth/react";
 import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import Error from "../error";
 
 export type FeedType = "ALL" | "FOLLOW";
 
@@ -37,7 +37,18 @@ export default function FeedPage() {
         ))}
       </header>
       <Suspense fallback={<LoadingSpinner />}>
-        <FeedList feedType={type} />
+        <ErrorBoundary
+          fallbackRender={({ error, resetErrorBoundary }) => (
+            <Error
+              error={error}
+              resetErrorBoundary={resetErrorBoundary}
+              notifyType="CONTAINER"
+            />
+          )}
+          resetKeys={[type]}
+        >
+          <FeedList feedType={type} />
+        </ErrorBoundary>
       </Suspense>
     </section>
   );

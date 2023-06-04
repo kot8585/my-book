@@ -7,7 +7,7 @@ import { authOptions } from "../auth/[...nextauth]/route";
 export async function GET() {
   const session: Session | null = await getServerSession(authOptions);
   if (!session) {
-    return [];
+    return NextResponse.json([]);
   }
 
   return getMyBookmarks(session.user.idx)

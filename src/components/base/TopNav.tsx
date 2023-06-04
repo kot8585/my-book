@@ -34,7 +34,6 @@ export const menu = [
 
 export default function TopNav() {
   const { data: session } = useSession();
-  console.log("login data: ", session);
 
   const pathName = usePathname();
   return (

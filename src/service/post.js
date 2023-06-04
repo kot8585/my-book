@@ -4,7 +4,7 @@ import prisma from "./prisma";
 // left join user u on p.userIdx = u.idx and p.isPublic=true
 // left join userBook b on p.isbn=b.isbn;
 export async function getAllPostList() {
-  return await prisma.post.findMany({
+  const result = await prisma.post.findMany({
     where: {
       openType: "ALL",
     },
@@ -30,6 +30,7 @@ export async function getAllPostList() {
       },
     },
   });
+  return result;
 }
 
 // SELECT * FROM POST p
@@ -41,7 +42,7 @@ export async function getAllPostList() {
 export async function getFollowingPostList(userIdx) {
   const result = await prisma.$queryRaw`
     SELECT 
-      p.user_idx, p.isbn, p.idx, p.page, p.title, p.content, p.created_at, p.bookmark_user_idx, like_user_idx, 
+      p.user_idx, p.isbn, p.idx, p.page, p.title, p.content, p.created_at,  
       b.title as book_title, b.image_url as book_image_url, b.author as book_author,  
       u.image as user_image_url, u.name as user_name 
     FROM POST p 

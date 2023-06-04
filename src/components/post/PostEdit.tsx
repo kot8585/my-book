@@ -6,6 +6,8 @@ import { redirect, useParams } from "next/navigation";
 import React, { useState } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PostEditForm from "./PostEditForm";
+import { ErrorBoundary } from "react-error-boundary";
+import Error from "@/app/error";
 
 export default function PostEdit() {
   const { data: session } = useSession();
@@ -28,9 +30,19 @@ export default function PostEdit() {
           <LoadingSpinner />
         </div>
       )}
-      {originalPost && (
-        <PostEditForm originalPost={originalPost} setLoading={setLoading} />
-      )}
+      <ErrorBoundary
+        fallbackRender={({ error, resetErrorBoundary }) => (
+          <Error
+            error={error}
+            resetErrorBoundary={resetErrorBoundary}
+            notifyType="TOAST"
+          />
+        )}
+      >
+        {originalPost && (
+          <PostEditForm originalPost={originalPost} setLoading={setLoading} />
+        )}
+      </ErrorBoundary>
     </section>
   );
 }
