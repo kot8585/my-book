@@ -5,14 +5,13 @@ type Props = {
   title: string;
 };
 
-export default function BottomCenterToast({ title }: Props) {
+export default function BottomCenterToast() {
   return (
     <ToastContainer
       position="bottom-center"
-      autoClose={5000}
+      autoClose={3000}
       hideProgressBar={false}
       newestOnTop={false}
-      closeOnClick
       rtl={false}
       pauseOnFocusLoss
       pauseOnHover

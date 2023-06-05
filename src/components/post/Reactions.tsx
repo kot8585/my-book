@@ -1,7 +1,9 @@
+"use client";
+
 import { useBookMarkPostListQuery } from "@/hooks/useBookMarkPostListQuery";
 import { useLikePostListQuery } from "@/hooks/useLikePostListQuery";
-import { useUpdateLikeMutation } from "@/hooks/useUpdateLikeMutation";
 import useUpdateBookMarkMutation from "@/hooks/useUpdateBookMarkMutation";
+import { useUpdateLikeMutation } from "@/hooks/useUpdateLikeMutation";
 import { useSession } from "next-auth/react";
 import {
   FaBookmark,
@@ -10,6 +12,8 @@ import {
   FaRegCommentDots,
   FaRegHeart,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
+import BottomCenterToast from "../common/BottomCenterToast";
 
 type Props = {
   postIdx: number;
@@ -30,33 +34,26 @@ export default function ReactionButtonList({ postIdx }: Props) {
   const bookmarked = !!bookmarkPosts && bookmarkPosts.includes(postIdx);
 
   const handleLikeClick = () => {
-    if (!user) {
-      //TODO: 모달띄우기?
-      console.log("로그인을 하셔야 이용가능 합니다.");
-      return;
-    }
+    if (!user) return toast.error("로그인을 해야 이용가능합니다.");
     setLikes.mutate({ postIdx, liked, userIdx: user.idx });
   };
 
   const handleBookmarkClick = () => {
-    if (!user) {
-      //TODO: 모달띄우기?
-      console.log("로그인을 하셔야 이용가능 합니다.");
-      return;
-    }
+    if (!user) return toast.error("로그인을 해야 이용가능합니다.");
     setBookmarks.mutate({ postIdx, bookmarked, userIdx: user.idx });
   };
 
   return (
     <div className="flex gap-2">
-      <div onClick={handleLikeClick}>
+      <button onClick={handleLikeClick}>
         {liked ? <FaHeart /> : <FaRegHeart />}
-      </div>
+      </button>
 
-      <div onClick={handleBookmarkClick}>
+      <button onClick={handleBookmarkClick}>
         {bookmarked ? <FaBookmark /> : <FaRegBookmark />}
-      </div>
+      </button>
       <FaRegCommentDots />
+      <BottomCenterToast />
     </div>
   );
 }
