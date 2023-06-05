@@ -5,6 +5,8 @@ import ReactQueryProvider from "@/provider/ReactQueryProvider";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import BottomCenterToast from "@/components/common/BottomCenterToast";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +34,7 @@ export default function RootLayout({
           <BottomNav />
         </AuthProvider>
         <div id="portal" />
+        <BottomCenterToast />
       </body>
     </html>
   );

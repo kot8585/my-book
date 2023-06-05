@@ -1,4 +1,4 @@
-export type Post = {
+export type PostType = {
   userIdx: number;
   isbn: string;
   idx: number;
@@ -8,9 +8,11 @@ export type Post = {
   type: "NOTE" | "REVIEW";
   openType: "NONE" | "FOLLOW" | "ALL";
   createdAt: Date;
-  bookMarkUserIdx?: String;
-  likeUserIdx?: String;
+  likeUsers: { userIdx: number }[];
+  bookmarkUsers: { userIdx: number }[];
 };
+
+export type OnlyPost = Omit<PostType, "bookMarkUserIdx" | "likeUserIdx">;
 
 export type FeedResponseType = {
   user: {
@@ -18,16 +20,36 @@ export type FeedResponseType = {
     name: string;
   };
   userBook: FeedBookInfoType;
-} & Post;
+} & PostType;
 
 export type FeedBookInfoType = {
   title: string;
   imageUrl: string;
   author: string;
   page?: number;
+  type: string;
 };
 
 export type CreateNoteType = Pick<
-  Post,
+  PostType,
   "userIdx" | "type" | "openType" | "page" | "content" | "isbn"
 >;
+
+export type PostDetailType = {
+  user: {
+    image?: string;
+    name: string;
+  };
+  userBook: FeedBookInfoType;
+  comments: CommentType[];
+} & PostType;
+
+export type CommentType = {
+  idx: number;
+  content: string;
+  createdAt: Date;
+  user: {
+    name: string;
+    image?: string;
+  };
+};

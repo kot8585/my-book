@@ -34,3 +34,28 @@ export async function getIdxByEmail(email: string) {
 
   return result?.idx;
 }
+
+export async function getMyLikes(userIdx: number) {
+  const data = await prisma.likes.findMany({
+    where: {
+      userIdx: userIdx,
+    },
+    select: {
+      postIdx: true,
+    },
+  });
+  return data.map((liked) => liked.postIdx);
+}
+
+export async function getMyBookmarks(userIdx: number) {
+  const data = await prisma.bookmarks.findMany({
+    where: {
+      userIdx: userIdx,
+    },
+    select: {
+      postIdx: true,
+    },
+  });
+
+  return data.map((bookmarked) => bookmarked.postIdx);
+}

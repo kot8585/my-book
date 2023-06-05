@@ -1,7 +1,31 @@
 import { UserBook } from "@/model/userBook";
-import { createUserBook } from "@/service/userbook";
+import { createUserBook, getUserBooks } from "@/service/userbook";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
+import { authOptions } from "../auth/[...nextauth]/route";
+import { Session, getServerSession } from "next-auth";
+
+export async function GET(req: NextRequest) {
+  const session: Session | null = await getServerSession(authOptions);
+  const user = session?.user;
+
+  if (!user) {
+    console.error("로그인이 되어있지 않음");
+    return new Response("Authentication Error 로그인이 되어있지 않음", {
+      status: 401,
+    });
+  }
+
+  const status = req.nextUrl.searchParams.get("status");
+
+  if (!status) {
+    return new Response("Bad Request", { status: 400 });
+  }
+
+  return getUserBooks(user.idx, status)
+    .then((res) => NextResponse.json(res))
+    .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
+}
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const body = await req.json();
@@ -12,13 +36,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 function getBookInfoFromAladin(body: UserBook) {
-  console.log("getBookInfoFromAladin 호출------", body.isbn);
   return axios
     .get(
       `http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx?ttbkey=${process.env.ALADIN_KEY}&itemIdType=ISBN&ItemId=${body.isbn}&output=js&Version=20131101`
     )
     .then((res) => {
-      console.log("=====res---", res);
       const items = res.data.item;
 
       if (!items)

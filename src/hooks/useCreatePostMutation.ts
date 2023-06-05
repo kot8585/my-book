@@ -1,20 +1,19 @@
+import { CreateNoteType } from "@/model/post";
 import { UserBook } from "@/model/userBook";
-import { CreateNoteType } from "./../model/post";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
-export default function useNote() {
+export const useCreatePostMutation = () => {
   const queryClient = useQueryClient();
 
-  const addNote = useMutation(
+  const createPost = useMutation(
     (newNote: CreateNoteType) => {
       return axios.post("/api/posts", newNote);
     },
     {
       onSuccess: ({ data }: AxiosResponse<UserBook>) => {
         queryClient.invalidateQueries({
-          queryKey: ["note", data.isbn, data.userIdx],
+          queryKey: ["posts"],
         });
       },
       onError: (error) => {
@@ -23,5 +22,5 @@ export default function useNote() {
     }
   );
 
-  return { addNote };
-}
+  return { createPost };
+};

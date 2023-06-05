@@ -1,9 +1,10 @@
 import { FeedResponseType } from "@/model/post";
 import React from "react";
-import FeedBookInfo from "./FeedBookInfo";
-import PostCard from "../post/PostCard";
+
 import UserInfo from "../common/UserInfo";
-import ReactButtonList from "./ReactButtonList";
+import PostCard from "../post/PostCard";
+import ReactionButtonList from "../post/Reactions";
+import FeedBookInfo from "./FeedBookInfo";
 
 type Props = {
   feed: FeedResponseType;
@@ -17,7 +18,7 @@ export default function FeedCard({ feed }: Props) {
       <hr />
       <div className="flex justify-between items-center">
         <UserInfo image={feed.user.image} name={feed.user.name} />
-        <ReactButtonList />
+        <ReactionButtonList postIdx={feed.idx} />
       </div>
     </li>
   );

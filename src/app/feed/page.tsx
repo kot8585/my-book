@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
-import FeedList from "@/components/feed/FeedList";
-import { useSession } from "next-auth/react";
-import ShowMessage from "@/components/common/ShowMessage";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import SimpleButton from "@/components/common/SimpleButton";
+import FeedList from "@/components/feed/FeedList";
+import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import Error from "../error";
 
 export type FeedType = "ALL" | "FOLLOW";
 
@@ -20,8 +21,6 @@ const headerMenu: HeaderMenuType[] = [
 
 export default function FeedPage() {
   const [type, setType] = useState<FeedType>("ALL");
-  const { data: session } = useSession();
-  const user = session?.user;
 
   return (
     <section className="flex flex-col justify-start max-w-3xl px-3 py-1 mx-auto lg:w-4/5 w-full h-full">
@@ -37,11 +36,20 @@ export default function FeedPage() {
           </SimpleButton>
         ))}
       </header>
-      {type === "FOLLOW" && !user ? (
-        <ShowMessage message="팔로잉한 유저의 피드를 보려면 로그인이 필요해요" />
-      ) : (
-        <FeedList feedType={type} />
-      )}
+      <Suspense fallback={<LoadingSpinner />}>
+        <ErrorBoundary
+          fallbackRender={({ error, resetErrorBoundary }) => (
+            <Error
+              error={error}
+              resetErrorBoundary={resetErrorBoundary}
+              notifyType="CONTAINER"
+            />
+          )}
+          resetKeys={[type]}
+        >
+          <FeedList feedType={type} />
+        </ErrorBoundary>
+      </Suspense>
     </section>
   );
 }

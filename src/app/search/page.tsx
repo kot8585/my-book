@@ -1,11 +1,9 @@
 "use client";
 
-import SearchBookCard from "@/components/search/SearchBookCard";
-import { SearchBookType } from "@/model/userBook";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import SearchBookCardList from "@/components/search/SearchBookCardList";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, Suspense, useEffect, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 
 export default function SearchPage() {
@@ -31,16 +29,6 @@ export default function SearchPage() {
   useEffect(() => {
     if (keyword) setText(keyword);
   }, [keyword]);
-  const { data: searchBookList } = useQuery(
-    ["search", "book", keyword],
-    () =>
-      axios
-        .get(`/api/search?keyword=${encodeURIComponent(keyword!)}`)
-        .then((response) => {
-          return response.data;
-        }),
-    { enabled: !!keyword, retry: 0 }
-  );
 
   return (
     <section className="lg:w-4/5 w-full h-full flex flex-col relative mx-auto">
@@ -57,12 +45,9 @@ export default function SearchPage() {
           />
         </div>
       </div>
-      <ul className="py-14">
-        {searchBookList &&
-          searchBookList.map((searchBook: SearchBookType) => (
-            <SearchBookCard key={searchBook.isbn} searchBook={searchBook} />
-          ))}
-      </ul>
+      <Suspense fallback={<LoadingSpinner />}>
+        <SearchBookCardList keyword={keyword} />
+      </Suspense>
     </section>
   );
 }

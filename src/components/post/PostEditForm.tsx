@@ -1,40 +1,30 @@
-"use client";
+import { useUpdatePostMutation } from "@/hooks/useUpdatePostMutation";
+import { PostDetailType } from "@/model/post";
+import { useRouter } from "next/navigation";
+import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import ModalPortal from "../common/ModalPortal";
+import SimpleButton from "../common/SimpleButton";
+import PostModal from "./PostModal";
 
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import ModalPortal from "@/components/common/ModalPortal";
-import SimpleButton from "@/components/common/SimpleButton";
-import NoteModal from "@/components/post/PostModal";
-import useNote from "@/hooks/note";
-import { CreateNoteType } from "@/model/post";
-import { useSession } from "next-auth/react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
-import React, { FormEvent, useState } from "react";
+type Props = {
+  originalPost: PostDetailType;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+};
 
-export default function CreateNotePage() {
-  const { data: session } = useSession();
-  const user = session?.user;
-
-  if (!user) {
-    redirect("/auth/signin");
-  }
-
-  const { addNote } = useNote();
-  const searchParams = useSearchParams();
-  //TODO: isbn과 readingType이 전해지지 않을 수가 있어,,? 이런것도 처리해줘야돼?
-  const isbn = searchParams.get("isbn");
-  const readingType = searchParams.get("readingType");
-
+export default function PostEditForm({ originalPost, setLoading }: Props) {
+  const { editPost } = useUpdatePostMutation();
   const router = useRouter();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [note, setNote] = useState<CreateNoteType>({
-    userIdx: user.idx,
-    type: "NOTE",
-    openType: "NONE",
-    page: 0,
-    content: "",
-    isbn: isbn!,
+
+  const [post, setPost] = useState({
+    userIdx: originalPost.userIdx,
+    type: originalPost.type,
+    openType: originalPost.openType,
+    page: originalPost.page,
+    content: originalPost.content,
+    isbn: originalPost.isbn,
+    idx: originalPost.idx,
   });
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const onClose = () => setOpenModal(true);
 
@@ -44,30 +34,25 @@ export default function CreateNotePage() {
     >
   ) => {
     const { name, value } = e.target;
-    setNote((note) => ({ ...note, [name]: value }));
+    setPost((post) => ({ ...post, [name]: value }));
   };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    if (typeof note.page === "string") {
-      note.page = parseInt(note.page);
+    if (typeof post.page === "string") {
+      post.page = parseInt(post.page);
     }
 
     //useQuery mutation 처리
-    addNote.mutate(note);
+    editPost.mutate(post);
 
     setLoading(false);
     router.back();
   };
 
   return (
-    <section className="relative w-full">
-      {loading && (
-        <div className="absolute inset-0 z-20 text-center pt-[30%] bg-yellow-100/20">
-          <LoadingSpinner />
-        </div>
-      )}
+    <>
       <form
         className="flex  flex-col relative justify-start max-w-3xl  py-1 mx-auto lg:w-4/5 w-full h-full"
         onSubmit={handleSubmit}
@@ -76,7 +61,7 @@ export default function CreateNotePage() {
           <SimpleButton type="button" onClick={onClose}>
             닫기
           </SimpleButton>
-          메모 작성
+          메모 수정
           <SimpleButton
             type="submit"
             onSubmit={handleSubmit}
@@ -92,12 +77,12 @@ export default function CreateNotePage() {
               min={0}
               className="p-2 w-full h-8 bg-gray-100 rounded-md focus:outline-none"
               name="page"
-              value={note?.page}
+              value={post?.page}
               onChange={handleChange}
               inputMode="numeric"
             />
             <span className="absolute right-2 top-[0.45rem]  text-gray-500 appearance-none text-sm">
-              {readingType === "PAPER" ? "p" : "%"}
+              {originalPost.userBook.type === "PAPER" ? "p" : "%"}
             </span>
           </div>
           <textarea
@@ -105,7 +90,7 @@ export default function CreateNotePage() {
             rows={10}
             className="bg-gray-100 rounded-lg p-2 focus:outline-none resize-none"
             name="content"
-            value={note?.content}
+            value={post?.content!}
             onChange={handleChange}
           />
           <select
@@ -113,18 +98,23 @@ export default function CreateNotePage() {
             id="openType"
             className="lg:w-24 w-full self-end bg-gray-100 p-2 rounded-lg"
             onChange={handleChange}
-            value={note.openType}
+            value={post.openType}
           >
             <option value="NONE">비공개</option>
             <option value="FOLLOW">팔로워만</option>
             <option value="ALL">전체 공개</option>
           </select>
-          <input type="hidden" id="isbn" name="isbn" value={isbn!} />
+          <input
+            type="hidden"
+            id="isbn"
+            name="isbn"
+            value={originalPost.isbn}
+          />
         </main>
       </form>
       {openModal && (
         <ModalPortal>
-          <NoteModal
+          <PostModal
             onCancel={() => setOpenModal(false)}
             onOK={() => router.back()}
           >
@@ -134,9 +124,9 @@ export default function CreateNotePage() {
               <br />
               그래도 이동하시겠어요?
             </p>
-          </NoteModal>
+          </PostModal>
         </ModalPortal>
       )}
-    </section>
+    </>
   );
 }

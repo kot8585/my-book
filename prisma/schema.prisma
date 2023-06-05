@@ -20,12 +20,15 @@ model User {
   //user primary admin
   type String @default("USER")
   createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime? @map("updated_at")
+  updatedAt DateTime? @map("updated_at") 
 
   posts Post[]
   userBook UserBook[]
+  comments Comment[] 
   follower Follow[] @relation("Follower")
   followee Follow[] @relation("Followee")
+  likePosts Likes[] 
+  bookmarkPosts Bookmarks[]
 }
 
 model UserBook {
@@ -47,37 +50,41 @@ model UserBook {
   endDate DateTime? @map("end_date")
   createdAt DateTime @map("created_at") @default(now()) 
 
-  user User @relation(fields: [userIdx], references: [idx])
+  user User @relation(fields: [userIdx], references: [idx], onDelete: Cascade)
 
   @@id([userIdx, isbn])
 }
 
 
 model Post {
-  userIdx Int @map("user_idx")
-  isbn String
+  userIdx Int? @map("user_idx")
+  isbn String?
   idx Int @id @default(autoincrement())
   page Int 
   title String? @db.VarChar(255)
-  content String?
+  content String
   type String? 
   createdAt DateTime @map("created_at") @default(now()) 
-  updatedAt DateTime? @map("updated_ap")
+  updatedAt DateTime? @map("updated_at")
   openType String  @map("open_type")
-  bookmarkUserIdx String? @map("bookmark_user_idx")
-  likeUserIdx String?  @map("like_user_idx")
 
-  user User @relation(fields: [userIdx], references: [idx])
-  userBook UserBook @relation(fields: [isbn, userIdx], references: [isbn, userIdx])
+  comments Comment[]
+  user User? @relation(fields: [userIdx], references: [idx], onDelete: SetNull)
+  userBook UserBook? @relation(fields: [isbn, userIdx], references: [isbn, userIdx], onDelete: SetNull)
+  likeUsers Likes[] 
+  bookmarkUsers Bookmarks[]
 }
 
 model Comment {
-  postIdx Int @map("post_idx")
+  postIdx Int? @map("post_idx")
   userIdx Int @map("user_idx")
   idx Int @id @default(autoincrement())
   content String
   createdAt DateTime @map("created_at") @default(now())
-  updatedAt DateTime? @map("updated_at")
+  updatedAt DateTime? @map("updated_at") @updatedAt
+
+  post Post? @relation(fields: [postIdx], references: [idx], onDelete: SetNull)
+  user User @relation(fields: [userIdx], references: [idx])
 }
 
 model Follow {
@@ -87,4 +94,22 @@ model Follow {
 
   followerUser User @relation("Follower", fields: [followerIdx], references: [idx])
   followeeUser User @relation("Followee", fields: [followeeIdx], references: [idx])
+}
+
+model Likes {
+  post Post @relation(fields: [postIdx], references: [idx], onDelete: Cascade)
+  postIdx Int 
+  user User @relation(fields: [userIdx], references: [idx], onDelete: Cascade)
+  userIdx Int
+
+  @@id([postIdx, userIdx])
+}
+
+model Bookmarks {
+  post Post @relation(fields: [postIdx], references: [idx], onDelete: Cascade)
+  postIdx Int 
+  user User @relation(fields: [userIdx], references: [idx], onDelete: Cascade)
+  userIdx Int
+
+  @@id([postIdx, userIdx])
 }
