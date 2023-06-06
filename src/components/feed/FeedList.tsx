@@ -11,7 +11,7 @@ export default function FeedList({ feedType }: Props) {
   const { feedList, isLoading, error } = useFeedListQuery(feedType);
 
   return (
-    <ul className="w-full">
+    <ul className="w-full h-full">
       {feedList &&
         feedList.map((feed) => <FeedCard key={feed.idx} feed={feed} />)}
       {!isLoading && !error && feedList?.length === 0 && (

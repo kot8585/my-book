@@ -1,11 +1,10 @@
 "use client";
 
+import AsyncErrorBoundary from "@/components/common/AsyncErrorBoundary";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import SimpleButton from "@/components/common/SimpleButton";
 import FeedList from "@/components/feed/FeedList";
 import { Suspense, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
-import Error from "../error";
 
 export type FeedType = "ALL" | "FOLLOW";
 
@@ -37,18 +36,9 @@ export default function FeedPage() {
         ))}
       </header>
       <Suspense fallback={<LoadingSpinner />}>
-        <ErrorBoundary
-          fallbackRender={({ error, resetErrorBoundary }) => (
-            <Error
-              error={error}
-              resetErrorBoundary={resetErrorBoundary}
-              notifyType="CONTAINER"
-            />
-          )}
-          resetKeys={[type]}
-        >
+        <AsyncErrorBoundary errorNotifyType="CONTAINER" resetKeys={[type]}>
           <FeedList feedType={type} />
-        </ErrorBoundary>
+        </AsyncErrorBoundary>
       </Suspense>
     </section>
   );
