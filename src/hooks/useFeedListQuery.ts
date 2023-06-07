@@ -1,4 +1,4 @@
-import { FeedType } from "@/app/feed/page";
+import { FeedType } from "@/components/feed/FeedTemplate";
 import { FeedResponseType } from "@/model/post";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";

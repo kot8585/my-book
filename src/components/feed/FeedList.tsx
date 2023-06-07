@@ -1,7 +1,7 @@
-import { FeedType } from "@/app/feed/page";
 import { useFeedListQuery } from "@/hooks/useFeedListQuery";
 import ShowMessage from "../common/ShowMessage";
 import FeedCard from "./FeedCard";
+import { FeedType } from "./FeedTemplate";
 
 export type Props = {
   feedType: FeedType;
