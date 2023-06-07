@@ -8,8 +8,14 @@ export type PostType = {
   type: "NOTE" | "REVIEW";
   openType: "NONE" | "FOLLOW" | "ALL";
   createdAt: Date;
+  updatedAt: Date | null;
   likeUsers: { userIdx: number }[];
   bookmarkUsers: { userIdx: number }[];
+  _count: {
+    likeUsers: number;
+    bookmarkUsers: number;
+    comments: number;
+  };
 };
 
 export type OnlyPost = Omit<PostType, "bookMarkUserIdx" | "likeUserIdx">;
@@ -48,6 +54,7 @@ export type CommentType = {
   idx: number;
   content: string;
   createdAt: Date;
+  updatedAt: Date | null;
   user: {
     name: string;
     image?: string;

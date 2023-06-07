@@ -31,18 +31,14 @@ export default function UserBookDetailPage() {
               className="border rounded-lg border-gray-300 p-2 my-3"
             >
               <div className="flex justify-between">
-                <PostCard
-                  idx={post.idx}
-                  title={post.title}
-                  content={post.content}
-                />
+                <PostCard {...post} />
                 <PostThreeDotButton postIdx={post.idx} author={post.userIdx} />
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-400">
                   {formatDate(post.createdAt)}
                 </span>
-                <ReactionButtonList postIdx={post.idx} />
+                <ReactionButtonList {...post} />
               </div>
             </li>
           ))}
