@@ -1,12 +1,15 @@
 import { rest } from "msw";
 import { server } from "../../../test/__mocks__/server";
 
+export const listDataHandler = rest.get(
+  `/api/posts?feedType=TOTAL`,
+  (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(feedListData));
+  }
+);
+
 export const setupListDataHandler = () => {
-  server.use(
-    rest.get(`/api/posts?feedType=TOTAL`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json(feedListData));
-    })
-  );
+  server.use(listDataHandler);
 };
 
 export const setupEmptyDataHandler = () => {
@@ -19,8 +22,8 @@ export const setupEmptyDataHandler = () => {
 
 export const setupErrorDataHandler = () => {
   server.use(
-    rest.get(`/api/posts?feedType=FOLLOW`, (req, res, ctx) => {
-      return res(ctx.status(403));
+    rest.get(`/api/posts?feedType=TOTAL`, (req, res, ctx) => {
+      return res(ctx.status(500));
     })
   );
 };

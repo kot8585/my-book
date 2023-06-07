@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { rest } from "msw";
 import { SessionProvider } from "next-auth/react";
 import FeedList from "./FeedList";
-import { ListDataHandler } from "./__test__/MswHandlers";
+import { listDataHandler } from "./__test__/MswHandlers";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +30,7 @@ export const Default: Story = {
   },
   parameters: {
     msw: {
-      handlers: ListDataHandler,
+      handlers: listDataHandler,
     },
   },
 };
