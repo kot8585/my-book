@@ -176,19 +176,3 @@ export async function updatePost(post) {
     },
   });
 }
-
-export async function getCommentList(postIdx) {
-  return await prisma.comment.findMany({
-    where: {
-      postIdx,
-    },
-    include: {
-      user: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
-    },
-  });
-}

@@ -21,7 +21,7 @@ export default function PostDetail() {
   }
 
   return (
-    <section className="flex flex-col py-3">
+    <section className="flex flex-col p-3">
       {detailPost && (
         <>
           <article className="flex flex-col border-b border-gray-300">
@@ -41,7 +41,7 @@ export default function PostDetail() {
             </div>
           </article>
           <section className="border-t border-gray-200 py-2">
-            <PostCommentCreateForm />
+            <PostCommentCreateForm postIdx={detailPost.idx} />
             <PostCommentList comments={detailPost.comments} />
           </section>
         </>

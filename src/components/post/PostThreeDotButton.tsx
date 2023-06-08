@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import ModalPortal from "../common/ModalPortal";
-import PostModal from "./PostModal";
+import CancelOkModal from "../common/CancelOkModal";
 import ThreeDotsButton from "../common/ThreeDotsButton";
 import { toast } from "react-toastify";
 
@@ -39,7 +39,7 @@ export default function PostThreeDotButton({ postIdx, author }: Props) {
       )}
       {openModal && (
         <ModalPortal>
-          <PostModal
+          <CancelOkModal
             onCancel={() => {
               setOpenModal(false);
             }}
@@ -55,7 +55,7 @@ export default function PostThreeDotButton({ postIdx, author }: Props) {
           >
             <h5 className="font-bold text-lg p-3">메모 삭제</h5>
             <p>메모를 정말 삭제하시겠어요?</p>
-          </PostModal>
+          </CancelOkModal>
         </ModalPortal>
       )}
     </>

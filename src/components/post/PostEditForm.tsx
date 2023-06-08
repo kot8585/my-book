@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import ModalPortal from "../common/ModalPortal";
 import SimpleButton from "../common/SimpleButton";
-import PostModal from "./PostModal";
+import CancelOkModal from "../common/CancelOkModal";
 
 type Props = {
   originalPost: PostDetailType;
@@ -114,7 +114,7 @@ export default function PostEditForm({ originalPost, setLoading }: Props) {
       </form>
       {openModal && (
         <ModalPortal>
-          <PostModal
+          <CancelOkModal
             onCancel={() => setOpenModal(false)}
             onOK={() => router.back()}
           >
@@ -124,7 +124,7 @@ export default function PostEditForm({ originalPost, setLoading }: Props) {
               <br />
               그래도 이동하시겠어요?
             </p>
-          </PostModal>
+          </CancelOkModal>
         </ModalPortal>
       )}
     </>

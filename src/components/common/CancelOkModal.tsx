@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function PostModal({ onCancel, onOK, children }: Props) {
+export default function CancelOkModal({ onCancel, onOK, children }: Props) {
   return (
     <section
       className="fixed top-0 left-0 flex items-center justify-center w-full h-full z-50 bg-neutral-500/90"
