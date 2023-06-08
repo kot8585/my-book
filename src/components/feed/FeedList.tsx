@@ -1,7 +1,7 @@
-import { FeedType } from "@/app/feed/page";
 import { useFeedListQuery } from "@/hooks/useFeedListQuery";
 import ShowMessage from "../common/ShowMessage";
 import FeedCard from "./FeedCard";
+import { FeedType } from "./FeedTemplate";
 
 export type Props = {
   feedType: FeedType;
@@ -11,7 +11,7 @@ export default function FeedList({ feedType }: Props) {
   const { feedList, isLoading, error } = useFeedListQuery(feedType);
 
   return (
-    <ul className="w-full">
+    <ul className="w-full h-full">
       {feedList &&
         feedList.map((feed) => <FeedCard key={feed.idx} feed={feed} />)}
       {!isLoading && !error && feedList?.length === 0 && (

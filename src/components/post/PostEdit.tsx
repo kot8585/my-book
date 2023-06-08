@@ -3,11 +3,10 @@
 import usePostDetailQuery from "@/hooks/usePostDetailQuery";
 import { useSession } from "next-auth/react";
 import { redirect, useParams } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+import AsyncErrorBoundary from "../common/AsyncErrorBoundary";
 import LoadingSpinner from "../common/LoadingSpinner";
 import PostEditForm from "./PostEditForm";
-import { ErrorBoundary } from "react-error-boundary";
-import Error from "@/app/error";
 
 export default function PostEdit() {
   const { data: session } = useSession();
@@ -30,19 +29,11 @@ export default function PostEdit() {
           <LoadingSpinner />
         </div>
       )}
-      <ErrorBoundary
-        fallbackRender={({ error, resetErrorBoundary }) => (
-          <Error
-            error={error}
-            resetErrorBoundary={resetErrorBoundary}
-            notifyType="TOAST"
-          />
-        )}
-      >
+      <AsyncErrorBoundary errorNotifyType="TOAST">
         {originalPost && (
           <PostEditForm originalPost={originalPost} setLoading={setLoading} />
         )}
-      </ErrorBoundary>
+      </AsyncErrorBoundary>
     </section>
   );
 }

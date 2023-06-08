@@ -1,12 +1,12 @@
 import { CommentType } from "@/model/post";
 import { formatDate } from "@/utils/formatDate";
-import PostCard from "../post/PostCard";
+import PostCard from "./PostCard";
 
 type Props = {
   comments: CommentType[];
 };
 
-export default function CommentList({ comments }: Props) {
+export default function PostCommentList({ comments }: Props) {
   return (
     <ul>
       {comments &&
@@ -25,7 +25,8 @@ export default function CommentList({ comments }: Props) {
             </div>
             <div className="flex flex-col">
               <span className="text-sm">{comment.user.name}</span>
-              <PostCard idx={comment.idx} content={comment.content} />
+              {/* TODO: 왜 여기다가 postCard를 넣었지? */}
+              <PostCard {...comment} />
               <span className="text-sm text-gray-500">
                 {formatDate(comment.createdAt)}
               </span>

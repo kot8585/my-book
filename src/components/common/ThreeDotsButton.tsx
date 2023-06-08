@@ -8,11 +8,12 @@ type Props = {
   onDelete: () => void;
 };
 
+// 버튼이 클릭되면 dropDownMenu를 보여준다.
 export default function ThreeDotsButton({ onEdit, onDelete }: Props) {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative text-end">
       <button onClick={() => setClicked(!clicked)}>
         <BsThreeDots className="text-gray-400 h-4 w-7" />
       </button>

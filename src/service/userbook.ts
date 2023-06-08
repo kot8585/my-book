@@ -10,14 +10,28 @@ export async function selectUserBook(userIdx: number, isbn: string) {
   const result = await prisma.userBook.findUnique({
     where: { userIdx_isbn: { userIdx, isbn } },
     include: {
-      posts: true,
+      posts: {
+        select: {
+          idx: true,
+          userIdx: true,
+          page: true,
+          title: true,
+          content: true,
+          type: true,
+          createdAt: true,
+          updatedAt: true,
+          openType: true,
+          _count: {
+            select: { likeUsers: true, bookmarkUsers: true, comments: true },
+          },
+        },
+      },
     },
   });
   return result;
 }
 
 export async function createUserBook(userBook: UserBook) {
-  console.log("userBook", userBook);
   return await prisma.$queryRaw`
     INSERT INTO USERBOOK (user_idx, isbn, title, author, publisher, image_url, category_name, total_page, status, type, comment) VALUES (${userBook.userIdx}, ${userBook.isbn}, ${userBook.title}, ${userBook.author}, ${userBook.publisher}, ${userBook.imageUrl}, ${userBook.categoryName}, ${userBook.totalPage}, ${userBook.status}, ${userBook.type}, ${userBook.comment});
   `;
