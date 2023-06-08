@@ -10,6 +10,7 @@ export interface Props extends ComponentProps<"button"> {
   bgColor?: string;
   border?: boolean;
   color?: string;
+  customStyle?: string;
 }
 
 export default function SimpleButton({
@@ -22,6 +23,7 @@ export default function SimpleButton({
   bgColor,
   border,
   color,
+  customStyle,
   ...rest
 }: Props) {
   return (
@@ -35,6 +37,7 @@ export default function SimpleButton({
         bgColor,
         border,
         color,
+        customStyle,
       })}
       {...rest}
     >
@@ -51,8 +54,9 @@ function getContainerStyle({
   bgColor,
   border,
   color,
+  customStyle,
 }: Omit<Props, "children" | "onClick">) {
-  const baseStyle = "rounded-xl cursor-pointer";
+  const baseStyle = "cursor-pointer";
 
   const bgColorStyle = bgColor ? `${bgColor}` : "";
 
@@ -64,7 +68,7 @@ function getContainerStyle({
 
   const colorStyle = !active && color ? `${color}` : "text-primary-color";
 
-  return `${baseStyle} ${bgColorStyle}  ${sizeStyle} ${borderStyle} ${colorStyle} ${activeStyle}`;
+  return `${baseStyle} ${bgColorStyle}  ${sizeStyle} ${borderStyle} ${colorStyle} ${activeStyle} ${customStyle}`;
 }
 
 function getActiveStyle(active?: boolean, activeType?: string) {

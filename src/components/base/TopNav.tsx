@@ -67,6 +67,7 @@ export default function TopNav() {
               size="small"
               bgColor="bg-secondary-color"
               color="text-white"
+              customStyle="rounded-lg"
               onClick={() => signIn()}
             >
               로그인
