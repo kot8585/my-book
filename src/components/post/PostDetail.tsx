@@ -42,7 +42,10 @@ export default function PostDetail() {
           </article>
           <section className="border-t border-gray-200 py-2">
             <PostCommentCreateForm postIdx={detailPost.idx} />
-            <PostCommentList comments={detailPost.comments} />
+            <PostCommentList
+              comments={detailPost.comments}
+              postAuthorIdx={detailPost.userIdx}
+            />
           </section>
         </>
       )}

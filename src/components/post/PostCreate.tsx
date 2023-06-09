@@ -1,3 +1,5 @@
+"use client";
+
 import { useCreatePostMutation } from "@/hooks/useCreatePostMutation";
 import { CreateNoteType } from "@/model/post";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -97,6 +99,7 @@ export default function PostCreate({ userIdx }: Props) {
               {readingType === "PAPER" ? "p" : "%"}
             </span>
           </div>
+
           <textarea
             placeholder="내용을 입력해주세요"
             rows={10}

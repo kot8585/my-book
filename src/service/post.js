@@ -132,6 +132,9 @@ export async function getPost(postIdx) {
           idx: true,
           content: true,
           createdAt: true,
+          updatedAt: true,
+          postIdx: true,
+          userIdx: true,
           user: {
             select: {
               name: true,

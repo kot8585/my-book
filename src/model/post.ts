@@ -1,3 +1,5 @@
+import { PostCommentType } from "./comment";
+
 export type PostType = {
   userIdx: number;
   isbn: string;
@@ -47,16 +49,5 @@ export type PostDetailType = {
     name: string;
   };
   userBook: FeedBookInfoType;
-  comments: CommentType[];
+  comments: PostCommentType[];
 } & PostType;
-
-export type CommentType = {
-  idx: number;
-  content: string;
-  createdAt: Date;
-  updatedAt: Date | null;
-  user: {
-    name: string;
-    image?: string;
-  };
-};

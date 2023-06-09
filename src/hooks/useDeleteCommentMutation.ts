@@ -1,20 +1,18 @@
-import { CreateCommentType } from "@/model/comment";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
-export const useCreateCommentMutation = () => {
+export const useDeleteCommentMutation = () => {
   const queryClient = useQueryClient();
 
-  const addComment = useMutation(
-    (newComment: CreateCommentType) => {
-      return axios.post(
-        `/api/posts/${newComment.postIdx}/comments`,
-        newComment
-      );
+  const deleteComment = useMutation(
+    ({ commentIdx, postIdx }: { commentIdx: number; postIdx: number }) => {
+      return axios.delete(`/api/posts/${postIdx}/comments/${commentIdx}`);
     },
     {
       onSuccess: (data, variables) => {
         queryClient.invalidateQueries({
+          //TODO: postIdx 넣기
+          //TODO: optimistic 처리
           queryKey: ["posts", "detail", variables.postIdx],
         });
       },
@@ -23,6 +21,5 @@ export const useCreateCommentMutation = () => {
       },
     }
   );
-
-  return { addComment };
+  return { deleteComment };
 };

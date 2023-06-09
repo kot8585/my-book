@@ -51,7 +51,7 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
       return;
     }
 
-    const comment = { postIdx, content, userIdx: user.idx };
+    const comment = { postIdx, content: content.trim(), userIdx: user.idx };
 
     addComment.mutate(comment, {
       onSuccess: () => {
