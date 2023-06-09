@@ -1,3 +1,5 @@
+"use client";
+
 import { useCreatePostMutation } from "@/hooks/useCreatePostMutation";
 import { CreateNoteType } from "@/model/post";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -6,7 +8,7 @@ import { toast } from "react-toastify";
 import LoadingSpinner from "../common/LoadingSpinner";
 import SimpleButton from "../common/SimpleButton";
 import ModalPortal from "../common/ModalPortal";
-import PostModal from "./PostModal";
+import CancelOkModal from "../common/CancelOkModal";
 
 type Props = {
   userIdx: number;
@@ -49,14 +51,13 @@ export default function PostCreate({ userIdx }: Props) {
 
     addNote.mutate(note, {
       onSuccess: () => {
-        setLoading(false);
         router.back();
       },
       onError(error, variables, context) {
-        setLoading(false);
         toast.error("노트 작성에 실패하였습니다.");
       },
     });
+    setLoading(false);
   };
 
   return (
@@ -98,6 +99,7 @@ export default function PostCreate({ userIdx }: Props) {
               {readingType === "PAPER" ? "p" : "%"}
             </span>
           </div>
+
           <textarea
             placeholder="내용을 입력해주세요"
             rows={10}
@@ -122,7 +124,7 @@ export default function PostCreate({ userIdx }: Props) {
       </form>
       {openModal && (
         <ModalPortal>
-          <PostModal
+          <CancelOkModal
             onCancel={() => setOpenModal(false)}
             onOK={() => router.back()}
           >
@@ -132,7 +134,7 @@ export default function PostCreate({ userIdx }: Props) {
               <br />
               그래도 이동하시겠어요?
             </p>
-          </PostModal>
+          </CancelOkModal>
         </ModalPortal>
       )}
     </section>

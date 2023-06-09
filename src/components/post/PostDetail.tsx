@@ -7,6 +7,7 @@ import PostCard from "./PostCard";
 import ReactionButtonList from "./Reactions";
 import PostThreeDotButton from "./PostThreeDotButton";
 import PostCommentList from "./PostCommentList";
+import PostCommentCreateForm from "./PostCommentCreateForm";
 
 export default function PostDetail() {
   const params = useParams();
@@ -20,7 +21,7 @@ export default function PostDetail() {
   }
 
   return (
-    <section className="flex flex-col py-3">
+    <section className="flex flex-col p-3">
       {detailPost && (
         <>
           <article className="flex flex-col border-b border-gray-300">
@@ -40,12 +41,11 @@ export default function PostDetail() {
             </div>
           </article>
           <section className="border-t border-gray-200 py-2">
-            <input
-              type="text"
-              className="w-full bg-gray-200 p-1 rounded-lg mb-2 outline-none"
-              placeholder="댓글을 작성해 주세요"
+            <PostCommentCreateForm postIdx={detailPost.idx} />
+            <PostCommentList
+              comments={detailPost.comments}
+              postAuthorIdx={detailPost.userIdx}
             />
-            <PostCommentList comments={detailPost.comments} />
           </section>
         </>
       )}

@@ -44,7 +44,6 @@ export const useUpdateLikeMutation = () => {
     },
 
     onError: (error, updateLikes, context: any) => {
-      console.log("previous post: ", context.previousPosts);
       queryClient.setQueryData(["posts", "likePosts"], context.previousPosts);
       console.error(error);
     },

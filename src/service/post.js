@@ -132,6 +132,9 @@ export async function getPost(postIdx) {
           idx: true,
           content: true,
           createdAt: true,
+          updatedAt: true,
+          postIdx: true,
+          userIdx: true,
           user: {
             select: {
               name: true,
@@ -173,22 +176,6 @@ export async function updatePost(post) {
     data: {
       ...post,
       updatedAt: new Date(),
-    },
-  });
-}
-
-export async function getCommentList(postIdx) {
-  return await prisma.comment.findMany({
-    where: {
-      postIdx,
-    },
-    include: {
-      user: {
-        select: {
-          name: true,
-          image: true,
-        },
-      },
     },
   });
 }
