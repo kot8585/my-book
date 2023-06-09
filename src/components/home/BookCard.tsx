@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaPlay } from "react-icons/fa";
 import { MdStickyNote2 } from "react-icons/md";
 import HomeBookInfo from "./HomeBookInfo";
+import SimpleButton from "../common/SimpleButton";
 type Props = {
   book: UserBook;
   size: "medium" | "large";
@@ -13,7 +14,10 @@ export default function BookCard({ book, size }: Props) {
   const router = useRouter();
   return (
     <li
-      onClick={() => router.push(`/userbooks/${book.userIdx}/${book.isbn}`)}
+      onClick={(e: React.MouseEvent) => {
+        if (e.target === e.currentTarget)
+          router.push(`/userbooks/${book.userIdx}/${book.isbn}`);
+      }}
       className={`flex flex-col relative gap-1 ${
         size === "large"
           ? ""
@@ -27,18 +31,21 @@ export default function BookCard({ book, size }: Props) {
         comment={book.comment}
         size={size}
       />
-      <div className="bg-brand-color text-white rounded-full py-2 p-3 flex items-center justify-center w-fit gap-2 absolute -bottom-5 right-2">
-        <FaPlay size={15} className="pl-[0.12rem]" />
+      <div className="bg-brand-color text-white rounded-full flex items-center justify-center absolute -bottom-5 right-2">
+        <SimpleButton customStyle="pl-2 py-2">
+          <FaPlay className="w-5 h-5 text-gray-50" />
+        </SimpleButton>
         <span> | </span>
-
-        <MdStickyNote2
-          size={18}
+        <SimpleButton
+          customStyle="pr-2 py-2"
           onClick={() => {
             router.push(
               `/posts/write?isbn=${book.isbn}&readingType=${book.type}`
             );
           }}
-        />
+        >
+          <MdStickyNote2 className="w-7 h-7  text-gray-50" />
+        </SimpleButton>
       </div>
     </li>
   );
