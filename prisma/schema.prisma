@@ -62,7 +62,7 @@ model Post {
   idx Int @id @default(autoincrement())
   page Int 
   title String? @db.VarChar(255)
-  content String
+  content String @db.Text
   type String? 
   createdAt DateTime @map("created_at") @default(now()) 
   updatedAt DateTime? @map("updated_at")
@@ -79,7 +79,7 @@ model Comment {
   postIdx Int? @map("post_idx")
   userIdx Int @map("user_idx")
   idx Int @id @default(autoincrement())
-  content String
+  content String @db.Text
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime? @map("updated_at") @updatedAt
 
