@@ -6,9 +6,12 @@ type Context = {
 };
 
 export async function GET(_: NextRequest, context: Context) {
-  return getPost(parseInt(context.params.postIdx)).then((data) =>
-    NextResponse.json(data)
-  );
+  return getPost(parseInt(context.params.postIdx))
+    .then((res) => NextResponse.json(res))
+    .catch((error) => {
+      console.error(error);
+      return new Response(JSON.stringify(error), { status: 500 });
+    });
 }
 
 export async function PUT(req: NextRequest) {

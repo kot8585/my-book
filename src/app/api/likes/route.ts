@@ -6,7 +6,7 @@ import { getMyLikes } from "@/service/user";
 
 export async function GET() {
   const session: Session | null = await getServerSession(authOptions);
-  if (!session || !session?.user) {
+  if (!session?.user) {
     return NextResponse.json([]);
   }
 

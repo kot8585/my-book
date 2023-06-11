@@ -4,7 +4,7 @@ import PostThreeDotButton from "../post/PostThreeDotButton";
 import ReactionButtonList from "../post/Reactions";
 import UserInfo from "../user/UserInfo";
 import FeedBookInfo from "./FeedBookInfo";
-import PostCard from "../post/PostCard";
+import PostListCard from "../post/PostListCard";
 
 type Props = {
   feed: FeedResponseType;
@@ -17,7 +17,7 @@ export default function FeedCard({ feed }: Props) {
         <FeedBookInfo book={feed.userBook} createdAt={feed.createdAt} />
         <PostThreeDotButton postIdx={feed.idx} author={feed.userIdx} />
       </div>
-      <PostCard {...feed} />
+      <PostListCard {...feed} />
       <hr />
       <div className="flex justify-between items-center">
         <UserInfo image={feed.user.image} name={feed.user.name} />

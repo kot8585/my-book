@@ -1,7 +1,7 @@
 "use client";
 
 import BookCard from "@/components/home/BookCard";
-import PostCard from "@/components/post/PostCard";
+import PostListCard from "@/components/post/PostListCard";
 import PostThreeDotButton from "@/components/post/PostThreeDotButton";
 import ReactionButtonList from "@/components/post/Reactions";
 import useUserBookDetailQuery from "@/hooks/useUserBookDetailQuery";
@@ -31,7 +31,7 @@ export default function UserBookDetailPage() {
               className="border rounded-lg border-gray-300 p-2 my-3"
             >
               <div className="flex justify-between">
-                <PostCard {...post} />
+                <PostListCard {...post} />
                 <PostThreeDotButton postIdx={post.idx} author={post.userIdx} />
               </div>
               <div className="flex justify-between">
