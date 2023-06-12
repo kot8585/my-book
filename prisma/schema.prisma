@@ -88,12 +88,13 @@ model Comment {
 }
 
 model Follow {
-  idx Int @id @default(autoincrement())
   followerIdx Int @map("follower_idx") 
   followeeIdx Int @map("followee_idx")
 
   followerUser User @relation("Follower", fields: [followerIdx], references: [idx])
   followeeUser User @relation("Followee", fields: [followeeIdx], references: [idx])
+
+  @@id([followerIdx, followeeIdx])
 }
 
 model Likes {

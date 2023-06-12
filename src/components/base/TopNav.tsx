@@ -56,7 +56,7 @@ export default function TopNav() {
           {session ? (
             <SimpleButton
               size="small"
-              bgColor="bg-secondary-color"
+              className="bg-secondary-color"
               color="text-white"
               onClick={() => signOut()}
             >
@@ -65,9 +65,8 @@ export default function TopNav() {
           ) : (
             <SimpleButton
               size="small"
-              bgColor="bg-secondary-color"
               color="text-white"
-              customStyle="rounded-lg"
+              className="rounded-lg bg-secondary-color"
               onClick={() => signIn()}
             >
               로그인

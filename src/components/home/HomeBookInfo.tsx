@@ -22,7 +22,7 @@ export default function HomeBookInfo({
         {title}
       </h2>
       <section className="flex gap-2 text-primary-color">
-        <img src={imageUrl} width={60} height={120} className="rounded-lg" />
+        <img src={imageUrl} width={60} height={120} className="rounded-lg " />
         <div className="flex flex-col text-sm">
           <span>
             {/* {book.startDate

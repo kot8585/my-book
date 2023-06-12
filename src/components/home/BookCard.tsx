@@ -31,12 +31,12 @@ export default function BookCard({ book, size }: Props) {
         size={size}
       />
       <div className="bg-brand-color text-white rounded-full flex items-center justify-center absolute -bottom-5 right-2">
-        <SimpleButton customStyle="pl-2 py-2">
+        <SimpleButton className="pl-2 py-2">
           <FaPlay className="w-5 h-5 text-gray-50" />
         </SimpleButton>
         <span> | </span>
         <SimpleButton
-          customStyle="pr-2 py-2"
+          className="pr-2 py-2"
           onClick={(e: React.MouseEvent) => {
             e.stopPropagation();
             router.push(

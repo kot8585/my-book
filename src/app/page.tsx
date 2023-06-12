@@ -16,22 +16,13 @@ export default async function HomePage() {
 
   return (
     <main className="w-full p-3 flex flex-col">
-      <section>
-        <SimpleButton bgColor="bg-gray-200" size="small">
-          읽고 있는 책
-        </SimpleButton>
-        <Suspense fallback={<LoadingSpinner />}>
-          <UserBookCardList status="READING" userIdx={user.idx} />
-        </Suspense>
-      </section>
-      <section>
-        <SimpleButton bgColor="bg-gray-200" size="small">
-          읽고 싶은 책
-        </SimpleButton>
-        <Suspense fallback={<LoadingSpinner />}>
-          <UserBookCardList status="TOREAD" userIdx={user.idx} />
-        </Suspense>
-      </section>
+      <Suspense fallback={<LoadingSpinner />}>
+        <UserBookCardList status="READING" userIdx={user.idx} />
+      </Suspense>
+
+      <Suspense fallback={<LoadingSpinner />}>
+        <UserBookCardList status="TOREAD" userIdx={user.idx} />
+      </Suspense>
     </main>
   );
 }

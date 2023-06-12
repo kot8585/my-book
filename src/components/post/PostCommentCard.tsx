@@ -140,8 +140,7 @@ export default function PostCommentCard({ comment, postAuthorIdx }: Props) {
             <SimpleButton
               type="submit"
               size="x-small"
-              bgColor="bg-brand-color"
-              customStyle="px-2 rounded-full mx-3 my-2"
+              className="px-2 rounded-full mx-3 my-2 bg-brand-color"
               color="text-white"
               disabled={loading}
             >

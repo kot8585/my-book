@@ -2,9 +2,9 @@ import { FeedResponseType } from "@/model/post";
 
 import PostThreeDotButton from "../post/PostThreeDotButton";
 import ReactionButtonList from "../post/Reactions";
-import UserInfo from "../user/UserInfo";
 import FeedBookInfo from "./FeedBookInfo";
 import PostListCard from "../post/PostListCard";
+import Avatar from "../common/Avatar";
 
 type Props = {
   feed: FeedResponseType;
@@ -20,7 +20,10 @@ export default function FeedCard({ feed }: Props) {
       <PostListCard {...feed} />
       <hr />
       <div className="flex justify-between items-center">
-        <UserInfo image={feed.user.image} name={feed.user.name} />
+        <div className="flex justify-start gap-2 items-center">
+          <Avatar image={feed.user.image} />
+          <span className="text-xs text-gray-400">{feed.user.name}</span>
+        </div>
         <ReactionButtonList {...feed} />
       </div>
     </li>

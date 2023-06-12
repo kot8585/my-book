@@ -22,6 +22,41 @@ export async function addUser({ userId, email, name, image, type }: OAuthUser) {
   });
 }
 
+export async function getUserFollowCnt(userIdx: number) {
+  const data = await prisma.user.findUnique({
+    where: { idx: userIdx },
+    include: {
+      _count: {
+        select: { follower: true, followee: true },
+      },
+      // 사용자가 팔로우 하는 사람들
+      followee: {
+        select: {
+          followerIdx: true,
+        },
+      },
+      // 사용자를 팔로잉 하는 사람들
+      follower: {
+        select: {
+          followeeIdx: true,
+        },
+      },
+    },
+  });
+
+  const result = {
+    ...data,
+    followee: data?.follower.map((data) => data.followeeIdx),
+    follower: data?.followee.map((data) => data.followerIdx),
+    followerCnt: data?._count.followee ?? 0,
+    followeeCnt: data?._count.follower ?? 0,
+  };
+
+  console.log("result : ", result);
+
+  return result;
+}
+
 export async function getIdxByEmail(email: string) {
   const result = await prisma.user.findUnique({
     where: {

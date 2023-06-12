@@ -1,9 +1,6 @@
-import React from "react";
-import { ToastContainer, toast } from "react-toastify";
+"use client";
 
-type Props = {
-  title: string;
-};
+import { ToastContainer } from "react-toastify";
 
 export default function BottomCenterToast() {
   return (

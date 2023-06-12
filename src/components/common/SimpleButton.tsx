@@ -3,41 +3,35 @@ import { ComponentProps, ReactNode } from "react";
 export interface Props extends ComponentProps<"button"> {
   children: ReactNode;
   onClick?: (e: React.MouseEvent) => void;
-  rounded?: boolean;
   activeType?: "bold" | "color" | "underline";
   active?: boolean;
   size?: "x-small" | "small" | "middle" | "large";
-  bgColor?: string;
   border?: boolean;
   color?: string;
-  customStyle?: string;
+  className?: string;
 }
 
 export default function SimpleButton({
   children,
   onClick,
-  rounded,
   activeType,
   active,
   size,
-  bgColor,
   border,
   color,
-  customStyle,
+  className,
   ...rest
 }: Props) {
   return (
     <button
       onClick={onClick}
       className={getContainerStyle({
-        rounded,
         activeType,
         active,
         size,
-        bgColor,
         border,
         color,
-        customStyle,
+        className: className,
       })}
       {...rest}
     >
@@ -47,18 +41,14 @@ export default function SimpleButton({
 }
 
 function getContainerStyle({
-  rounded,
   activeType,
   active,
   size,
-  bgColor,
   border,
   color,
-  customStyle,
+  className: customStyle,
 }: Omit<Props, "children" | "onClick">) {
   const baseStyle = "cursor-pointer";
-
-  const bgColorStyle = bgColor ? `${bgColor}` : "";
 
   let activeStyle = getActiveStyle(active, activeType);
 
@@ -68,7 +58,7 @@ function getContainerStyle({
 
   const colorStyle = !active && color ? `${color}` : "text-primary-color";
 
-  return `${baseStyle} ${bgColorStyle}  ${sizeStyle} ${borderStyle} ${colorStyle} ${activeStyle} ${customStyle}`;
+  return `${baseStyle}  ${sizeStyle} ${borderStyle} ${colorStyle} ${activeStyle} ${customStyle}`;
 }
 
 function getActiveStyle(active?: boolean, activeType?: string) {
