@@ -3,11 +3,12 @@
 import usePostDetailQuery from "@/hooks/usePostDetailQuery";
 import { notFound, useParams } from "next/navigation";
 import FeedBookInfo from "../feed/FeedBookInfo";
-import PostCard from "./PostCard";
+import PostListCard from "./PostListCard";
 import ReactionButtonList from "./Reactions";
 import PostThreeDotButton from "./PostThreeDotButton";
 import PostCommentList from "./PostCommentList";
 import PostCommentCreateForm from "./PostCommentCreateForm";
+import PostContent from "./PostContent";
 
 export default function PostDetail() {
   const params = useParams();
@@ -24,7 +25,7 @@ export default function PostDetail() {
     <section className="flex flex-col p-3">
       {detailPost && (
         <>
-          <article className="flex flex-col border-b border-gray-300">
+          <article className="flex flex-col border-b border-gray-300 gap-2">
             <div className="flex justify-between items-center">
               <FeedBookInfo
                 book={detailPost.userBook}
@@ -35,7 +36,7 @@ export default function PostDetail() {
                 author={detailPost.userIdx}
               />
             </div>
-            <PostCard {...detailPost} />
+            <PostContent {...detailPost} />
             <div className="py-2 self-end ">
               <ReactionButtonList {...detailPost} />
             </div>
