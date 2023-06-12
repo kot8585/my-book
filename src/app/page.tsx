@@ -16,7 +16,7 @@ export default async function HomePage() {
 
   return (
     <main className="w-full p-3 flex flex-col">
-      <section className="h-52">
+      <section>
         <SimpleButton bgColor="bg-gray-200" size="small">
           읽고 있는 책
         </SimpleButton>
@@ -24,7 +24,7 @@ export default async function HomePage() {
           <UserBookCardList status="READING" userIdx={user.idx} />
         </Suspense>
       </section>
-      <section className="h-52">
+      <section>
         <SimpleButton bgColor="bg-gray-200" size="small">
           읽고 싶은 책
         </SimpleButton>

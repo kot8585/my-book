@@ -20,7 +20,7 @@ export default function BookCard({ book, size }: Props) {
       className={`flex flex-col relative gap-1 ${
         size === "large"
           ? ""
-          : "rounded-lg border border-gray-200 shadow-lg px-3 py-1 w-60"
+          : "rounded-lg border border-gray-200 shadow-lg px-3 py-1 w-60 h-36"
       }`}
     >
       <HomeBookInfo
