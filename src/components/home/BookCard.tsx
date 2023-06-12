@@ -14,9 +14,8 @@ export default function BookCard({ book, size }: Props) {
   const router = useRouter();
   return (
     <li
-      onClick={(e: React.MouseEvent) => {
-        if (e.target === e.currentTarget)
-          router.push(`/userbooks/${book.userIdx}/${book.isbn}`);
+      onClick={() => {
+        router.push(`/userbooks/${book.userIdx}/${book.isbn}`);
       }}
       className={`flex flex-col relative gap-1 ${
         size === "large"
@@ -38,7 +37,8 @@ export default function BookCard({ book, size }: Props) {
         <span> | </span>
         <SimpleButton
           customStyle="pr-2 py-2"
-          onClick={() => {
+          onClick={(e: React.MouseEvent) => {
+            e.stopPropagation();
             router.push(
               `/posts/write?isbn=${book.isbn}&readingType=${book.type}`
             );

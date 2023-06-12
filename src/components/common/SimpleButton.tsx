@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode } from "react";
 
 export interface Props extends ComponentProps<"button"> {
   children: ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   rounded?: boolean;
   activeType?: "bold" | "color" | "underline";
   active?: boolean;
