@@ -1,5 +1,5 @@
 import SimpleButton from "@/components/common/SimpleButton";
-import UserBookCardList from "@/components/home/UserBookCardList";
+import HomeBookCardList from "@/components/home/HomeBookCardList";
 import { Session, getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "./api/auth/[...nextauth]/route";
@@ -17,11 +17,11 @@ export default async function HomePage() {
   return (
     <main className="w-full p-3 flex flex-col">
       <Suspense fallback={<LoadingSpinner />}>
-        <UserBookCardList status="READING" userIdx={user.idx} />
+        <HomeBookCardList status="READING" userIdx={user.idx} />
       </Suspense>
 
       <Suspense fallback={<LoadingSpinner />}>
-        <UserBookCardList status="TOREAD" userIdx={user.idx} />
+        <HomeBookCardList status="TOREAD" userIdx={user.idx} />
       </Suspense>
     </main>
   );

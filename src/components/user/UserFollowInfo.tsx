@@ -48,11 +48,13 @@ export default function UserFollowInfo({ userIdx, loggedUser }: Props) {
               <span>팔로워</span>
             </div>
           </div>
-          <FollowButton
-            following={following}
-            followerIdx={loggedUser?.idx}
-            followeeIdx={userIdx}
-          />
+          {userIdx === loggedUser?.idx && (
+            <FollowButton
+              following={following}
+              followerIdx={loggedUser?.idx}
+              followeeIdx={userIdx}
+            />
+          )}
         </>
       )}
     </section>

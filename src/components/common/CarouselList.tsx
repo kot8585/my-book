@@ -24,7 +24,11 @@ export default function CarouselList({
   children: React.ReactNode;
 }) {
   return (
-    <Carousel containerClass="w-full flex gap-2 h-48" responsive={responsive}>
+    <Carousel
+      containerClass="w-full flex gap-2 h-48"
+      responsive={responsive}
+      itemClass="rounded-lg border border-gray-200 shadow-lg mr-3  w-60 h-36 p-1"
+    >
       {children}
     </Carousel>
   );
