@@ -1,11 +1,11 @@
 "use client";
 
+import { useCreateCommentMutation } from "@/hooks/useCreateCommentMutation";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
-import SimpleButton from "../common/SimpleButton";
-import { useCreateCommentMutation } from "@/hooks/useCreateCommentMutation";
-import { redirect } from "next/navigation";
 import { toast } from "react-toastify";
+import Avatar from "../common/Avatar";
+import SimpleButton from "../common/SimpleButton";
 
 type Props = {
   postIdx: number;
@@ -14,10 +14,6 @@ type Props = {
 export default function PostCommentCreateForm({ postIdx }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
-
-  if (!user) {
-    redirect("/auth/signin");
-  }
 
   //TODO: 사용자가 없다면 기본 이미지를 보여주기
   const { addComment } = useCreateCommentMutation();
@@ -38,6 +34,10 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
   }, [textAreaRef, content]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (!user) {
+      toast.error("로그인을 해주세요");
+      return;
+    }
     const val = e.target?.value;
 
     setContent(val);
@@ -48,6 +48,11 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
     setLoading(true);
     if (!content || !content.trim()) {
       setErrors({ content: "한글자 이상 입력해주세요" });
+      return;
+    }
+
+    if (!user) {
+      toast.error("로그인을 해주세요");
       return;
     }
 
@@ -67,7 +72,7 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
 
   return (
     <section className="flex gap-2 py-2">
-      <img src={user?.image || ""} className="w-8 h-8 rounded-full" />
+      <Avatar image={user?.image} />
       <form className="flex flex-col w-full" onSubmit={handleSubmit}>
         <textarea
           name="content"

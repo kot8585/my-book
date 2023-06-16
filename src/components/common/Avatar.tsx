@@ -19,7 +19,9 @@ export default function Avatar({ image, size = "small" }: Props) {
           referrerPolicy="no-referrer"
         />
       ) : (
-        <BiUserCircle />
+        <BiUserCircle
+          className={`${getImageSizeStyle(size).container} text-gray-400`}
+        />
       )}
     </div>
   );
