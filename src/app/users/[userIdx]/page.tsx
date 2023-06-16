@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import HomeBookCardList from "@/components/home/HomeBookCardList";
+import UserBookCardList from "@/components/user/UserBookCardList";
 import UserFollowInfo from "@/components/user/UserFollowInfo";
 import { getServerSession } from "next-auth";
 
@@ -13,8 +13,8 @@ export default async function UserPage({ params: { userIdx } }: Props) {
   return (
     <main className="w-full py-3 flex flex-col px-5 gap-4">
       <UserFollowInfo userIdx={userIdxToNum} loggedUser={loggedUser} />
-      <HomeBookCardList status="READING" userIdx={userIdxToNum} />
-      <HomeBookCardList status="TOREAD" userIdx={userIdxToNum} />
+      <UserBookCardList status="READING" userIdx={userIdxToNum} />
+      <UserBookCardList status="TOREAD" userIdx={userIdxToNum} />
     </main>
   );
 }

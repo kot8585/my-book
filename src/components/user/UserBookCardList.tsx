@@ -1,24 +1,22 @@
 "use client";
 
 import { useUserBookListQuery } from "@/hooks/useUserBookListQuery";
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { LuBookPlus } from "react-icons/lu";
 import CarouselList from "../common/CarouselList";
-import ReadingNoteButtons from "../common/ReadingNoteButtons";
 import SimpleButton from "../common/SimpleButton";
-import BookCard from "./BookCard";
+import BookCard from "../home/BookCard";
 
 type Props = {
   status: "READING" | "TOREAD" | "COMPLETED";
   userIdx: number;
 };
 
-export default function HomeBookCardList({ status, userIdx }: Props) {
-  const { data: session } = useSession();
-  const user = session?.user;
-
-  const { userbooks, error } = useUserBookListQuery(userIdx, status);
+export default function UserBookCardList({ status, userIdx }: Props) {
+  const { userbooks, error } = useUserBookListQuery(
+    userIdx,
+    status,
+    `/users/${userIdx}`
+  );
   console.log("userbook", userbooks);
   return (
     <section>
@@ -28,15 +26,17 @@ export default function HomeBookCardList({ status, userIdx }: Props) {
       <CarouselList>
         {userbooks && userbooks.length ? (
           userbooks.map((userbook) => (
-            <BookCard key={userbook.isbn} book={userbook} size="medium">
-              {user && <ReadingNoteButtons {...userbook} />}
-            </BookCard>
+            <BookCard
+              key={userbook.isbn}
+              book={userbook}
+              size="medium"
+            ></BookCard>
           ))
         ) : (
-          <Link href="/search">
-            <div className="font-semibold pb-2">책을 추가해주세요</div>
+          <div>
+            <div className="font-semibold pb-2">등록된 책이 없습니다</div>
             <LuBookPlus className="w-16 h-16 text-brand-color opacity-50 m-auto" />
-          </Link>
+          </div>
         )}
       </CarouselList>
     </section>

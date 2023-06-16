@@ -5,13 +5,13 @@ import axios from "axios";
 export const useUserBookListQuery = (
   userIdx: number,
   status: "READING" | "TOREAD" | "COMPLETED",
-  pathname: string
+  pathname: string = ""
 ) => {
   const { data: userbooks, error } = useQuery(
     ["userbooks", "list", userIdx, { filter: status }],
     (): Promise<UserBook[]> =>
       axios
-        .get(`/api/${pathname}/userbooks/?status=${status}`)
+        .get(`/api${pathname}/userbooks/?status=${status}`)
         .then((res) => res.data),
     {
       suspense: true,
