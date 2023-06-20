@@ -1,6 +1,8 @@
 import { CreateCommentType } from "@/model/comment";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export const useCreateCommentMutation = () => {
   const queryClient = useQueryClient();
@@ -17,9 +19,10 @@ export const useCreateCommentMutation = () => {
         queryClient.invalidateQueries({
           queryKey: ["posts", "detail", variables.postIdx],
         });
+        toast.info("댓글이 정상적으로 작성되었습니다.");
       },
       onError: (error) => {
-        console.error(error);
+        toast.error(getErrorMessage(error, "댓글 작성에 실패하였습니다."));
       },
     }
   );

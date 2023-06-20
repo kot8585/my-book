@@ -9,6 +9,7 @@ import LoadingSpinner from "../common/LoadingSpinner";
 import SimpleButton from "../common/SimpleButton";
 import ModalPortal from "../common/ModalPortal";
 import CancelOkModal from "../common/CancelOkModal";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 type Props = {
   userIdx: number;
@@ -52,9 +53,6 @@ export default function PostCreate({ userIdx }: Props) {
     addNote.mutate(note, {
       onSuccess: () => {
         router.back();
-      },
-      onError(error, variables, context) {
-        toast.error("노트 작성에 실패하였습니다.");
       },
     });
     setLoading(false);

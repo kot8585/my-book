@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import SimpleButton from "../common/SimpleButton";
 import CommentThreeDotsButton from "./CommentThreeDotsButton";
 import { useUpdateCommentMutation } from "@/hooks/useUpdateCommentMutation";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 type Props = {
   comment: PostCommentType;
@@ -80,7 +81,7 @@ export default function PostCommentCard({ comment, postAuthorIdx }: Props) {
       },
       onError(error, variables, context) {
         console.error("PostCommentCard Error: ", error);
-        toast.error("댓글 작성에 실패하였습니다.");
+        toast.error(getErrorMessage(error, "댓글 작성에 실패하였습니다."));
       },
     });
 

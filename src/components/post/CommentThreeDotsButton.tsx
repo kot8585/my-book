@@ -5,7 +5,6 @@ import { DefaultCommentType } from "@/model/comment";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast } from "react-toastify";
 import CancelOkModal from "../common/CancelOkModal";
 import ModalPortal from "../common/ModalPortal";
 import ThreeDotsButton from "../common/ThreeDotsButton";
@@ -45,15 +44,7 @@ export default function CommentThreeDotsButton({
               setOpenModal(false);
             }}
             onOK={() => {
-              deleteComment.mutate(
-                { commentIdx: idx, postIdx },
-                {
-                  onSuccess: () => {
-                    toast.info("정상적으로 삭제되었습니다.");
-                  },
-                  onError: () => toast.error("요청에 실패하였습니다."),
-                }
-              );
+              deleteComment.mutate({ commentIdx: idx, postIdx });
               setOpenModal(false);
             }}
           >

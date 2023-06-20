@@ -1,5 +1,7 @@
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const useUpdateLikeMutation = () => {
   const queryClient = useQueryClient();
@@ -45,7 +47,7 @@ export const useUpdateLikeMutation = () => {
 
     onError: (error, updateLikes, context: any) => {
       queryClient.setQueryData(["posts", "likePosts"], context.previousPosts);
-      console.error(error);
+      toast.error(getErrorMessage(error, "좋아요 처리를 실패하였습니다."));
     },
   });
 

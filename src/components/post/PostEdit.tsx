@@ -4,8 +4,8 @@ import usePostDetailQuery from "@/hooks/usePostDetailQuery";
 import { useSession } from "next-auth/react";
 import { redirect, useParams } from "next/navigation";
 import { useState } from "react";
-import AsyncErrorBoundary from "../common/AsyncErrorBoundary";
 import LoadingSpinner from "../common/LoadingSpinner";
+import QueryErrorBoundary from "../common/QueryErrorBoundary";
 import PostEditForm from "./PostEditForm";
 
 export default function PostEdit() {
@@ -16,7 +16,7 @@ export default function PostEdit() {
   }
 
   const params = useParams();
-  const { detailPost: originalPost, error } = usePostDetailQuery({
+  const { detailPost: originalPost } = usePostDetailQuery({
     postIdx: parseInt(params.postIdx),
   });
 
@@ -29,11 +29,11 @@ export default function PostEdit() {
           <LoadingSpinner />
         </div>
       )}
-      <AsyncErrorBoundary errorNotifyType="TOAST">
+      <QueryErrorBoundary>
         {originalPost && (
           <PostEditForm originalPost={originalPost} setLoading={setLoading} />
         )}
-      </AsyncErrorBoundary>
+      </QueryErrorBoundary>
     </section>
   );
 }

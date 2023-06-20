@@ -8,7 +8,6 @@ const queryClient = new QueryClient({
     queries: {
       retry: 0,
       suspense: true,
-      // 발생한 에러를 렌더단계에서 발생시키고 가장 가까운 오류 경계로 전파
       useErrorBoundary: true,
     },
   },

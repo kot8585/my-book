@@ -6,6 +6,7 @@ import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Avatar from "../common/Avatar";
 import SimpleButton from "../common/SimpleButton";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 type Props = {
   postIdx: number;
@@ -61,9 +62,6 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
     addComment.mutate(comment, {
       onSuccess: () => {
         setContent("");
-      },
-      onError(error, variables, context) {
-        toast.error("댓글 작성에 실패하였습니다.");
       },
     });
 

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
-import SimpleButton from "../common/SimpleButton";
+import { Suspense, useState } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
-import AsyncErrorBoundary from "../common/AsyncErrorBoundary";
+import QueryErrorBoundary from "../common/QueryErrorBoundary";
+import SimpleButton from "../common/SimpleButton";
 import FeedList from "./FeedList";
 
 export type FeedType = "ALL" | "FOLLOW";
@@ -35,9 +35,9 @@ export default function FeedTemplate() {
         ))}
       </header>
       <Suspense fallback={<LoadingSpinner />}>
-        <AsyncErrorBoundary errorNotifyType="CONTAINER" resetKeys={[type]}>
+        <QueryErrorBoundary resetKeys={[type]}>
           <FeedList feedType={type} />
-        </AsyncErrorBoundary>
+        </QueryErrorBoundary>
       </Suspense>
     </section>
   );

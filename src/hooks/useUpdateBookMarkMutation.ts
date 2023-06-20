@@ -1,5 +1,7 @@
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function useUpdateBookMarkMutation() {
   const queryClient = useQueryClient();
@@ -52,7 +54,7 @@ export default function useUpdateBookMarkMutation() {
         ["posts", "bookmarkPosts"],
         context.previousPosts
       );
-      console.error(error);
+      toast.error(getErrorMessage(error, "북마크 등록을 실패하였습니다."));
     },
   });
 

@@ -1,6 +1,8 @@
 import { PostCommentType } from "@/model/comment";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const useUpdateCommentMutation = () => {
   const queryClient = useQueryClient();
@@ -19,7 +21,7 @@ export const useUpdateCommentMutation = () => {
         });
       },
       onError: (error) => {
-        console.error(error);
+        toast.error(getErrorMessage(error, "댓글 수정을 실패하였습니다."));
       },
     }
   );

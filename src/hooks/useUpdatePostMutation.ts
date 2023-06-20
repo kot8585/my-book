@@ -1,6 +1,8 @@
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { Post } from "@prisma/client";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 export const useUpdatePostMutation = () => {
   const queryClient = useQueryClient();
@@ -16,7 +18,7 @@ export const useUpdatePostMutation = () => {
         });
       },
       onError: (error) => {
-        console.error(error);
+        toast.error(getErrorMessage(error, "글 수정을 실패하였습니다."));
       },
     }
   );

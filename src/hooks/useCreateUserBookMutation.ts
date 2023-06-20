@@ -1,6 +1,8 @@
 import { addUserBookType } from "@/model/userBook";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 export default function useCreateUserBookMutation() {
   const queryClient = useQueryClient();
@@ -18,6 +20,9 @@ export default function useCreateUserBookMutation() {
             { userIdx: data.userIdx, status: data.status },
           ],
         });
+      },
+      onError: (error) => {
+        toast.error(getErrorMessage(error, "책 추가에 실패하였습니다."));
       },
     }
   );

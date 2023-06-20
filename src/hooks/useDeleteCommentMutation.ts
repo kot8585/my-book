@@ -1,5 +1,7 @@
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const useDeleteCommentMutation = () => {
   const queryClient = useQueryClient();
@@ -18,6 +20,7 @@ export const useDeleteCommentMutation = () => {
       },
       onError: (error) => {
         console.error(error);
+        toast.error(getErrorMessage(error, "댓글 삭제를 실패하였습니다."));
       },
     }
   );
