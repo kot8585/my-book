@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
       console.log("=======🔥re", result);
       const parse = JSON.parse(result);
       console.log("======parse::::", parse);
-      return parse.item?.map((item) => {
+      return parse.item?.map((item: any) => {
         return {
           title: item.title,
           isbn: item.isbn,
