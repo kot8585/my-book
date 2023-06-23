@@ -1,4 +1,4 @@
-import { useFeedListQuery } from "@/hooks/useFeedListQuery";
+import useFeedListQuery from "@/hooks/useFeedListQuery";
 import ShowMessage from "../common/ShowMessage";
 import FeedCard from "./FeedCard";
 import { FeedType } from "./FeedTemplate";

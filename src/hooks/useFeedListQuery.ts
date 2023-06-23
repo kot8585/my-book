@@ -1,24 +1,26 @@
+"use client";
 import { FeedType } from "@/components/feed/FeedTemplate";
 import { FeedResponseType } from "@/model/post";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
+import useSWR from "swr";
 
-export const useFeedListQuery = (feedType: FeedType) => {
-  async function getPost() {
-    return await axios
-      .get(`${process.env.NEXT_PUBLIC_URL}/api/posts?feedType=${feedType}`)
-      .then((response) => response.data);
-  }
+export default function useFeedListQuery(feedType: FeedType) {
+  // const {
+  //   data: feedList,
+  //   isLoading,
+  //   error,
+  // } = useQuery<FeedResponseType[], AxiosError>(["feeds", feedType], () =>
+  //   axios
+  //     .get(`${process.env.NEXT_PUBLIC_URL}/api/posts?feedType=${feedType}`)
+  //     .then((response) => response.data)
+  // );
 
   const {
     data: feedList,
     isLoading,
     error,
-    refetch,
-    isRefetching,
-  } = useQuery<FeedResponseType[], AxiosError>(["feeds", feedType], getPost, {
-    suspense: true,
-  });
+  } = useSWR<FeedResponseType[]>(`/api/posts?feedType=${feedType}`);
 
-  return { feedList, isLoading, error, refetch, isRefetching };
-};
+  return { feedList, isLoading, error };
+}
