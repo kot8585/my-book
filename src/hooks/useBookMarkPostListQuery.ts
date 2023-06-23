@@ -7,7 +7,9 @@ export const useBookMarkPostListQuery = () => {
     isLoading,
     error,
   } = useQuery<number[]>(["posts", "bookmarkPosts"], () =>
-    axios.get("/api/bookmarks").then((res) => res.data)
+    axios
+      .get(`${process.env.NEXT_PUBLIC_URL}/api/bookmarks`)
+      .then((res) => res.data)
   );
 
   return { bookmarkPosts, isLoading, error };

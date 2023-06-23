@@ -10,7 +10,7 @@ type Props = {
 export default function useUserBookDetailQuery({ isbn, userIdx }: Props) {
   const fetchUserBookInfo: () => Promise<UserBookDetail> = async () => {
     return axios
-      .get(`/api/userbooks/${userIdx}/${isbn}`)
+      .get(`${process.env.NEXT_PUBLIC_URL}/api/userbooks/${userIdx}/${isbn}`)
       .then((res) => res.data);
   };
 

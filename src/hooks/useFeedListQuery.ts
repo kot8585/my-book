@@ -6,7 +6,7 @@ import axios, { AxiosError } from "axios";
 export const useFeedListQuery = (feedType: FeedType) => {
   async function getPost() {
     return await axios
-      .get(`/api/posts?feedType=${feedType}`)
+      .get(`${process.env.NEXT_PUBLIC_URL}/api/posts?feedType=${feedType}`)
       .then((response) => response.data);
   }
 
@@ -17,7 +17,6 @@ export const useFeedListQuery = (feedType: FeedType) => {
     refetch,
     isRefetching,
   } = useQuery<FeedResponseType[], AxiosError>(["feeds", feedType], getPost, {
-    staleTime: 3 * 1000 * 60,
     suspense: true,
   });
 

@@ -6,7 +6,11 @@ export const useSearchBookQuery = (keyword: string | null) => {
     ["search", "book", keyword],
     () =>
       axios
-        .get(`/api/search?keyword=${encodeURIComponent(keyword!)}`)
+        .get(
+          `${
+            process.env.NEXT_PUBLIC_URL
+          }/api/search?keyword=${encodeURIComponent(keyword!)}`
+        )
         .then((response) => {
           return response.data;
         }),

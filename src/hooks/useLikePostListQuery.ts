@@ -8,7 +8,10 @@ export const useLikePostListQuery = () => {
     error,
   } = useQuery(
     ["posts", "likePosts"],
-    (): Promise<number[]> => axios.get("/api/likes").then((res) => res.data)
+    (): Promise<number[]> =>
+      axios
+        .get(`${process.env.NEXT_PUBLIC_URL}/api/likes`)
+        .then((res) => res.data)
   );
   return { likePosts, isLoading, error };
 };
