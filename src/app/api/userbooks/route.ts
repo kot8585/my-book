@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
 
   if (!user) {
     console.error("로그인이 되어있지 않음");
-    return new Response("Authentication Error 로그인이 되어있지 않음", {
+    return NextResponse.json("Authentication Error 로그인이 되어있지 않음", {
       status: 401,
     });
   }
@@ -19,12 +19,12 @@ export async function GET(req: NextRequest) {
   const status = req.nextUrl.searchParams.get("status");
 
   if (!status) {
-    return new Response("Bad Request", { status: 400 });
+    return NextResponse.json("Bad Request", { status: 400 });
   }
 
   return getUserBooks(user.idx, status)
     .then((res) => NextResponse.json(res))
-    .catch((error) => new Response(JSON.stringify(error), { status: 500 }));
+    .catch((error) => NextResponse.json(error, { status: 500 }));
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {

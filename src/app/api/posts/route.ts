@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     const user = session?.user;
     if (!user) {
       console.error("로그인이 되어있지 않음");
-      return new Response("Authentication Error 로그인이 되어있지 않음", {
+      return NextResponse.json("Authentication Error 로그인이 되어있지 않음", {
         status: 401,
       });
     } else {
