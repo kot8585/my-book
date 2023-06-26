@@ -33,7 +33,7 @@ export async function selectUserBook(userIdx: number, isbn: string) {
 
 export async function createUserBook(userBook: UserBook) {
   return await prisma.$queryRaw`
-    INSERT INTO USERBOOK (user_idx, isbn, title, author, publisher, image_url, category_name, total_page, status, type, comment) VALUES (${userBook.userIdx}, ${userBook.isbn}, ${userBook.title}, ${userBook.author}, ${userBook.publisher}, ${userBook.imageUrl}, ${userBook.categoryName}, ${userBook.totalPage}, ${userBook.status}, ${userBook.type}, ${userBook.comment});
+    INSERT INTO book_app.UserBook (user_idx, isbn, title, author, publisher, image_url, category_name, total_page, status, type, comment) VALUES (${userBook.userIdx}, ${userBook.isbn}, ${userBook.title}, ${userBook.author}, ${userBook.publisher}, ${userBook.imageUrl}, ${userBook.categoryName}, ${userBook.totalPage}, ${userBook.status}, ${userBook.type}, ${userBook.comment});
   `;
 
   // return await prisma.userBook.create({

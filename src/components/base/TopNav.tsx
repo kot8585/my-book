@@ -40,7 +40,7 @@ export default function TopNav() {
     <header className="sticky top-0 bg-white z-10 border-b hidden xl:block p-2">
       <div className="max-w-screen-xl flex justify-between items-center mx-auto px-3">
         <Link href="/">
-          <Image src={logo} alt="키핑북" width={40} height={40} />
+          <Image src={logo} alt="투게더북" width={40} height={40} />
         </Link>
         <nav className="flex items-center gap-2 pl-3">
           {menu.map((item) => (
@@ -56,7 +56,7 @@ export default function TopNav() {
           {session ? (
             <SimpleButton
               size="small"
-              className="bg-secondary-color"
+              className="rounded-lg bg-secondary-color"
               color="text-white"
               onClick={() => signOut()}
             >
