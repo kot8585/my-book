@@ -1,7 +1,6 @@
 "use client";
 
-import usePostDetailQuery from "@/hooks/usePostDetailQuery";
-import { notFound, useParams } from "next/navigation";
+import { PostDetailType } from "@/model/post";
 import QueryErrorBoundary from "../common/QueryErrorBoundary";
 import FeedBookInfo from "../feed/FeedBookInfo";
 import PostCommentCreateForm from "./PostCommentCreateForm";
@@ -10,17 +9,11 @@ import PostContent from "./PostContent";
 import PostThreeDotButton from "./PostThreeDotButton";
 import ReactionButtonList from "./Reactions";
 
-export default function PostDetail() {
-  const params = useParams();
+type Props = {
+  detailPost: PostDetailType;
+};
 
-  const { detailPost, error, isLoading } = usePostDetailQuery({
-    postIdx: parseInt(params.postIdx),
-  });
-
-  if (!detailPost && !error && !isLoading) {
-    return notFound();
-  }
-
+export default function PostDetail({ detailPost }: Props) {
   return (
     <section className="flex flex-col p-3">
       {detailPost && (

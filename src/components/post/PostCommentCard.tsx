@@ -12,7 +12,7 @@ import { getErrorMessage } from "@/utils/getErrorMessage";
 
 type Props = {
   comment: PostCommentType;
-  postAuthorIdx: number;
+  postAuthorIdx: number | null;
 };
 
 export default function PostCommentCard({ comment, postAuthorIdx }: Props) {

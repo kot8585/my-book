@@ -1,4 +1,6 @@
+import { Prisma, UserBook } from "@prisma/client";
 import { PostCommentType } from "./comment";
+import { getPost } from "@/service/post";
 
 export type PostType = {
   userIdx: number;
@@ -30,24 +32,11 @@ export type FeedResponseType = {
   userBook: FeedBookInfoType;
 } & PostType;
 
-export type FeedBookInfoType = {
-  title: string;
-  imageUrl: string;
-  author: string;
-  page?: number;
-  type: string;
-};
+export type PostDetailType = Prisma.PromiseReturnType<typeof getPost>;
+
+export type FeedBookInfoType = Partial<UserBook>;
 
 export type CreateNoteType = Pick<
   PostType,
   "userIdx" | "type" | "openType" | "page" | "content" | "isbn"
 >;
-
-export type PostDetailType = {
-  user: {
-    image?: string;
-    name: string;
-  };
-  userBook: FeedBookInfoType;
-  comments: PostCommentType[];
-} & PostType;

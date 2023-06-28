@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 
 type Props = {
   postIdx: number;
-  author: number;
+  author: number | null;
 };
 
 // 삭제할때는 Modal을 보여주고, 수정할때는 post/write로 이동시켜준다.

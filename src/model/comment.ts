@@ -5,7 +5,7 @@ export type CreateCommentType = {
 };
 
 export type DefaultCommentType = {
-  postIdx: number;
+  postIdx: number | null;
   userIdx: number;
   content: string;
   idx: number;
@@ -15,7 +15,7 @@ export type DefaultCommentType = {
 
 export type PostCommentType = {
   user: {
-    name: string;
-    image?: string;
+    name: string | null;
+    image?: string | null;
   };
 } & DefaultCommentType;

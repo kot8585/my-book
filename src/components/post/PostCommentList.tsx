@@ -3,7 +3,7 @@ import PostCommentCard from "./PostCommentCard";
 
 type Props = {
   comments: PostCommentType[];
-  postAuthorIdx: number;
+  postAuthorIdx: number | null;
 };
 
 export default function PostCommentList({ comments, postAuthorIdx }: Props) {

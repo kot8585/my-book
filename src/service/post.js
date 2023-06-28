@@ -42,7 +42,7 @@ export async function getFollowingPostList(userIdx) {
       p.user_idx, p.isbn, p.idx, p.page, p.title, p.content, p.created_at,  
       b.title as book_title, b.image_url as book_image_url, b.author as book_author,  
       u.image as user_image_url, u.name as user_name, count_likeUsers, count_bookmarkUsers, count_comments
-    FROM POST p 
+    FROM Post p 
     LEFT JOIN user u 
       ON p.user_idx = u.idx 
     LEFT JOIN userbook b 
