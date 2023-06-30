@@ -17,7 +17,12 @@ export const useCreateCommentMutation = () => {
     {
       onSuccess: (data, variables) => {
         queryClient.invalidateQueries({
-          queryKey: ["posts", "detail", variables.postIdx],
+          queryKey: [
+            "posts",
+            "detail",
+            variables.postIdx.toString(),
+            "reactions",
+          ],
         });
         toast.info("댓글이 정상적으로 작성되었습니다.");
       },

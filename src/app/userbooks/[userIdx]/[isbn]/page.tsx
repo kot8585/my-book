@@ -48,7 +48,15 @@ export default function UserBookDetailPage() {
                 <span className="text-sm text-gray-400">
                   {formatDate(post.createdAt)}
                 </span>
-                <ReactionButtonList {...post} />
+                <ReactionButtonList
+                  {...post}
+                  queryKey={[
+                    "posts",
+                    "userbooks",
+                    "detail",
+                    { isbn: params.isbn, userIdx: userIdx },
+                  ]}
+                />
               </div>
             </li>
           ))}

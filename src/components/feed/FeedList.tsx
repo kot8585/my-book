@@ -1,4 +1,7 @@
+"use client";
+
 import useFeedListQuery from "@/hooks/useFeedListQuery";
+
 import ShowMessage from "../common/ShowMessage";
 import FeedCard from "./FeedCard";
 import { FeedType } from "./FeedTemplate";
@@ -13,7 +16,9 @@ export default function FeedList({ feedType }: Props) {
   return (
     <ul className="w-full h-full">
       {feedList &&
-        feedList.map((feed) => <FeedCard key={feed.idx} feed={feed} />)}
+        feedList.map((feed) => (
+          <FeedCard key={feed.idx} feed={feed} feedType={feedType} />
+        ))}
       {!isLoading && !error && feedList?.length === 0 && (
         <ShowMessage message="작성된 피드가 없습니다" />
       )}

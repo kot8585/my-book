@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export default function useUpdateBookMarkMutation() {
+export default function useUpdateBookMarkMutation(queryKey: string[]) {
   const queryClient = useQueryClient();
 
   const setBookmarks = useMutation({
@@ -20,26 +20,32 @@ export default function useUpdateBookMarkMutation() {
       bookmarked: boolean;
       userIdx: number;
     }) => {
-      await queryClient.cancelQueries({ queryKey: ["posts", "bookmarkPosts"] });
-      const previousPosts = queryClient.getQueryData([
-        "posts",
-        "bookmarkPosts",
-      ]);
-      let setQuery;
-      if (updateBookmarks.bookmarked) {
-        setQuery = (oldBookmarkPosts: any) =>
-          oldBookmarkPosts.filter(
-            (bookmarkPostIdx: number) =>
-              bookmarkPostIdx !== updateBookmarks.postIdx
-          );
-      } else {
-        setQuery = (oldBookmarkPosts: any) => [
-          ...oldBookmarkPosts,
-          updateBookmarks.postIdx,
-        ];
-      }
+      await queryClient.cancelQueries(queryKey);
+      const previousPosts = queryClient.getQueryData(queryKey);
 
-      queryClient.setQueryData(["posts", "bookmarkPosts"], setQuery);
+      let setQuery;
+      setQuery = (oldPosts: any) => {
+        let post;
+        if (queryKey.includes("list")) {
+          post = oldPosts.find(
+            (oldPost: any) => oldPost.idx === updateBookmarks.postIdx
+          );
+        } else {
+          post = oldPosts;
+        }
+        if (updateBookmarks.bookmarked) {
+          post.bookmarkUsers.pop({ userIdx: updateBookmarks.userIdx });
+          --post._count.bookmarkUsers;
+        } else {
+          post.bookmarkUsers.push({
+            userIdx: updateBookmarks.userIdx,
+          });
+          ++post._count.bookmarkUsers;
+        }
+        return oldPosts;
+      };
+
+      queryClient.setQueryData(queryKey, setQuery);
       return { previousPosts };
     },
 

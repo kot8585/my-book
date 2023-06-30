@@ -1,22 +1,21 @@
 "use client";
 
-import React, { Suspense } from "react";
+import { PostReactionsType } from "@/model/post";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import QueryErrorBoundary from "../common/QueryErrorBoundary";
 import PostCommentCreateForm from "./PostCommentCreateForm";
 import PostCommentList from "./PostCommentList";
-import { PostDetailType, PostReactionsType } from "@/model/post";
 import ReactionButtonList from "./Reactions";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 
 type Props = {
   postIdx: number;
 };
 
 export default function PostReactions({ postIdx }: Props) {
-  const { data: postReactions } = useQuery<PostReactionsType>(
-    ["posts", "detail", postIdx, "reactions"],
-    () => axios.get(`/api/posts/${postIdx}/reactions`).then((res) => res.data)
+  const queryKey = ["posts", "detail", postIdx.toString(), "reactions"];
+  const { data: postReactions } = useQuery<PostReactionsType>(queryKey, () =>
+    axios.get(`/api/posts/${postIdx}/reactions`).then((res) => res.data)
   );
 
   return (
@@ -26,6 +25,7 @@ export default function PostReactions({ postIdx }: Props) {
           <div className="py-2 self-end ">
             <QueryErrorBoundary>
               <ReactionButtonList
+                queryKey={queryKey}
                 _count={postReactions._count}
                 idx={postIdx}
                 likeUsers={postReactions.likeUsers}
@@ -34,17 +34,16 @@ export default function PostReactions({ postIdx }: Props) {
             </QueryErrorBoundary>
           </div>
           <section className="border-t-2 border-gray-300 my-2 flex-">
-            <Suspense>
-              <QueryErrorBoundary>
-                <PostCommentCreateForm postIdx={postReactions.idx} />
-              </QueryErrorBoundary>
-              <QueryErrorBoundary>
-                <PostCommentList
-                  comments={postReactions.comments}
-                  postAuthorIdx={postReactions.userIdx}
-                />
-              </QueryErrorBoundary>
-            </Suspense>
+            <QueryErrorBoundary>
+              <PostCommentCreateForm postIdx={postReactions.idx} />
+            </QueryErrorBoundary>
+            <QueryErrorBoundary>
+              <PostCommentList
+                key={postReactions._count.comments}
+                comments={postReactions.comments}
+                postAuthorIdx={postReactions.userIdx}
+              />
+            </QueryErrorBoundary>
           </section>
         </>
       )}

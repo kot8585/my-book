@@ -17,7 +17,12 @@ export const useUpdateCommentMutation = () => {
     {
       onSuccess: (data, variables) => {
         queryClient.invalidateQueries({
-          queryKey: ["posts", "detail", variables.postIdx],
+          queryKey: [
+            "posts",
+            "detail",
+            variables.postIdx?.toString(),
+            "reactions",
+          ],
         });
       },
       onError: (error) => {

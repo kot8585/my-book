@@ -5,11 +5,10 @@ import {
 } from "@/service/post";
 import { Session, getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import { authOptions, handler } from "../auth/[...nextauth]/route";
-import { getIdxByEmail } from "@/service/user";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 // http://localhost:3000/api/posts?feedType=${feedType}
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   const feedType = req.nextUrl.searchParams.get("feedType");
 
   if (feedType === "FOLLOW") {
@@ -25,7 +24,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
         .then((res) => NextResponse.json(res))
         .catch((error) => {
           console.error(error);
-          return new Response(JSON.stringify(error), { status: 500 });
+          return NextResponse.json(error, { status: 500 });
         });
     }
   }
@@ -34,7 +33,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     .then((res) => NextResponse.json(res))
     .catch((error) => {
       console.error(error);
-      return new Response(JSON.stringify(error), { status: 500 });
+      return NextResponse.json(error, { status: 500 });
     });
 }
 

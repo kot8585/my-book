@@ -5,12 +5,14 @@ import ReactionButtonList from "../post/Reactions";
 import FeedBookInfo from "./FeedBookInfo";
 import PostListCard from "../post/PostListCard";
 import Avatar from "../common/Avatar";
+import { FeedType } from "./FeedTemplate";
 
 type Props = {
   feed: FeedResponseType;
+  feedType: FeedType;
 };
 
-export default function FeedCard({ feed }: Props) {
+export default function FeedCard({ feed, feedType }: Props) {
   return (
     <li className="flex flex-col border border-gray-200 rounded-xl p-2 shadow-lg gap-2 my-5">
       <div className="flex justify-between">
@@ -24,7 +26,7 @@ export default function FeedCard({ feed }: Props) {
           <Avatar image={feed.user.image} />
           <span className="text-xs text-gray-400">{feed.user.name}</span>
         </div>
-        <ReactionButtonList {...feed} />
+        <ReactionButtonList {...feed} queryKey={["posts", "list", feedType]} />
       </div>
     </li>
   );

@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import BottomCenterToast from "../common/BottomCenterToast";
 
 type Props = {
+  queryKey: Array<any>;
   idx: number;
   _count: {
     likeUsers: number;
@@ -27,6 +28,7 @@ type Props = {
 };
 
 export default function ReactionButtonList({
+  queryKey,
   idx,
   _count: {
     likeUsers: likeUserCnt,
@@ -39,10 +41,9 @@ export default function ReactionButtonList({
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { setBookmarks } = useUpdateBookMarkMutation();
-  const { setLikes } = useUpdateLikeMutation(idx);
+  const { setBookmarks } = useUpdateBookMarkMutation(queryKey);
+  const { setLikes } = useUpdateLikeMutation(queryKey);
 
-  console.log("==========likeUsers", likeUsers, "likeUserCnt", likeUserCnt);
   const liked = !!likeUsers.find((likeUser) => likeUser.userIdx === user?.idx);
   console.log("====liked", liked);
   const bookmarked = !!bookmarkUsers.find(

@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const useUpdateLikeMutation = (postIdx: number) => {
+export const useUpdateLikeMutation = (queryKey: string[]) => {
   const queryClient = useQueryClient();
 
   const setLikes = useMutation({
@@ -20,48 +20,39 @@ export const useUpdateLikeMutation = (postIdx: number) => {
       liked: boolean;
       userIdx: number;
     }) => {
-      await queryClient.cancelQueries({
-        queryKey: ["posts", "detail", postIdx, "reactions"],
-      });
-      const previousPosts = queryClient.getQueryData([
-        "posts",
-        "detail",
-        postIdx,
-        "reactions",
-      ]);
+      await queryClient.cancelQueries(queryKey);
+      const previousPosts = queryClient.getQueryData(queryKey);
 
       let setQuery;
-      if (updateLikes.liked) {
-        //TODO: cache key가 list일 경우 idx로 해당 포스트 가져오기
-        setQuery = (oldLikePosts: any) => {
-          oldLikePosts.likeUsers.pop({ userIdx: updateLikes.userIdx });
-          --oldLikePosts._count.likeUsers;
-          return oldLikePosts;
-        };
-      } else {
-        setQuery = (oldLikePosts: any) => {
-          oldLikePosts.likeUsers.push({
+      setQuery = (oldPosts: any) => {
+        let post;
+        if (queryKey.includes("list")) {
+          post = oldPosts.find(
+            (oldPost: any) => oldPost.idx === updateLikes.postIdx
+          );
+        } else {
+          post = oldPosts;
+        }
+        if (updateLikes.liked) {
+          post.likeUsers.pop({ userIdx: updateLikes.userIdx });
+          --post._count.likeUsers;
+        } else {
+          post.likeUsers.push({
             userIdx: updateLikes.userIdx,
           });
-          ++oldLikePosts._count.likeUsers;
-          return oldLikePosts;
-        };
-      }
+          ++post._count.likeUsers;
+        }
+        return oldPosts;
+      };
 
-      queryClient.setQueryData(
-        ["posts", "detail", postIdx, "reactions"],
-        setQuery
-      );
+      queryClient.setQueryData(queryKey, setQuery);
       return { previousPosts };
     },
 
     onSuccess: () => {},
 
     onError: (error, updateLikes, context: any) => {
-      queryClient.setQueryData(
-        ["posts", "detail", postIdx, "reactions"],
-        context.previousPosts
-      );
+      queryClient.setQueryData(queryKey, context.previousPosts);
       toast.error(getErrorMessage(error, "좋아요 처리를 실패하였습니다."));
     },
   });

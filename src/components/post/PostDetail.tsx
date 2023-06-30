@@ -3,11 +3,8 @@
 import { PostDetailType } from "@/model/post";
 import QueryErrorBoundary from "../common/QueryErrorBoundary";
 import FeedBookInfo from "../feed/FeedBookInfo";
-import PostCommentCreateForm from "./PostCommentCreateForm";
-import PostCommentList from "./PostCommentList";
 import PostContent from "./PostContent";
 import PostThreeDotButton from "./PostThreeDotButton";
-import ReactionButtonList from "./Reactions";
 
 type Props = {
   detailPost: PostDetailType;

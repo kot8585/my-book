@@ -13,9 +13,12 @@ export const useDeleteCommentMutation = () => {
     {
       onSuccess: (data, variables) => {
         queryClient.invalidateQueries({
-          //TODO: postIdx 넣기
-          //TODO: optimistic 처리
-          queryKey: ["posts", "detail", variables.postIdx],
+          queryKey: [
+            "posts",
+            "detail",
+            variables.postIdx.toString(),
+            "reactions",
+          ],
         });
       },
       onError: (error) => {
