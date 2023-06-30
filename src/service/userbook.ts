@@ -24,6 +24,16 @@ export async function selectUserBook(userIdx: number, isbn: string) {
           _count: {
             select: { likeUsers: true, bookmarkUsers: true, comments: true },
           },
+          likeUsers: {
+            select: {
+              userIdx: true,
+            },
+          },
+          bookmarkUsers: {
+            select: {
+              userIdx: true,
+            },
+          },
         },
       },
     },
