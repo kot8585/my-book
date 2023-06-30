@@ -1,14 +1,24 @@
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { BiUserCircle } from "react-icons/bi";
 
 type AvatarSize = "small" | "medium" | "large" | "xlarge";
 type Props = {
   image?: string | null;
   size?: AvatarSize;
+  userIdx?: number;
 };
 
-export default function Avatar({ image, size = "small" }: Props) {
+export default function Avatar({ image, size = "small", userIdx }: Props) {
+  const router = useRouter();
+
+  const handleOnClick = () => {
+    if (!userIdx) return;
+    router.push(`/users/${userIdx}`);
+  };
+
   return (
-    <div className={getContainerStyle(size)}>
+    <div onClick={handleOnClick} className={getContainerStyle(size)}>
       {/* eslint-disable-next-line @next/next/no-img-element*/}
       {image ? (
         <img
@@ -28,7 +38,8 @@ export default function Avatar({ image, size = "small" }: Props) {
 }
 
 function getContainerStyle(size: AvatarSize): string {
-  const baseStyle = "rounded-full flex justify-center items-center";
+  const baseStyle =
+    "rounded-full flex justify-center items-center cursor-pointer";
 
   const { container } = getImageSizeStyle(size);
   return `${baseStyle}  ${container}`;

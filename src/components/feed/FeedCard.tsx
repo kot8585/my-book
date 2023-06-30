@@ -23,7 +23,7 @@ export default function FeedCard({ feed, feedType }: Props) {
       <hr />
       <div className="flex justify-between items-center">
         <div className="flex justify-start gap-2 items-center">
-          <Avatar image={feed.user.image} />
+          <Avatar image={feed.user.image} userIdx={feed.userIdx} />
           <span className="text-xs text-gray-400">{feed.user.name}</span>
         </div>
         <ReactionButtonList {...feed} queryKey={["posts", "list", feedType]} />

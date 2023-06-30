@@ -70,7 +70,7 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
 
   return (
     <section className="flex gap-2 py-2">
-      <Avatar image={user?.image} />
+      <Avatar image={user?.image} userIdx={user?.idx} />
       <form className="flex flex-col w-full" onSubmit={handleSubmit}>
         <textarea
           name="content"
