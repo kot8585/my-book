@@ -14,7 +14,7 @@ export default function useFeedListQuery(feedType: FeedType) {
     ["posts", "list", feedType],
     () =>
       axios
-        .get(`${process.env.NEXT_PUBLIC_URL}/api/posts?feedType=${feedType}`)
+        .get(`/api/posts?feedType=${feedType}`)
         .then((response) => response.data),
     { initialData: [] }
   );

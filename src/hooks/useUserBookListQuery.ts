@@ -11,9 +11,7 @@ export const useUserBookListQuery = (
     ["userbooks", "list", userIdx, { filter: status }],
     (): Promise<UserBook[]> =>
       axios
-        .get(
-          `${process.env.NEXT_PUBLIC_URL}/api${pathname}/userbooks?status=${status}`
-        )
+        .get(`/api${pathname}/userbooks?status=${status}`)
         .then((res) => res.data),
     {
       suspense: true,

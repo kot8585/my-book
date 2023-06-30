@@ -20,9 +20,7 @@ export default function UserFollowInfo({ userIdx, loggedUser }: Props) {
     isError,
     isLoading,
   } = useQuery<UserFollowInfoType>(["users", "detail", userIdx, "follow"], () =>
-    axios
-      .get(`${process.env.NEXT_PUBLIC_URL}/api/users/${userIdx}`)
-      .then((res) => res.data)
+    axios.get(`/api/users/${userIdx}`).then((res) => res.data)
   );
 
   const [following, setFollowing] = useState<boolean>();

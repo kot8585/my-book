@@ -8,9 +8,7 @@ type Props = {
 
 export default function usePostDetailQuery({ postIdx }: Props) {
   const getPost: () => Promise<PostDetailType> = () =>
-    axios
-      .get(`${process.env.NEXT_PUBLIC_URL}/api/posts/${postIdx}`)
-      .then((response) => response.data);
+    axios.get(`/api/posts/${postIdx}`).then((response) => response.data);
   const {
     data: detailPost,
     error,
