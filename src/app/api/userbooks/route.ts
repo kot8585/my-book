@@ -60,7 +60,7 @@ function getBookInfoFromAladin(body: UserBook) {
         categoryName: item.categoryName,
         totalPage: item.subInfo.itemPage,
         status: body.status,
-        type: "BOOK",
+        type: "PAPER",
         comment: body?.comment,
       };
     });

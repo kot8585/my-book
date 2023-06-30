@@ -1,6 +1,6 @@
 import { Prisma, UserBook } from "@prisma/client";
 import { PostCommentType } from "./comment";
-import { getPost } from "@/service/post";
+import { getPost, getPostReactions } from "@/service/post";
 
 export type PostType = {
   userIdx: number;
@@ -33,6 +33,10 @@ export type FeedResponseType = {
 } & PostType;
 
 export type PostDetailType = Prisma.PromiseReturnType<typeof getPost>;
+
+export type PostReactionsType = Prisma.PromiseReturnType<
+  typeof getPostReactions
+>;
 
 export type FeedBookInfoType = Partial<UserBook>;
 

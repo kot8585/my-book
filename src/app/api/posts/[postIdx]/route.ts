@@ -1,4 +1,9 @@
-import { deletePost, getPost, updatePost } from "@/service/post";
+import {
+  deletePost,
+  getPost,
+  getPostReactions,
+  updatePost,
+} from "@/service/post";
 import { NextRequest, NextResponse } from "next/server";
 
 type Context = {

@@ -28,6 +28,16 @@ export async function getAllPostList() {
           publisher: true,
         },
       },
+      likeUsers: {
+        select: {
+          userIdx: true,
+        },
+      },
+      bookmarkUsers: {
+        select: {
+          userIdx: true,
+        },
+      },
       _count: {
         select: { likeUsers: true, bookmarkUsers: true, comments: true },
       },
@@ -127,6 +137,16 @@ export async function getPost(postIdx) {
           type: true,
         },
       },
+    },
+  });
+}
+
+export async function getPostReactions(postIdx) {
+  return await prisma.post.findUnique({
+    where: {
+      idx: postIdx,
+    },
+    include: {
       comments: {
         select: {
           idx: true,

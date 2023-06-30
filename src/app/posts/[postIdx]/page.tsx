@@ -5,6 +5,7 @@ import { getPost } from "@/service/post";
 import { Metadata } from "next";
 import { Suspense, cache } from "react";
 import notFound from "./not-found";
+import PostReactions from "@/components/post/PostReactions";
 
 type Props = {
   params: {
@@ -22,10 +23,11 @@ export default async function PostDetailPage({ params: { postIdx } }: Props) {
   }
 
   return (
-    <section className="lg:w-4/5 w-full h-full flex flex-col mx-auto">
+    <section className="lg:w-4/5 w-full h-full flex flex-col mx-auto p-3">
       <Suspense fallback={<LoadingSpinner />}>
         <QueryErrorBoundary>
           <PostDetail detailPost={post} />
+          <PostReactions postIdx={parseInt(postIdx)} />
         </QueryErrorBoundary>
       </Suspense>
     </section>

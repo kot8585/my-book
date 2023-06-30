@@ -20,6 +20,8 @@ export default function PostEdit() {
     postIdx: parseInt(params.postIdx),
   });
 
+  console.log("========original post", originalPost);
+
   const [loading, setLoading] = useState<boolean>(false);
 
   return (

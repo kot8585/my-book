@@ -22,24 +22,32 @@ type Props = {
     bookmarkUsers: number;
     comments: number;
   };
+  likeUsers: { userIdx: number }[];
+  bookmarkUsers: { userIdx: number }[];
 };
 
 export default function ReactionButtonList({
   idx,
-  _count: { likeUsers, bookmarkUsers, comments },
+  _count: {
+    likeUsers: likeUserCnt,
+    bookmarkUsers: bookmarkUserCnt,
+    comments: commentCnt,
+  },
+  likeUsers,
+  bookmarkUsers,
 }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
 
   const { setBookmarks } = useUpdateBookMarkMutation();
-  const { setLikes } = useUpdateLikeMutation();
+  const { setLikes } = useUpdateLikeMutation(idx);
 
-  const { likePosts } = useLikePostListQuery();
-
-  const { bookmarkPosts } = useBookMarkPostListQuery();
-
-  const liked = !!likePosts && likePosts.includes(idx);
-  const bookmarked = !!bookmarkPosts && bookmarkPosts.includes(idx);
+  console.log("==========likeUsers", likeUsers, "likeUserCnt", likeUserCnt);
+  const liked = !!likeUsers.find((likeUser) => likeUser.userIdx === user?.idx);
+  console.log("====liked", liked);
+  const bookmarked = !!bookmarkUsers.find(
+    (bookmarkUser) => bookmarkUser.userIdx === user?.idx
+  );
 
   const handleLikeClick = () => {
     if (!user) return toast.error("로그인을 해야 이용가능합니다.");
@@ -55,7 +63,7 @@ export default function ReactionButtonList({
     <div className="flex items-center text-gray-400 gap-2 text-sm">
       <button onClick={handleLikeClick} className="flex items-center gap-1">
         {liked ? <FaHeart className="text-red-500" /> : <FaRegHeart />}
-        <span>{likeUsers}</span>
+        <span>{likeUserCnt}</span>
       </button>
 
       <button onClick={handleBookmarkClick} className="flex items-center gap-1">
@@ -64,12 +72,12 @@ export default function ReactionButtonList({
         ) : (
           <FaRegBookmark />
         )}
-        <span>{bookmarkUsers}</span>
+        <span>{bookmarkUserCnt}</span>
       </button>
 
       <div className="flex items-center gap-1">
         <FaRegCommentDots />
-        <span>{comments}</span>
+        <span>{commentCnt}</span>
       </div>
       <BottomCenterToast />
     </div>
