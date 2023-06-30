@@ -13,7 +13,10 @@ export default function usePostDetailQuery({ postIdx }: Props) {
     data: detailPost,
     error,
     isLoading,
-  } = useQuery(["posts", "detail", postIdx], getPost, { suspense: true });
+  } = useQuery(["posts", "detail", postIdx], getPost, {
+    cacheTime: 0,
+    suspense: true,
+  });
 
   return { detailPost, error, isLoading };
 }
