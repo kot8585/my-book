@@ -4,7 +4,6 @@ import { useUserBookListQuery } from "@/hooks/useUserBookListQuery";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { LuBookPlus } from "react-icons/lu";
-import CarouselList from "../common/CarouselList";
 import ReadingNoteButtons from "../common/ReadingNoteButtons";
 import SimpleButton from "../common/SimpleButton";
 import BookCard from "./BookCard";
@@ -25,7 +24,7 @@ export default function HomeBookCardList({ status, userIdx }: Props) {
       <SimpleButton className="bg-gray-200  rounded-md" size="small">
         {status === "READING" ? "읽고 있는 책" : "읽고 싶은 책"}
       </SimpleButton>
-      <CarouselList>
+      <ul className="flex overflow-x-scroll w-full h-44 my-3 whitespace-nowrap snap-x snap-mandatory">
         {userbooks && userbooks.length ? (
           userbooks.map((userbook) => (
             <BookCard key={userbook.isbn} book={userbook} size="medium">
@@ -38,7 +37,7 @@ export default function HomeBookCardList({ status, userIdx }: Props) {
             <LuBookPlus className="w-16 h-16 text-brand-color opacity-50 m-auto" />
           </Link>
         )}
-      </CarouselList>
+      </ul>
     </section>
   );
 }

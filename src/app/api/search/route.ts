@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
   const searchResult = await axios
     .get(
-      `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.ALADIN_KEY}&Query=${decodeKeyword}&QueryType=Keyword&MaxResults=2&start=1&SearchTarget=Book&output=js&Version=20070901`
+      `http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=${process.env.ALADIN_KEY}&Query=${decodeKeyword}&QueryType=Keyword&MaxResults=50&start=1&SearchTarget=Book&output=js&Version=20070901`
     )
     .then((response) => {
       const data: string = response.data;

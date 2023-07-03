@@ -11,7 +11,7 @@ export default async function UserPage({ params: { userIdx } }: Props) {
   const userIdxToNum = parseInt(userIdx);
 
   return (
-    <main className="w-full py-3 flex flex-col px-5 gap-4">
+    <main className="w-full py-3 flex flex-col px-5 gap-4 pb-14">
       <UserFollowInfoAndButton userIdx={userIdxToNum} loggedUser={loggedUser} />
       <UserBookCardList status="READING" userIdx={userIdxToNum} />
       <UserBookCardList status="TOREAD" userIdx={userIdxToNum} />

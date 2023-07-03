@@ -32,11 +32,11 @@ export default function SearchPage() {
 
   return (
     <section className="lg:w-4/5 w-full h-full flex flex-col relative mx-auto">
-      <div className="fixed lg:w-4/5 w-full border-b border-gray-200">
-        <div className=" relative ">
+      <div className="fixed  xl:w-4/6 lg:w-5/6  w-full ">
+        <div className="relative">
           <BsSearch className="w-5 h-5 absolute left-3 top-5 text-gray-500" />
           <input
-            className="w-full h-14 py-2 px-10 pr-5 text-lg font-semibold outline-none"
+            className="w-full h-14 py-2 px-10 pr-5 text-lg font-semibold outline-none border-b border-gray-200"
             type="search"
             placeholder="검색어를 입력해주세요"
             value={text}

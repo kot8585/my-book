@@ -18,7 +18,11 @@ export default function HomeBookInfo({
 }: Props) {
   return (
     <>
-      <h2 className={`font-semibold ${size === "large" ? "text-xl" : ""}`}>
+      <h2
+        className={`font-semibold ${
+          size === "large" ? "text-xl" : ""
+        } line-clamp-1`}
+      >
         {title}
       </h2>
       <section className="flex gap-2 text-primary-color">

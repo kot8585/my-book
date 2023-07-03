@@ -15,7 +15,7 @@ export default async function HomePage() {
   }
 
   return (
-    <main className="w-full p-3 flex flex-col">
+    <main className="w-full py-3 pl-3 flex flex-col pb-14">
       <Suspense fallback={<LoadingSpinner />}>
         <HomeBookCardList status="READING" userIdx={user.idx} />
       </Suspense>

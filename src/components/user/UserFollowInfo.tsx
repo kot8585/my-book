@@ -10,7 +10,7 @@ type Props = {
 export default function UserFollowInfo({ user }: Props) {
   return (
     <>
-      <Avatar image={user?.image} size="large" />
+      <Avatar image={user?.image} userIdx={user?.idx} size="large" />
       <div className="flex-1 ">
         <div>{user.name}</div>
         <div className="text-gray-500 text-sm flex gap-1">

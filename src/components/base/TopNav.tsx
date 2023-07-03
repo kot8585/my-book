@@ -15,11 +15,11 @@ export const menu = [
     text: "피드",
     icon: <MdPeopleAlt />,
   },
-  {
-    href: "/note",
-    text: "노트",
-    icon: <TbNotes />,
-  },
+  // {
+  //   href: "/note",
+  //   text: "노트",
+  //   icon: <TbNotes />,
+  // },
   {
     href: "/search",
     text: "검색",

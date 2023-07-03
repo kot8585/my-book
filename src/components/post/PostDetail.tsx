@@ -16,7 +16,7 @@ export default function PostDetail({ detailPost }: Props) {
       {detailPost && (
         <>
           <QueryErrorBoundary>
-            <article className="flex flex-col gap-2">
+            <article className="flex flex-col gap-4">
               <div className="flex justify-between items-center">
                 <FeedBookInfo
                   book={detailPost.userBook}

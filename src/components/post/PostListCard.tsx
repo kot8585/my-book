@@ -17,7 +17,7 @@ export default function PostListCard({
   return (
     <Link href={`/posts/${idx}`} className="flex flex-col">
       {title && <div className="font-bold text-lg">{title}</div>}
-      <span className=" whitespace-pre-line line-clamp-3 ">
+      <span className=" whitespace-pre-line line-clamp-5">
         {content}
         {updatedAt && <span className="text-xs text-gray-400"> (수정됨)</span>}
       </span>
