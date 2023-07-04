@@ -1,6 +1,6 @@
 import { useCreateCommentMutation } from "@/hooks/useCreateCommentMutation";
 import { PostCommentType } from "@/model/comment";
-import { formatDate } from "@/utils/formatDate";
+import { timeagoFormatDate } from "@/utils/formatDate";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
@@ -98,7 +98,9 @@ export default function PostCommentCard({ comment, postAuthorIdx }: Props) {
         <div className="flex items-center text-gray-500 w-full">
           <span className="text-xs">{comment.user?.name}</span>
           <span>﹒</span>
-          <span className="text-xs">{formatDate(comment.createdAt)}</span>
+          <span className="text-xs">
+            {timeagoFormatDate(comment.createdAt)}
+          </span>
           {comment.userIdx === postAuthorIdx && (
             <span className="rounded-xl bg-gray-200 px-1 text-xs ml-2">
               작성자

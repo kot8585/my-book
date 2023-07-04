@@ -1,5 +1,6 @@
 import React from "react";
 import ThreeDotsButton from "../common/ThreeDotsButton";
+import { formatDate } from "@/utils/formatDate";
 
 type Props = {
   title: string;
@@ -7,6 +8,8 @@ type Props = {
   status: string;
   comment?: string | null;
   size: "medium" | "large";
+  createdAt?: Date;
+  startDate?: Date | null;
 };
 
 export default function HomeBookInfo({
@@ -14,6 +17,8 @@ export default function HomeBookInfo({
   imageUrl,
   status,
   comment,
+  startDate,
+  createdAt,
   size,
 }: Props) {
   return (
@@ -26,14 +31,15 @@ export default function HomeBookInfo({
         {title}
       </h2>
       <section className="flex gap-2 text-primary-color">
-        <img src={imageUrl} width={60} height={120} className="rounded-lg " />
+        <img
+          src={imageUrl}
+          className="rounded-lg w-[60px] h-[90px] object-cover"
+        />
         <div className="flex flex-col text-sm">
           <span>
-            {/* {book.startDate
-              ? book.startDate.toString()
-              : book.createdAt.toString()} */}
-            {status === "TOREAD"}
-            2023.05.01. 부터
+            {status === "TOREAD"
+              ? formatDate(createdAt?.toString()) + "에 등록"
+              : formatDate(startDate?.toString()) + "부터 독서 시작"}
           </span>
           {comment && <span>{comment}</span>}
         </div>

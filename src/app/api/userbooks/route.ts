@@ -32,6 +32,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   const bookInfo: UserBook = await getBookInfoFromAladin(body);
 
+  if (body.status === "READING") {
+    bookInfo.startDate = new Date();
+  }
+
   return await createUserBook(bookInfo).then((res) => NextResponse.json(res));
 }
 

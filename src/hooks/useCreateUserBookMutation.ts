@@ -20,6 +20,7 @@ export default function useCreateUserBookMutation() {
             { userIdx: data.userIdx, status: data.status },
           ],
         });
+        toast.info("책을 성공적으로 추가하였습니다.");
       },
       onError: (error) => {
         toast.error(getErrorMessage(error, "책 추가에 실패하였습니다."));

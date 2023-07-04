@@ -6,7 +6,7 @@ import PostListCard from "@/components/post/PostListCard";
 import PostThreeDotButton from "@/components/post/PostThreeDotButton";
 import ReactionButtonList from "@/components/post/Reactions";
 import useUserBookDetailQuery from "@/hooks/useUserBookDetailQuery";
-import { formatDate } from "@/utils/formatDate";
+import { timeagoFormatDate } from "@/utils/formatDate";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 
@@ -46,7 +46,7 @@ export default function UserBookDetailPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-sm text-gray-400">
-                  {formatDate(post.createdAt)}
+                  {timeagoFormatDate(post.createdAt)}
                 </span>
                 <ReactionButtonList
                   {...post}

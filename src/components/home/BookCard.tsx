@@ -24,13 +24,7 @@ export default function BookCard({ book, size, children }: Props) {
       }
        flex-grow-0 flex-shrink-0 }`}
     >
-      <HomeBookInfo
-        title={book.title}
-        imageUrl={book.imageUrl}
-        status={book.status}
-        comment={book.comment}
-        size={size}
-      />
+      <HomeBookInfo {...book} size={size} />
       {children}
     </li>
   );

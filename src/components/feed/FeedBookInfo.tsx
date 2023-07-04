@@ -1,5 +1,5 @@
 import { FeedBookInfoType } from "@/model/post";
-import { formatDate } from "@/utils/formatDate";
+import { timeagoFormatDate } from "@/utils/formatDate";
 
 type Props = {
   book: FeedBookInfoType | null;
@@ -9,10 +9,12 @@ type Props = {
 export default function FeedBookInfo({ book, createdAt }: Props) {
   return (
     <section className="flex justify-start gap-2">
-      <img src={book?.imageUrl} alt="책 표지" width={30} height={60} />
+      <img src={book?.imageUrl} alt="책 표지" className="w-[30px] h-[60px]" />
       <div className="flex flex-col">
         <span>{book?.title}</span>
-        <span className="text-xs text-gray-500">{formatDate(createdAt)}</span>
+        <span className="text-xs text-gray-500">
+          {timeagoFormatDate(createdAt)}
+        </span>
       </div>
     </section>
   );

@@ -8,7 +8,11 @@ type Props = {
 export default function SearchBookInfo({ searchBook }: Props) {
   return (
     <>
-      <img src={searchBook.imageUrl} alt="책 표지" width={60} height={60} />
+      <img
+        src={searchBook.imageUrl}
+        alt="책 표지"
+        className="w-16 h-24 object-cover"
+      />
       <div className="flex flex-col">
         <span className="font-semibold">{searchBook.title}</span>
         <div className="flex-1"></div>
