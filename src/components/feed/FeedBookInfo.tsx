@@ -1,5 +1,5 @@
 import { FeedBookInfoType } from "@/model/post";
-import { timeagoFormatDate } from "@/utils/formatDate";
+import { timeagoFormatDate as timeAgoFormatDate } from "@/utils/formatDate";
 
 type Props = {
   book: FeedBookInfoType | null;
@@ -13,7 +13,7 @@ export default function FeedBookInfo({ book, createdAt }: Props) {
       <div className="flex flex-col">
         <span>{book?.title}</span>
         <span className="text-xs text-gray-500">
-          {timeagoFormatDate(createdAt)}
+          {timeAgoFormatDate(createdAt)}
         </span>
       </div>
     </section>

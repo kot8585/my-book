@@ -37,7 +37,7 @@ export default function TopNav() {
 
   const pathName = usePathname();
   return (
-    <header className="sticky top-0 bg-white z-10 border-b hidden xl:block p-2">
+    <header className="sticky top-0 bg-white z-30 border-b-2 hidden xl:block p-2">
       <div className="max-w-screen-xl flex justify-between items-center mx-auto px-3">
         <Link href="/">
           <Image src={logo} alt="투게더북" width={40} height={40} />

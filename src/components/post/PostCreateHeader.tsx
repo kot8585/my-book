@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import SimpleButton from "../common/SimpleButton";
 import { MdArrowBackIos } from "react-icons/md";

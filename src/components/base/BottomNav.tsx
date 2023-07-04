@@ -12,7 +12,7 @@ export default function BottomNav() {
   const bottomMenu = [{ href: "/", text: "홈", icon: <TiHome /> }, ...menu];
 
   return (
-    <section className="fixed bottom-0 bg-white z-10 border-t w-full">
+    <section className="fixed bottom-0 bg-white z-30 border-t w-full">
       <nav className="flex items-center gap-2 pl-3 justify-around xl:hidden">
         {bottomMenu.map((item) => (
           <Link href={item.href} key={item.href}>
