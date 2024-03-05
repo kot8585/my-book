@@ -1,6 +1,6 @@
 import React from "react";
 import ThreeDotsButton from "../common/ThreeDotsButton";
-import { formatDate } from "@/utils/formatDate";
+import { formatDate } from "@/utils/format";
 
 type Props = {
   title: string;

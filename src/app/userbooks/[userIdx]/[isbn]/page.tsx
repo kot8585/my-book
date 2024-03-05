@@ -6,7 +6,7 @@ import PostListCard from "@/components/post/PostListCard";
 import PostThreeDotButton from "@/components/post/PostThreeDotButton";
 import ReactionButtonList from "@/components/post/Reactions";
 import useUserBookDetailQuery from "@/hooks/useUserBookDetailQuery";
-import { timeagoFormatDate } from "@/utils/formatDate";
+import { timeagoFormatDate } from "@/utils/format";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 

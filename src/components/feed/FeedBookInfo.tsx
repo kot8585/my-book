@@ -1,5 +1,5 @@
 import { FeedBookInfoType } from "@/model/post";
-import { timeagoFormatDate as timeAgoFormatDate } from "@/utils/formatDate";
+import { timeagoFormatDate as timeAgoFormatDate } from "@/utils/format";
 
 type Props = {
   book: FeedBookInfoType | null;

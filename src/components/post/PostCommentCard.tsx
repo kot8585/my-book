@@ -1,6 +1,6 @@
 import { useCreateCommentMutation } from "@/hooks/useCreateCommentMutation";
 import { PostCommentType } from "@/model/comment";
-import { timeagoFormatDate } from "@/utils/formatDate";
+import { timeagoFormatDate } from "@/utils/format";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
