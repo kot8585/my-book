@@ -25,18 +25,18 @@ export default function HomeBookCardList({ status, userIdx }: Props) {
         {status === "READING" ? "읽고 있는 책" : "읽고 싶은 책"}
       </SimpleButton>
       <ul className="flex overflow-x-scroll w-full h-44 my-3 whitespace-nowrap snap-x snap-mandatory">
-        {userbooks && userbooks.length ? (
-          userbooks.map((userbook) => (
-            <BookCard key={userbook.isbn} book={userbook} size="medium">
-              {user && <ReadingNoteButtons {...userbook} />}
-            </BookCard>
-          ))
-        ) : (
-          <Link href="/search">
-            <div className="font-semibold pb-2">책을 추가해주세요</div>
+        {userbooks?.map((userbook) => (
+          <BookCard key={userbook.isbn} book={userbook} size="medium">
+            {user && <ReadingNoteButtons {...userbook} />}
+          </BookCard>
+        ))}
+
+        <Link href="/search">
+          <li className="flex flex-col px-3 h-36 w-72 rounded-lg border border-gray-200 shadow-lg mr-3 p-1 basis-72 cursor-pointer snap-center">
+            <div className="font-semibold">책을 추가해주세요</div>
             <LuBookPlus className="w-16 h-16 text-brand-color opacity-50 m-auto" />
-          </Link>
-        )}
+          </li>
+        </Link>
       </ul>
     </section>
   );
