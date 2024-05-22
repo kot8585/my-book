@@ -1,14 +1,13 @@
 import BottomNav from "@/components/base/BottomNav";
 import TopNav from "@/components/base/TopNav";
+import BottomCenterToast from "@/components/common/BottomCenterToast";
 import AuthProvider from "@/provider/AuthProvider";
 import ReactQueryProvider from "@/provider/ReactQueryProvider";
-import { Inter } from "next/font/google";
-import "./globals.css";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import BottomCenterToast from "@/components/common/BottomCenterToast";
-import "react-toastify/dist/ReactToastify.css";
-import SWRConfigContext from "@/context/SWRConfigContext";
 import { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "react-toastify/dist/ReactToastify.css";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,7 +29,7 @@ export default function RootLayout({
           <TopNav />
           <ReactQueryProvider>
             <main className="w-full flex max-w-screen-xl  mx-auto grow justify-center">
-              <SWRConfigContext>{children}</SWRConfigContext>
+              {children}
             </main>
             <ReactQueryDevtools initialIsOpen={false} />
           </ReactQueryProvider>
