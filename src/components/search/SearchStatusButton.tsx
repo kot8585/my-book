@@ -1,4 +1,4 @@
-import useCreateUserBookMutation from "@/hooks/useCreateUserBookMutation";
+import useUserBooks from "@/hooks/userbooks";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { ChangeEvent, useState } from "react";
@@ -10,16 +10,15 @@ type Props = {
 
 export default function SearchStatusButton({ isbn }: Props) {
   const [bookStatus, setBookStatus] = useState("TOREAD");
-  const { createUserBook: addUserBookMutate } = useCreateUserBookMutation();
   const { data: session } = useSession();
   const user = session?.user;
+  const { createUserBookMutation } = useUserBooks();
 
   if (!user) {
     return redirect("/auth/login");
   }
-
   const handleClick = async () => {
-    addUserBookMutate.mutate({
+    createUserBookMutation.mutate({
       userIdx: user.idx,
       isbn: isbn,
       status: bookStatus,

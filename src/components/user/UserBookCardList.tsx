@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserBookListQuery } from "@/hooks/useUserBookListQuery";
+import useUserBooks from "@/hooks/userbooks";
 import { LuBookPlus } from "react-icons/lu";
 import SimpleButton from "../common/SimpleButton";
 import BookCard from "../home/BookCard";
@@ -11,11 +11,9 @@ type Props = {
 };
 
 export default function UserBookCardList({ status, userIdx }: Props) {
-  const { userbooks, error } = useUserBookListQuery(
-    userIdx,
-    status,
-    `/users/${userIdx}`
-  );
+  const {
+    getUserBookListQuery: { data: userbooks },
+  } = useUserBooks(userIdx, status, `/users/${userIdx}`);
   console.log("userbook", userbooks);
   return (
     <section>

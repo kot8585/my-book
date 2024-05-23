@@ -1,12 +1,11 @@
 "use client";
 
-import { useCreateCommentMutation } from "@/hooks/useCreateCommentMutation";
+import useComment from "@/hooks/comment";
 import { useSession } from "next-auth/react";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import Avatar from "../common/Avatar";
 import SimpleButton from "../common/SimpleButton";
-import { getErrorMessage } from "@/utils/getErrorMessage";
 
 type Props = {
   postIdx: number;
@@ -17,7 +16,7 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
   const user = session?.user;
 
   //TODO: 사용자가 없다면 기본 이미지를 보여주기
-  const { addComment } = useCreateCommentMutation();
+  const { createCommentMutation } = useComment(postIdx);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -59,7 +58,7 @@ export default function PostCommentCreateForm({ postIdx }: Props) {
 
     const comment = { postIdx, content: content.trim(), userIdx: user.idx };
 
-    addComment.mutate(comment, {
+    createCommentMutation.mutate(comment, {
       onSuccess: () => {
         setContent("");
       },

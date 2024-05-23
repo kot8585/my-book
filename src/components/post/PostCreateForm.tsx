@@ -1,11 +1,9 @@
-import React from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useState, ChangeEvent } from "react";
-import { useCreatePostMutation } from "@/hooks/useCreatePostMutation";
+import usePosts from "@/hooks/posts";
 import { CreateNoteType } from "@/model/post";
-import SimpleButton from "../common/SimpleButton";
+import { useSearchParams } from "next/navigation";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { toast } from "react-toastify";
-import { init } from "next/dist/compiled/@vercel/og/satori";
+import SimpleButton from "../common/SimpleButton";
 
 type Props = {
   userIdx: number;
@@ -13,7 +11,7 @@ type Props = {
 };
 
 export default function PostCreateForm({ userIdx, setLoading }: Props) {
-  const { createPost: addNote } = useCreatePostMutation();
+  const { createPostMutation } = usePosts();
   const searchParams = useSearchParams();
   //TODO: isbn과 readingType이 전해지지 않을 수가 있어,,? 이런것도 처리해줘야돼?
   const isbn = searchParams.get("isbn");
@@ -44,7 +42,7 @@ export default function PostCreateForm({ userIdx, setLoading }: Props) {
       note.page = parseInt(note.page);
     }
 
-    addNote.mutate(note, {
+    createPostMutation.mutate(note, {
       onSuccess: () => {
         toast.info("메모가 정상적으로 작성되었습니다");
         setNote(initialNote);

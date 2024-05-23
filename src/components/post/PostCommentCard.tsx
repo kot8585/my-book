@@ -1,14 +1,13 @@
-import { useCreateCommentMutation } from "@/hooks/useCreateCommentMutation";
+import useComment from "@/hooks/comment";
 import { PostCommentType } from "@/model/comment";
 import { timeagoFormatDate } from "@/utils/format";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import React, { FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import SimpleButton from "../common/SimpleButton";
 import CommentThreeDotsButton from "./CommentThreeDotsButton";
-import { useUpdateCommentMutation } from "@/hooks/useUpdateCommentMutation";
-import { getErrorMessage } from "@/utils/getErrorMessage";
 
 type Props = {
   comment: PostCommentType;
@@ -24,7 +23,7 @@ export default function PostCommentCard({ comment, postAuthorIdx }: Props) {
   }
   const [textAreaDisabled, setTextAreaDisabled] = useState(true);
 
-  const { updateComment } = useUpdateCommentMutation();
+  const { updateCommentMutation } = useComment(comment.postIdx);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [content, setContent] = useState(comment.content);
   const [loading, setLoading] = useState(false);
@@ -75,7 +74,7 @@ export default function PostCommentCard({ comment, postAuthorIdx }: Props) {
       idx: comment.idx,
     };
 
-    updateComment.mutate(editComment, {
+    updateCommentMutation.mutate(editComment, {
       onSuccess: () => {
         setTextAreaDisabled(true);
       },

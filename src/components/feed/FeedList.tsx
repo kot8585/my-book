@@ -1,7 +1,6 @@
 "use client";
 
-import useFeedListQuery from "@/hooks/useFeedListQuery";
-
+import usePosts from "@/hooks/posts";
 import ShowMessage from "../common/ShowMessage";
 import FeedCard from "./FeedCard";
 import { FeedType } from "./FeedTemplate";
@@ -11,7 +10,9 @@ export type Props = {
 };
 
 export default function FeedList({ feedType }: Props) {
-  const { feedList, isLoading, error } = useFeedListQuery(feedType);
+  const {
+    postListQuery: { data: feedList, isLoading, error },
+  } = usePosts(feedType);
 
   return (
     <ul className="w-full h-full pb-14">

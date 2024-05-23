@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-export const useSearchBookQuery = (keyword: string | null) => {
-  const { data: searchBookList, error } = useQuery(
+export default function useSearchBook(keyword: string | null) {
+  const useSearchBookQuery = useQuery(
     ["search", "book", keyword],
     () =>
       axios
@@ -13,5 +13,5 @@ export const useSearchBookQuery = (keyword: string | null) => {
     { enabled: !!keyword }
   );
 
-  return { searchBookList, error };
-};
+  return { useSearchBookQuery };
+}

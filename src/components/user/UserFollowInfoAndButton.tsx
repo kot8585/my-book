@@ -1,14 +1,9 @@
 "use client";
 
-import { UserFollowInfoType } from "@/model/user";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
-import Avatar from "../common/Avatar";
-import FollowButton from "./FollowButton";
+import useFollow from "@/hooks/follow";
 import { User } from "next-auth";
-import { useFollowInfoQuery } from "@/hooks/useFollowInfoQuery";
+import { useEffect, useState } from "react";
+import FollowButton from "./FollowButton";
 import UserFollowInfo from "./UserFollowInfo";
 
 type Props = {
@@ -20,7 +15,9 @@ export default function UserFollowInfoAndButton({
   userIdx,
   loggedUser,
 }: Props) {
-  const { user } = useFollowInfoQuery(userIdx);
+  const {
+    getFollowQuery: { data: user },
+  } = useFollow(userIdx);
 
   const [following, setFollowing] = useState<boolean>();
 

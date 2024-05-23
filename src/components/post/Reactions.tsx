@@ -1,9 +1,6 @@
 "use client";
 
-import { useBookMarkPostListQuery } from "@/hooks/useBookMarkPostListQuery";
-import { useLikePostListQuery } from "@/hooks/useLikePostListQuery";
-import useUpdateBookMarkMutation from "@/hooks/useUpdateBookMarkMutation";
-import { useUpdateLikeMutation } from "@/hooks/useUpdateLikeMutation";
+import useReactions from "@/hooks/reactions";
 import { useSession } from "next-auth/react";
 import {
   FaBookmark,
@@ -41,8 +38,8 @@ export default function ReactionButtonList({
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { setBookmarks } = useUpdateBookMarkMutation(queryKey);
-  const { setLikes } = useUpdateLikeMutation(queryKey);
+  const { updateBookMarksMutation, updateLikesMutation } =
+    useReactions(queryKey);
 
   const liked = !!likeUsers.find((likeUser) => likeUser.userIdx === user?.idx);
   console.log("====liked", liked);
@@ -52,12 +49,16 @@ export default function ReactionButtonList({
 
   const handleLikeClick = () => {
     if (!user) return toast.error("로그인을 해야 이용가능합니다.");
-    setLikes.mutate({ postIdx: idx, liked, userIdx: user.idx });
+    updateLikesMutation.mutate({ postIdx: idx, liked, userIdx: user.idx });
   };
 
   const handleBookmarkClick = () => {
     if (!user) return toast.error("로그인을 해야 이용가능합니다.");
-    setBookmarks.mutate({ postIdx: idx, bookmarked, userIdx: user.idx });
+    updateBookMarksMutation.mutate({
+      postIdx: idx,
+      bookmarked,
+      userIdx: user.idx,
+    });
   };
 
   return (

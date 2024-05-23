@@ -1,6 +1,6 @@
 "use client";
 
-import { useFollowInfoQuery } from "@/hooks/useFollowInfoQuery";
+import { useFollowInfoQuery } from "@/hooks/follow";
 import React from "react";
 import UserFollowInfo from "../user/UserFollowInfo";
 import SimpleButton from "../common/SimpleButton";

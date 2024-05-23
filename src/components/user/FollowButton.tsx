@@ -1,8 +1,6 @@
 "user client";
 
-import { UserFollowInfoType } from "@/model/user";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import useFollow from "@/hooks/follow";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -16,66 +14,7 @@ export default function FollowButton({
   followerIdx,
   followeeIdx,
 }: Props) {
-  const queryClient = useQueryClient();
-  const updateFollowMutation = useMutation({
-    mutationFn: (updateFollow: {
-      followerIdx: number;
-      followeeIdx: number;
-      following: boolean;
-    }) => {
-      return axios.put("/api/follow", updateFollow);
-    },
-    onMutate: async (updateFollow: {
-      followerIdx: number;
-      followeeIdx: number;
-      following: boolean;
-    }) => {
-      await queryClient.cancelQueries({
-        queryKey: ["users", "detail", followeeIdx, "follow"],
-      });
-
-      const previousData: UserFollowInfoType | undefined =
-        await queryClient.getQueryData([
-          "users",
-          "detail",
-          followeeIdx,
-          "follow",
-        ]);
-
-      if (!previousData) {
-        return;
-      }
-
-      console.log("previous data:", previousData);
-
-      const newData = {
-        ...previousData,
-        follower: following
-          ? previousData.follower.filter(
-              (previousFollowerIdx) => previousFollowerIdx !== followerIdx
-            )
-          : [...previousData.follower, followerIdx!],
-        followerCnt: following
-          ? previousData.followerCnt - 1
-          : previousData.followerCnt + 1,
-      };
-      console.log("new data: ", newData);
-
-      queryClient.setQueryData(
-        ["users", "detail", followeeIdx, "follow"],
-        newData
-      );
-
-      return { previousData };
-    },
-    onError: (err, newTodo, context) => {
-      queryClient.setQueryData(
-        ["users", "detail", followeeIdx, "follow"],
-        context?.previousData
-      );
-      toast.error("요청사항을 처리하는데 실패하였습니다");
-    },
-  });
+  const { updateFollowMutation } = useFollow(followeeIdx);
 
   const toggleFollow = async () => {
     if (!followerIdx) {

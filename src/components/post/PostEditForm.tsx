@@ -1,10 +1,10 @@
-import { useUpdatePostMutation } from "@/hooks/useUpdatePostMutation";
+import usePosts from "@/hooks/posts";
 import { PostDetailType } from "@/model/post";
 import { useRouter } from "next/navigation";
 import React, { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import CancelOkModal from "../common/CancelOkModal";
 import ModalPortal from "../common/ModalPortal";
 import SimpleButton from "../common/SimpleButton";
-import CancelOkModal from "../common/CancelOkModal";
 
 type Props = {
   originalPost: PostDetailType;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default function PostEditForm({ originalPost, setLoading }: Props) {
-  const { editPost } = useUpdatePostMutation();
+  const { updatePostMutation } = usePosts();
   const router = useRouter();
 
   const [post, setPost] = useState({
@@ -45,7 +45,7 @@ export default function PostEditForm({ originalPost, setLoading }: Props) {
     }
 
     //useQuery mutation 처리
-    editPost.mutate(post);
+    updatePostMutation.mutate(post);
 
     setLoading(false);
     router.back();

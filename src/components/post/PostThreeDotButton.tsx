@@ -1,13 +1,13 @@
 "use client";
 
-import { useDeletePostMutation } from "@/hooks/useDeletePostMutation";
+import usePosts from "@/hooks/posts";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
-import ModalPortal from "../common/ModalPortal";
-import CancelOkModal from "../common/CancelOkModal";
-import ThreeDotsButton from "../common/ThreeDotsButton";
+import { useState } from "react";
 import { toast } from "react-toastify";
+import CancelOkModal from "../common/CancelOkModal";
+import ModalPortal from "../common/ModalPortal";
+import ThreeDotsButton from "../common/ThreeDotsButton";
 
 type Props = {
   postIdx: number;
@@ -19,7 +19,7 @@ export default function PostThreeDotButton({ postIdx, author }: Props) {
   const router = useRouter();
 
   const { data: session } = useSession();
-  const { deletePost } = useDeletePostMutation();
+  const { deletePostMutation } = usePosts();
   const user = session?.user;
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -44,7 +44,7 @@ export default function PostThreeDotButton({ postIdx, author }: Props) {
               setOpenModal(false);
             }}
             onOK={() => {
-              deletePost.mutate(postIdx, {
+              deletePostMutation.mutate(postIdx, {
                 onSuccess: () => {
                   toast.info("정상적으로 삭제되었습니다.");
                 },

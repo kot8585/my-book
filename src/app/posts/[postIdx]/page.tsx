@@ -13,6 +13,7 @@ type Props = {
   };
 };
 
+//TODO: cache 뭐지?
 const getPostDetail = cache((postIdx: string) => getPost(parseInt(postIdx)));
 
 export default async function PostDetailPage({ params: { postIdx } }: Props) {

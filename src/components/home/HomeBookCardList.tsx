@@ -1,6 +1,6 @@
 "use client";
 
-import { useUserBookListQuery } from "@/hooks/useUserBookListQuery";
+import useUserBooks from "@/hooks/userbooks";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { LuBookPlus } from "react-icons/lu";
@@ -17,8 +17,10 @@ export default function HomeBookCardList({ status, userIdx }: Props) {
   const { data: session } = useSession();
   const user = session?.user;
 
-  const { userbooks, error } = useUserBookListQuery(userIdx, status);
-  console.log("userbook", userbooks);
+  const {
+    getUserBookListQuery: { data: userbooks },
+  } = useUserBooks(userIdx, status);
+
   return (
     <section>
       <SimpleButton className="bg-gray-200  rounded-md" size="small">

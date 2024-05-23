@@ -1,6 +1,6 @@
 "use client";
 
-import { useDeleteCommentMutation } from "@/hooks/useDeleteCommentMutation";
+import useComment from "@/hooks/comment";
 import { DefaultCommentType } from "@/model/comment";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,8 @@ export default function CommentThreeDotsButton({
   const router = useRouter();
 
   const { data: session } = useSession();
-  const { deleteComment } = useDeleteCommentMutation();
+
+  const { deleteCommentMutation } = useComment(postIdx);
   const user = session?.user;
   const [openModal, setOpenModal] = useState<boolean>(false);
 
@@ -44,7 +45,7 @@ export default function CommentThreeDotsButton({
               setOpenModal(false);
             }}
             onOK={() => {
-              deleteComment.mutate({ commentIdx: idx, postIdx });
+              deleteCommentMutation.mutate({ commentIdx: idx, postIdx });
               setOpenModal(false);
             }}
           >

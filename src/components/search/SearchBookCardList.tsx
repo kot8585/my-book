@@ -1,16 +1,17 @@
 "use client";
 
-import { useSearchBookQuery } from "@/hooks/useSearchBookQuery";
-import React from "react";
-import SearchBookCard from "./SearchBookCard";
+import useSearchBook from "@/hooks/searchbook";
 import { SearchBookType } from "@/model/userBook";
+import SearchBookCard from "./SearchBookCard";
 
 type Props = {
   keyword: string | null;
 };
 
 export default function SearchBookCardList({ keyword }: Props) {
-  const { searchBookList, error } = useSearchBookQuery(keyword);
+  const {
+    useSearchBookQuery: { data: searchBookList },
+  } = useSearchBook(keyword);
   return (
     <ul className="py-14">
       {searchBookList &&

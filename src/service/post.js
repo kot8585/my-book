@@ -53,15 +53,15 @@ export async function getFollowingPostList(userIdx) {
       b.title as book_title, b.image_url as book_image_url, b.author as book_author,  
       u.image as user_image_url, u.name as user_name, count_likeUsers, count_bookmarkUsers, count_comments
     FROM Post p 
-    LEFT JOIN user u 
+    LEFT JOIN User u 
       ON p.user_idx = u.idx 
-    LEFT JOIN userbook b 
+    LEFT JOIN UserBook b 
       ON p.isbn=b.isbn  
-      LEFT JOIN (SELECT Likes.postIdx, COUNT(*) AS count_likeUsers FROM book_app.Likes WHERE 1=1 GROUP BY book_app.Likes.postIdx) AS aggr_selection_0_Likes ON (p.idx = aggr_selection_0_Likes.postIdx)
-     LEFT JOIN (SELECT book_app.Bookmarks.postIdx, COUNT(*) AS count_bookmarkUsers FROM book_app.Bookmarks WHERE 1=1 GROUP BY book_app.Bookmarks.postIdx) AS aggr_selection_1_Bookmarks ON (p.idx = aggr_selection_1_Bookmarks.postIdx)
-    LEFT JOIN (SELECT book_app.Comment.post_idx, COUNT(*) AS count_comments FROM book_app.Comment WHERE 1=1 GROUP BY book_app.Comment.post_idx) AS aggr_selection_2_Comment ON (p.idx = aggr_selection_2_Comment.post_idx)
+      LEFT JOIN (SELECT Likes.postIdx, COUNT(*) AS count_likeUsers FROM freedb_book_app.Likes WHERE 1=1 GROUP BY freedb_book_app.Likes.postIdx) AS aggr_selection_0_Likes ON (p.idx = aggr_selection_0_Likes.postIdx)
+     LEFT JOIN (SELECT freedb_book_app.Bookmarks.postIdx, COUNT(*) AS count_bookmarkUsers FROM freedb_book_app.Bookmarks WHERE 1=1 GROUP BY freedb_book_app.Bookmarks.postIdx) AS aggr_selection_1_Bookmarks ON (p.idx = aggr_selection_1_Bookmarks.postIdx)
+    LEFT JOIN (SELECT freedb_book_app.Comment.post_idx, COUNT(*) AS count_comments FROM freedb_book_app.Comment WHERE 1=1 GROUP BY freedb_book_app.Comment.post_idx) AS aggr_selection_2_Comment ON (p.idx = aggr_selection_2_Comment.post_idx)
     WHERE (open_type="FOLLOW" OR open_type="ALL") AND p.user_idx IN (
-        SELECT followee_idx FROM FOLLOW WHERE follower_idx=${userIdx}
+        SELECT followee_idx FROM Follow WHERE follower_idx=${userIdx}
       )
     ORDER BY p.created_at DESC
     `;

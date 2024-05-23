@@ -1,12 +1,13 @@
 "use client";
 
-import usePostDetailQuery from "@/hooks/usePostDetailQuery";
+import usePostDetailQuery from "@/hooks/post";
 import { useSession } from "next-auth/react";
 import { redirect, useParams } from "next/navigation";
 import { useState } from "react";
 import LoadingSpinner from "../common/LoadingSpinner";
 import QueryErrorBoundary from "../common/QueryErrorBoundary";
 import PostEditForm from "./PostEditForm";
+import usePost from "@/hooks/post";
 
 export default function PostEdit() {
   const { data: session } = useSession();
@@ -16,9 +17,9 @@ export default function PostEdit() {
   }
 
   const params = useParams();
-  const { detailPost: originalPost } = usePostDetailQuery({
-    postIdx: parseInt(params.postIdx),
-  });
+  const {
+    getPostDetailQuery: { data: originalPost },
+  } = usePost(parseInt(params.postIdx));
 
   console.log("========original post", originalPost);
 

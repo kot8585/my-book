@@ -5,7 +5,7 @@ import BookCard from "@/components/home/BookCard";
 import PostListCard from "@/components/post/PostListCard";
 import PostThreeDotButton from "@/components/post/PostThreeDotButton";
 import ReactionButtonList from "@/components/post/Reactions";
-import useUserBookDetailQuery from "@/hooks/useUserBookDetailQuery";
+import useUserBook from "@/hooks/userbook";
 import { timeagoFormatDate } from "@/utils/format";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
@@ -17,7 +17,9 @@ export default function UserBookDetailPage() {
   const user = session?.user;
 
   const userIdx = parseInt(params.userIdx);
-  const { userBook, isLoading, error } = useUserBookDetailQuery({
+  const {
+    getUserBookDetailQuery: { data: userBook },
+  } = useUserBook({
     isbn: params.isbn,
     userIdx,
   });

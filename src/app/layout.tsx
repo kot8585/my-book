@@ -31,7 +31,7 @@ export default function RootLayout({
             <main className="w-full flex max-w-screen-xl  mx-auto grow justify-center">
               {children}
             </main>
-            <ReactQueryDevtools initialIsOpen={false} />
+            <ReactQueryDevtools initialIsOpen={true} />
           </ReactQueryProvider>
           <BottomNav />
         </AuthProvider>
