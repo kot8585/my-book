@@ -1,18 +1,19 @@
 "use client";
 
-import { useFollowInfoQuery } from "@/hooks/follow";
-import React from "react";
-import UserFollowInfo from "../user/UserFollowInfo";
-import SimpleButton from "../common/SimpleButton";
-import { toast } from "react-toastify";
+import useFollow from "@/hooks/follow";
 import { signOut } from "next-auth/react";
+import { toast } from "react-toastify";
+import SimpleButton from "../common/SimpleButton";
+import UserFollowInfo from "../user/UserFollowInfo";
 
 type Props = {
   userIdx: number;
 };
 
 export default function MyInfo({ userIdx }: Props) {
-  const { user } = useFollowInfoQuery(userIdx);
+  const {
+    getFollowQuery: { data: user },
+  } = useFollow(userIdx);
   return (
     <>
       {user && (
