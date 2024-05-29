@@ -40,10 +40,9 @@ export default function ReactionButtonList({
 
   const { updateBookMarksMutation, updateLikesMutation } =
     useReactions(queryKey);
-
-  const liked = !!likeUsers.find((likeUser) => likeUser.userIdx === user?.idx);
+  const liked = !!likeUsers?.find((likeUser) => likeUser.userIdx === user?.idx);
   console.log("====liked", liked);
-  const bookmarked = !!bookmarkUsers.find(
+  const bookmarked = !!bookmarkUsers?.find(
     (bookmarkUser) => bookmarkUser.userIdx === user?.idx
   );
 

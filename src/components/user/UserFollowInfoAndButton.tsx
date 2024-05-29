@@ -33,7 +33,7 @@ export default function UserFollowInfoAndButton({
       {user && (
         <>
           <UserFollowInfo user={user} />
-          {userIdx === loggedUser?.idx && (
+          {userIdx !== loggedUser?.idx && (
             <FollowButton
               following={following}
               followerIdx={loggedUser?.idx}
